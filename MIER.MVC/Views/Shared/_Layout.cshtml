@@ -1,0 +1,264 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DePunt</title>
+
+    <!--begin:STYLE-->
+    <!--begin:bootstrap-->
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!--end:bootstrap-->
+    <!--begin:font-awesome-->
+    <link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.css" />
+    <!--end:font-awesome-->
+    <!--begin:kendo-->
+    <link rel="stylesheet" type="text/css" href="~/kendo/styles/kendo.common.css" />
+    <link rel="stylesheet" type="text/css" href="~/kendo/styles/kendo.bootstrap-v4.css" />
+    <!--end:kendo-->
+    <!--begin:fonts-->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end:fonts-->
+    <!--begin:metronic-->
+    <link rel="stylesheet" type="text/css" href="~/metronic/assets/plugins/global/plugins.bundle.css?v=7.0.3" />
+    <link rel="stylesheet" type="text/css" href="~/metronic/assets/plugins/custom/prismjs/prismjs.bundle.css?v=7.0.3" />
+    <link rel="stylesheet" type="text/css" href="~/metronic/assets/css/style.bundle.css?v=7.0.3" />
+    <link rel="stylesheet" type="text/css" href="~/metronic/assets/css/themes/layout/header/base/light.css?v=7.0.3" />
+    <link rel="stylesheet" type="text/css" href="~/metronic/assets/css/themes/layout/header/menu/light.css?v=7.0.3" />
+    <link rel="stylesheet" type="text/css" href="~/metronic/assets/css/themes/layout/brand/light.css" />
+    <link rel="stylesheet" type="text/css" href="~/metronic/assets/css/themes/layout/aside/light.css" />
+    <link rel="shortcut icon" href="~/metronic/assets/media/logos/logo.ico" />
+    <!--end:metronic-->
+    <!--begin:toastr-->
+    <link rel="stylesheet" type="text/css" href="~/lib/toastr/dist/css/toastr.css" />
+    <!--end:toastr-->
+    <!--begin:select2-->
+    @*<link rel="stylesheet" type="text/css" href="~/lib/select2/dist/css/select2.css" />*@
+    <!--end:select2-->
+    <!--begin:daterangepicker-->
+    @*<link rel="stylesheet" type="text/css" href="~/lib/daterangepicker/dist/daterangepicker.css" />*@
+    <!--end:daterangepicker-->
+    <!--begin:bootstrap-slider-->
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap-slider//dist/bootstrap-slider.css" />
+    <!--end:bootstrap-slider-->
+    <!--begin:sitecss-->
+    <link href="~/css/site.css" rel="stylesheet" />
+    <!--end:sitecss-->
+    <!--end:STYLE-->
+    <!--begin:SCRIPT-->
+    <!--begin:jquery-->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!--end:jquery-->
+    <!--begin:bootstrap-->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!--end:bootstrap-->
+    <!--begin:select2-->
+    <script src="~/lib/select2/dist/js/select2.js"></script>
+    <!--end:select2-->
+    <!--begin:metronic-->
+    <script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#3699FF", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#E1F0FF", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
+    <script src="~/metronic/assets/plugins/global/plugins.bundle.js?v=7.0.3"></script>
+    <script src="~/metronic/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.3"></script>
+    <script src="~/metronic/assets/js/scripts.bundle.js?v=7.0.3"></script>
+    <!--end:metronic-->
+    <!--begin:jszip-->
+    <script src="~/lib/jszip/dist/jszip.js"></script>
+    <!--end:jszip-->
+    <!--begin:kendo-->
+    <script src="~/kendo/js/kendo.all.js"></script>
+    <script src="~/kendo/js/kendo.aspnetmvc.js"></script>
+    <!--end:kendo-->
+    <!--begin:toastr-->
+    <script src="~/lib/toastr/dist/js/toastr.js"></script>
+    <!--end:toastr-->
+    <!--begin:daterangepicker-->
+    <script src="~/lib/daterangepicker/dist/moment.min.js"></script>
+    <script src="~/lib/daterangepicker/dist/daterangepicker.js"></script>
+    <!--end:daterangepicker-->
+    <!--begin:bootstrap-slider-->
+    <script src="~/lib/bootstrap-slider/dist/bootstrap-slider.js"></script>
+    <!--end:bootstrap-slider-->
+    <!--begin:popper-->
+    <script src="~/lib/popper/dist/popper.min.js"></script>
+    <!--end:popper-->
+    <!--begin:bootbox-->
+    <script src="~/lib/bootbox/dist/bootbox.js"></script>
+    <!--end:bootbox-->
+    <!--begin:sitejs-->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!--end:sitejs-->
+    <!--end:SCRIPT-->
+</head>
+<!--begin::Body-->
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+
+    <!--begin::Main-->
+    <div class="d-flex flex-column flex-root">
+
+        <!--begin::Page-->
+        <div class="d-flex flex-row flex-column-fluid page">
+            <!--begin::Aside-->
+            <div class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
+                <!--begin::Brand-->
+                <div class="brand flex-column-auto" id="kt_brand">
+                    <!--begin::Logo-->
+                    <a asp-controller="Home" asp-action="Index" class="brand-logo">
+                        <img alt="Logo" width="150" class="test" src="~/metronic/assets/media/logos/brand_logo.svg" />
+                    </a>
+                    <!--end::Logo-->
+                    <!--begin::Toggle-->
+                    <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
+                        <span class="svg-icon">
+                            <i class="fa fa-bars text-primary text-hover-dark-75" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                    <!--end::Toolbar-->
+                </div>
+                <!--end::Brand-->
+                <!--begin::Aside Menu-->
+                <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
+                    <!--begin::Menu Container-->
+                    <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
+                        <ul class="menu-nav">
+
+                            
+                            @*SIDE MENU CONTENT*@
+
+
+
+                        </ul>
+                    </div>
+                    <!--end::Menu Container-->
+                </div>
+                <!--end::Aside Menu-->
+            </div>
+            <!--end::Aside-->
+            <!--begin::Wrapper-->
+            <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+                <!--begin::Header-->
+                <div id="kt_header" class="header header-fixed">
+                    <!--begin:Container-->
+                    <div class="container-fluid d-flex align-items-stretch justify-content-between">
+                        <!--begin:TopMenuWrapper-->
+                        <div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
+                            <!--begin:HeaderMenu-->
+                            <div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
+                                <!--begin:HeaderNav-->
+                                <ul class="menu-nav">
+
+
+                                    @*HEADER MENU CONTENT*@
+
+
+                                </ul>
+                                <!--end:HeaderNav-->
+                            </div>
+                            <!--end:HeaderMenu-->
+                        </div>
+                        <!--end:TopMenuWrapper-->
+                        <!--begin::Topbar-->
+                        <div class="topbar">
+                            <!--begin::User-->
+                            <div class="topbar-item">
+                                <div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
+                            
+                                    @*LOGIN INFO*@
+
+                                </div>
+                            </div>
+                            <!--end::User-->
+                        </div>
+                        <!--end::Topbar-->
+                    </div>
+                    <!--end:Container-->
+                </div>
+                <!--end::Header-->
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    @RenderBody()
+                </div>
+                <!--end::Content-->
+                <!--begin::Footer-->
+                <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">
+                    <!--begin::Container-->
+                    <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+                        <!--begin::Copyright-->
+                        <div class="text-dark order-2 order-md-1">
+                            <span class="text-muted font-weight-bold mr-2">©2021</span>
+                            <a href="https://www.polarisbali.com/" target="_blank" class="text-primary text-hover-primary">POLARIS BALI</a>
+                        </div>
+                        <!--end::Copyright-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Footer-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Main-->
+    <!-- begin::User Panel-->
+    <div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
+        <!--begin::Header-->
+        <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
+            <h3 class="font-weight-bold m-0">
+                User Profile
+
+            </h3>
+            <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
+                <i class="ki ki-close icon-xs text-muted"></i>
+            </a>
+        </div>
+        <!--end::Header-->
+        <!--begin::Content-->
+        <div class="offcanvas-content pr-5 mr-n5">
+            <!--begin::Header-->
+            <!--begin::Separator-->
+            <div class="separator separator-dashed mt-3 mb-3"></div>
+            <!--end::Separator-->
+            <div class="d-flex align-items-center mt-5">
+                <div class="d-flex flex-column">
+                    
+
+                    @*INDENTITY CONTENT*@
+
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Separator-->
+            <div class="separator separator-dashed mt-5 mb-5"></div>
+            <!--end::Separator-->
+            <!--begin::Nav-->
+            <div class="navi navi-spacer-x-0 p-0">
+
+                @*INDENTIY DROPDOWN CONTENT*@
+
+            </div>
+            <!--end::Nav-->
+            <!--begin::Separator-->
+            <div class="separator separator-dashed my-7"></div>
+            <!--end::Separator-->
+        </div>
+        <!--end::Content-->
+    </div>
+    <!-- end::User Panel-->
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop">
+        <span class="svg-icon">
+            <i class="fa fa-angle-up" aria-hidden="true"></i>
+        </span>
+    </div>
+    <!--end::Scrolltop-->
+
+
+
+
+</body>
+<!--end::Body-->
+</html>
+
+
+
+@RenderSection("Scripts", required: false)
