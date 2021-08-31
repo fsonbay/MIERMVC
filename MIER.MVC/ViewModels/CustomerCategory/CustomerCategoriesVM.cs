@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace MIER.MVC.ViewModels.CustomerCategory
 {
-    public class CustomerCategory_VM
+    public class CustomerCategoriesVM
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
 
     }
 }

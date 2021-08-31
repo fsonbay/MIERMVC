@@ -1,0 +1,163 @@
+﻿@using MIER.MVC.ViewModels.CustomerCategory
+
+
+@{
+    ViewData["Title"] = "Customer Category Index";
+    const string EditLink = "#{#<a title='Edit' class='k-button' href='/CustomerCategory/Edit/#=Id#'> <span class='k-icon k-i-edit'></span></a>#}#";
+
+}
+
+<!--begin:PageHeader-->
+<div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin:PageInfo-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Page Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Customer Category</h5>
+            <!--end::Page Title-->
+            <!--begin::Actions-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
+            <span class="text-muted font-weight-bold mr-4">Index</span>
+            <!--end::Actions-->
+        </div>
+        <!--end:PageInfo-->
+        <!--begin::Toolbar-->
+        <div class="d-flex align-items-center">
+            <!--begin::Actions-->
+            <a asp-controller="CustomerCategory" asp-action="Create" class="btn btn-light-primary btn-sm"><i class="fa fa-plus-circle"></i>Create Customer Category</a>
+            <!--end::Actions-->
+        </div>
+        <!--end::Toolbar-->
+    </div>
+</div>
+<!--end:PageHeader-->
+<!--begin:PageContent-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+
+        <!--begin::Row-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom card-stretch gutter-b">
+                    <div class="card-body">
+                        <!--begin:Search-->
+                        <div class="row align-items-center mb-4">
+                            <div class="col-xl-12">
+                                <div class="form-group align-items-center">
+                                    <div class="input-group">
+                                        <input type="text" id="ListSearch" class="form-control" placeholder="Search...">
+                                        <span class="input-group-btn">
+                                            <button id="GetListButton" class="btn btn-primary ml-2"><i class="fa fa-search fa-sm"></i></button>
+                                        </span>
+                                        <span class="input-group-btn">
+                                            <button id="ClearSearchButton" class="btn btn-link">Clear search</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end:Search-->
+                        <!--begin:Grid-->
+                        <div class="row align-items-center mb-4">
+                            <!--begin:GridExport-->
+                            <div class="col-6 d-flex">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button class="brand-toggle btn btn-sm px-0" id="ExportExcel" title="Export to Excel">
+                                            <i class="fa fa-file-excel-o text-success text-hover-primary" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="brand-toggle btn btn-sm px-0" id="ExportPDF" title="Export to PDF">
+                                            <i class="fa fa-file-pdf-o text-danger text-hover-primary" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end:GridExport-->
+                            <!--begin:GridFilter-->
+                            <div class="col-6 d-flex justify-content-end">
+                                <label>Show Audit Log</label>
+                                <input id="ShowAuditLogCheckbox" type="checkbox" class="ml-2">
+                            </div>
+                            <!--end:GridFilter-->
+                            <!--begin:GridData-->
+                            <div style="overflow: auto;">
+                                @(Html.Kendo().Grid<CustomerCategoriesVM>()
+                                .Name("ListGrid")
+                                .Excel(excel => excel.AllPages(true).FileName("CustomerCategory"))
+                                .Pdf(pdf => pdf.AllPages(true).FileName("CustomerCategory"))
+                                .Columns(columns =>
+                                {
+                                    columns.Bound(d => d.Id)
+                                        .ClientTemplate(string.Format("{0}", EditLink))
+                                        .Filterable(false)
+                                        .Sortable(false)
+                                        .Groupable(false)
+                                        .Width(80)
+                                        .Title(" ");
+
+                                    columns.Bound(m => m.Id).Width(60)
+                                        .HtmlAttributes(new { @class = "text text-muted" })
+                                        .HeaderHtmlAttributes(new { @class = "text text-muted" })
+                                        .Hidden();
+
+                                    columns.Bound(m => m.Name);
+
+                                })
+                                .HtmlAttributes(new { style = "height:100%; width:100%;" })
+                                .ColumnMenu(col => col.Filterable(false))
+                                .Pageable(p =>
+                                {
+                                    p.PageSizes(new[] { 10, 20, 50, 100 });
+                                })
+                                .Sortable()
+                                .Navigatable()
+                                .Resizable(r => r.Columns(true))
+                                .Reorderable(r => r.Columns(true))
+                                .Groupable(g => g.ShowFooter(false))
+                                .Filterable()
+                                .Scrollable()
+                                .DataSource(datasource => datasource
+                                .Ajax()
+                                .PageSize(20)
+                                .Model(model =>
+                                {
+                                    model.Id(p => p.Id);
+                                })
+
+                                .Read(read => read.Action("List", "CustomerCategory").Data("FilterData"))
+                                .Sort(sort => sort.Add("Id").Ascending())))
+                            </div>
+                        </div>
+                        <!--end:Grid-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Row-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end:PageContent-->
+<!--begin:PageScript-->
+@section Scripts {
+
+    <script type="text/javascript">
+
+        //Page Message
+        var message = '@TempData["Message"]';
+
+        //Kendo grid filter
+        function FilterData() {
+            var listSearch = $("#ListSearch").val();
+            return { listSearch: listSearch }
+        }
+
+
+    </script>
+}
+
+<!--end:PageScript-->
