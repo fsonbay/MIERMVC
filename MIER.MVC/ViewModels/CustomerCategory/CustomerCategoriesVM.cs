@@ -7,8 +7,13 @@ namespace MIER.MVC.ViewModels.CustomerCategory
 {
     public class CustomerCategoriesVM
     {
-        public int Id { get; set; }
+        public bool IsEditMode => Id.HasValue;
+
+        public int? Id { get; set; }
+
         public string Name { get; set; }
+
+        public bool IsTaxable { get; set; }
 
     }
 }

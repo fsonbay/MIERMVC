@@ -18,7 +18,7 @@ namespace MIER.MVC.Data
 
         public DbSet<CustomerCategory> CustomerCategory { get; set; }
 
-
+        public DbSet<Customer> Customer { get; set; }
 
 
     }

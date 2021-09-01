@@ -15,9 +15,15 @@ namespace MIER.MVC.ViewModels.CustomerCategory
         [MaxLength(Consts.MaxLength_Name)]
         public string Name { get; set; }
 
+        [Display(Name = "Is Taxable")]
+        public bool IsTaxable { get; set; }
+
         public string InsertBy { get; set; }
+
         public DateTime InsertTime { get; set; }
+
         public string UpdateBy { get; set; }
+
         public DateTime UpdateTime { get; set; }
 
     }

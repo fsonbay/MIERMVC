@@ -1,4 +1,19 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+//site.js
 
-// Write your JavaScript code.
+$(function () {
+
+    //select2
+    $(".select2").select2({
+        placeholder: "Please select...",
+        allowClear: true
+    });
+
+    $(".select2-multiple").select2({
+        placeholder: "Please select...",
+        closeOnSelect: false
+    });
+
+
+});
+

@@ -11,12 +11,14 @@
     <!--begin:Identity-->
 
     string UserFullName = "";
+    string UserFirstName = "";
     string UserName = "";
     string UserRole = "";
     string UserEmail = "";
     string UserId = "";
 
     UserFullName = @UserManager.GetUserAsync(User).Result.FirstName + " " + @UserManager.GetUserAsync(User).Result.LastName;
+    UserFirstName = @UserManager.GetUserAsync(User).Result.FirstName;
     UserName = @UserManager.GetUserAsync(User).Result.UserName;
     UserEmail = @UserManager.GetUserAsync(User).Result.Email;
     UserId = @UserManager.GetUserAsync(User).Result.Id;
@@ -38,11 +40,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DePunt</title>
+    <title>@ViewData["Title"] - MIER</title>
 
     <!--begin:STYLE-->
     <!--begin:bootstrap-->
-    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <!--end:bootstrap-->
     <!--begin:font-awesome-->
     <link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.css" />
@@ -116,9 +118,7 @@
     <!--begin:popper-->
     <script src="~/lib/popper/dist/popper.min.js"></script>
     <!--end:popper-->
-    <!--begin:bootbox-->
-    <script src="~/lib/bootbox/dist/bootbox.js"></script>
-    <!--end:bootbox-->
+
     <!--begin:sitejs-->
     <script src="~/js/site.js" asp-append-version="true"></script>
     <!--end:sitejs-->
@@ -135,16 +135,16 @@
             <!--begin::Aside-->
             <div class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
                 <!--begin::Brand-->
-                <div class="brand flex-column-auto" id="kt_brand">
+                <div class="brand flex-column-auto bg-theme" id="kt_brand">
                     <!--begin::Logo-->
                     <a asp-controller="Home" asp-action="Index" class="brand-logo">
-                        <img alt="Logo" width="150" class="test" src="~/metronic/assets/media/logos/brand_logo.svg" />
+                        <img alt="Logo" width="150" class="test" src="~/metronic/assets/media/logos/mier_logo.svg" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::Toggle-->
                     <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
                         <span class="svg-icon">
-                            <i class="fa fa-bars text-primary text-hover-dark-75" aria-hidden="true"></i>
+                            <i class="fa fa-bars text-white text-hover-dark-75" aria-hidden="true"></i>
                         </span>
                     </button>
                     <!--end::Toolbar-->
@@ -161,380 +161,56 @@
                                 <li class="menu-item " aria-haspopup="true">
                                     <a asp-controller="Home" asp-action="Index" class="menu-link">
                                         <span class="svg-icon menu-icon">
-                                            <i class="fa fa-tachometer-alt text-primary" aria-hidden="true"></i>
+                                            <i class="fa fa-tachometer-alt text-theme" aria-hidden="true"></i>
                                         </span>
                                         <span class="menu-text">Dashboard</span>
                                     </a>
                                 </li>
                             }
 
-                            @if (User.IsInRole("Administrator") || User.IsInRole("User"))
-                            {
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="javascript:;" class="menu-link menu-toggle">
-                                        <span class="svg-icon menu-icon">
-                                            <i class="fa fa-wrench text-primary" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="menu-text">Configuratie</span>
-                                        <i class="menu-arrow"></i>
-                                    </a>
-                                    <div class="menu-submenu">
-                                        <i class="menu-arrow"></i>
-                                        <ul class="menu-subnav">
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="Model" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Model</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="Meeteenheid" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Meeteenheid</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="SignaalGroep" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Signaal Groep</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="Signaal" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Signaal PA</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="Waterdebieten" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Waterdebieten</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="MengbekkenGroep" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Mengbekken Groep</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="LabParameter" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Lab Parameter</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="ProcesParameterGroep" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Proces Parameter Groep</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="ProcesParameter" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Proces Parameter</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="DoseringParameterGroep" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Dosering Groep</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="DoseringParameter" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Dosering Parameter</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="ProcesFlow" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Proces Flow</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="ProcesMeetwaarden" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Proces Meetwaarden</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            }
-
-                            @if (User.IsInRole("Administrator") || User.IsInRole("User"))
-                            {
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="javascript:;" class="menu-link menu-toggle">
-                                        <span class="svg-icon menu-icon">
-                                            <i class="fa fa-exchange-alt text-primary" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="menu-text">Transacties</span>
-                                        <i class="menu-arrow"></i>
-                                    </a>
-                                    <div class="menu-submenu">
-                                        <i class="menu-arrow"></i>
-                                        <ul class="menu-subnav">
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="MeetwaardenHistorie" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Meetwaarden Historie</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="MengbekkenHistorie" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Mengbekken Historie</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="MengbekkenAnalyse" asp-action="Index" class="menu-link">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Mengbekken Analyse</span>
-                                                </a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </li>
-                            }
-
-                            @if (User.IsInRole("Administrator") || User.IsInRole("User"))
-                            {
-
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="javascript:;" class="menu-link menu-toggle">
-                                        <span class="svg-icon menu-icon">
-                                            <i class="fa fa-calculator text-primary" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="menu-text">Phreeqc</span>
-                                        <i class="menu-arrow"></i>
-                                    </a>
-                                    <div class="menu-submenu">
-                                        <i class="menu-arrow"></i>
-                                        <ul class="menu-subnav">
-
-                                            <li class="menu-item menu-item-parent" aria-haspopup="true">
-                                                <span class="menu-link">
-                                                    <span class="menu-text">Phreeqc</span>
-                                                </span>
-                                            </li>
-
-                                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                                <a href="javascript:;" class="menu-link menu-toggle">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Configuratie</span>
-                                                    <i class="menu-arrow"></i>
-                                                </a>
-                                                <div class="menu-submenu">
-                                                    <i class="menu-arrow"></i>
-                                                    <ul class="menu-subnav">
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="ConfigurationPhreeqc" asp-action="Index" class="menu-link">
-                                                                <i class="menu-bullet menu-bullet-dot">
-                                                                    <span></span>
-                                                                </i>
-                                                                <span class="menu-text">Process Configuration</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="ModelPhreeqc" asp-action="Index" class="menu-link">
-                                                                <i class="menu-bullet menu-bullet-dot">
-                                                                    <span></span>
-                                                                </i>
-                                                                <span class="menu-text">Model</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="Simulation" asp-action="Index" class="menu-link">
-                                                                <i class="menu-bullet menu-bullet-dot">
-                                                                    <span></span>
-                                                                </i>
-                                                                <span class="menu-text">Simulation</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                                            <a href="javascript:;" class="menu-link menu-toggle">
-                                                                <i class="menu-bullet menu-bullet-dot">
-                                                                    <span></span>
-                                                                </i>
-                                                                <span class="menu-text">Rule</span>
-                                                                <i class="menu-arrow"></i>
-                                                            </a>
-                                                            <div class="menu-submenu">
-                                                                <i class="menu-arrow"></i>
-                                                                <ul class="menu-subnav">
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="RuleReaction" asp-action="Index" class="menu-link">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Reaction</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="RuleTitle" asp-action="Index" class="menu-link">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Title</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="RuleSubRule" asp-action="Index" class="menu-link">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Sub Rule</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="Rule" asp-action="Index" class="menu-link">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Rule</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="RuleComponent" asp-action="Index" class="menu-link">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Component</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="RulePosition" asp-action="Index" class="menu-link">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Position</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </li>
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="InputValue" asp-action="Index" class="menu-link">
-                                                                <i class="menu-bullet menu-bullet-dot">
-                                                                    <span></span>
-                                                                </i>
-                                                                <span class="menu-text">Input Value</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="Solution" asp-action="Index" class="menu-link">
-                                                                <i class="menu-bullet menu-bullet-dot">
-                                                                    <span></span>
-                                                                </i>
-                                                                <span class="menu-text">Solution</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="OutputComponent" asp-action="Index" class="menu-link">
-                                                                <i class="menu-bullet menu-bullet-dot">
-                                                                    <span></span>
-                                                                </i>
-                                                                <span class="menu-text">Output Component</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-
-                                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                                <a href="javascript:;" class="menu-link menu-toggle">
-                                                    <i class="menu-bullet menu-bullet-dot">
-                                                        <span></span>
-                                                    </i>
-                                                    <span class="menu-text">Proces</span>
-                                                    <i class="menu-arrow"></i>
-                                                </a>
-                                                <div class="menu-submenu">
-                                                    <i class="menu-arrow"></i>
-                                                    <ul class="menu-subnav">
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="Batch" asp-action="Index" class="menu-link">
-                                                                <i class="menu-bullet menu-bullet-dot">
-                                                                    <span></span>
-                                                                </i>
-                                                                <span class="menu-text">Batch</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="Input" asp-action="Index" class="menu-link">
-                                                                <i class="menu-bullet menu-bullet-dot">
-                                                                    <span></span>
-                                                                </i>
-                                                                <span class="menu-text">Input</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="Output" asp-action="Index" class="menu-link">
-                                                                <i class="menu-bullet menu-bullet-dot">
-                                                                    <span></span>
-                                                                </i>
-                                                                <span class="menu-text">Output</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            }
-
-                            @if (User.IsInRole("Administrator") || User.IsInRole("User"))
+                            @if (User.IsInRole("Boss") || User.IsInRole("Admin") || User.IsInRole("Design"))
                             {
                                 <li class="menu-item " aria-haspopup="true">
-                                    <a asp-controller="SimulationRun" asp-action="Index" class="menu-link">
+                                    <a asp-controller="Customer" asp-action="Index" class="menu-link">
                                         <span class="svg-icon menu-icon">
-                                            <i class="fa fa-play text-primary" aria-hidden="true"></i>
+                                            <i class="fa fa-users text-theme" aria-hidden="true"></i>
                                         </span>
-                                        <span class="menu-text">Simulation Run</span>
+                                        <span class="menu-text">Customer</span>
                                     </a>
                                 </li>
                             }
+
+                            @if (User.IsInRole("Boss") || User.IsInRole("Admin"))
+                            {
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <span class="svg-icon menu-icon">
+                                            <i class="fa fa-cogs text-theme" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="menu-text">References</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a asp-controller="CustomerCategory" asp-action="Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Customer Category</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+
+
+
+
+
+
                         </ul>
                     </div>
                     <!--end::Menu Container-->
@@ -629,8 +305,8 @@
                             <!--begin::User-->
                             <div class="topbar-item">
                                 <div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
-                                    <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-                                    <span class="text-primary font-weight-bolder font-size-base d-none d-md-inline mr-3">@UserFullName</span>
+                                    <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi</span>
+                                    <span class="text-primary font-weight-bolder font-size-base d-none d-md-inline mr-3">@UserFirstName</span>
                                 </div>
                             </div>
                             <!--end::User-->
@@ -646,18 +322,18 @@
                 </div>
                 <!--end::Content-->
                 <!--begin::Footer-->
-                <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">
+                <!--<div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">-->
                     <!--begin::Container-->
-                    <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+                    <!--<div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">-->
                         <!--begin::Copyright-->
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted font-weight-bold mr-2">©2021</span>
-                            <a href="https://waterbedrijfgroningen.nl/" target="_blank" class="text-primary text-hover-primary">Waterbedrijf Groningen</a>
+                            <a href="https://polarisbali.com/" target="_blank" class="text-primary text-hover-primary">POLARIS BALI</a>
                         </div>
                         <!--end::Copyright-->
-                    </div>
+                    <!--</div>-->
                     <!--end::Container-->
-                </div>
+                <!--</div>-->
                 <!--end::Footer-->
             </div>
             <!--end::Wrapper-->

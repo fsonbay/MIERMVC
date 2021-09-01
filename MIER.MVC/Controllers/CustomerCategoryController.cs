@@ -49,7 +49,8 @@ namespace MIER.MVC.Controllers
                 var viewModel = new CustomerCategoriesVM
                 {
                     Id = item.Id,
-                    Name = item.Name
+                    Name = item.Name,
+                    IsTaxable = item.IsTaxable
                 };
 
                 list.Add(viewModel);
@@ -74,6 +75,7 @@ namespace MIER.MVC.Controllers
                     var model = new CustomerCategory
                     {
                         Name = viewModel.Name,
+                        IsTaxable = viewModel.IsTaxable,
                         InsertBy = _userManager.GetUserName(User),
                         InsertTime = DateTime.Now,
                         UpdateBy = _userManager.GetUserName(User),
@@ -99,7 +101,8 @@ namespace MIER.MVC.Controllers
             var viewModel = new CustomerCategoryVM
             {
                 Id = model.Id,
-                Name = model.Name
+                Name = model.Name,
+                IsTaxable = model.IsTaxable
             };
 
             return View(viewModel);
@@ -115,6 +118,7 @@ namespace MIER.MVC.Controllers
                     var model = _customerCategoryRepo.GetById(viewModel.Id);
 
                     model.Name = viewModel.Name;
+                    model.IsTaxable = viewModel.IsTaxable;
                     model.UpdateBy = _userManager.GetUserName(User);
                     model.UpdateTime = DateTime.Now;
 
