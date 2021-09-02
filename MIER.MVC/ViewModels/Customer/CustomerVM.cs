@@ -28,6 +28,14 @@ namespace MIER.MVC.ViewModels.Customer
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
 
+        public DateTime InsertTime { get; set; }
+
+        public string InsertBy { get; set; }
+
+        public DateTime UpdateTime { get; set; }
+
+        public string UpdateBy { get; set; }
+
         public SelectList CustomerCategoryList { get; set; }
     }
 }

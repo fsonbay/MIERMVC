@@ -59,7 +59,14 @@
                         </div>
                         <!--end:Search-->
                         <!--begin:Grid-->
-                        <div class="row align-items-center mb-4">
+                        <div class="row align-items-end mb-4">
+                            <!--begin:GridExport-->
+                            <div class="col-6 d-flex">
+                                <div class="row">
+                                    @*CONTENT HERE*@
+                                </div>
+                            </div>
+                            <!--end:GridExport-->
                             <!--begin:GridFilter-->
                             <div class="col-6 d-flex justify-content-end">
                                 <label>Show Audit Log</label>
@@ -114,7 +121,7 @@
                                     columns.Bound(m => m.Company);
                                     columns.Bound(m => m.CustomerCategory);
                                     columns.Bound(m => m.Description);
-
+                                    columns.Bound(m => m.IsActive);
 
                                 })
                                 .HtmlAttributes(new { style = "height:10%; width:auto;" })
@@ -139,7 +146,8 @@
                                 })
 
                                 .Read(read => read.Action("List", "Customer").Data("FilterData"))
-                                .Sort(sort => sort.Add("Id").Ascending())))
+                                .Sort(sort => sort.Add("Id").Ascending()))
+                                .Events(e => e.DataBound("OnDataBound")))
                             </div>
                             <!--end:GridData-->
                         </div>

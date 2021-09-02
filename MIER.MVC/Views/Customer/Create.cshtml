@@ -38,8 +38,7 @@
             <div class="col-12">
                 <div class="card card-custom card-stretch gutter-b">
                     <div class="card-body">
-
-                        <!--begin:Row-->
+                        <!--begin:Fields-->
                         <div class="row align-items-center mb-4">
                             <div class="col-12">
                                 <!--begin:Form-->
@@ -55,8 +54,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                     <div class="form-group">
                                         <label asp-for="Name"></label>
                                         <div>
@@ -64,14 +61,31 @@
                                             @Html.ValidationMessageFor(model => model.Name, String.Empty, new { @class = "text-danger" })
                                         </div>
                                     </div>
-
+                                    <div class="form-group">
+                                        <label asp-for="Company"></label>
+                                        <div>
+                                            @Html.TextBoxFor(model => model.Company, new { @class = "form-control col-5" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Phone"></label>
+                                        <div>
+                                            @Html.TextBoxFor(model => model.Phone, new { @class = "form-control col-5" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Description"></label>
+                                        <div>
+                                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control col-5" })
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-2">
                                                 <label asp-for="IsActive"></label>
                                                 <div>
                                                     @Html.CheckBoxFor(model => model.IsActive)
-                                              
+
                                                 </div>
                                             </div>
                                         </div>
@@ -90,7 +104,7 @@
                                 <!--end:Form-->
                             </div>
                         </div>
-                        <!--end:Row-->
+                        <!--end:Fields-->
                     </div>
                 </div>
             </div>
