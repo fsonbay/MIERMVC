@@ -17,6 +17,7 @@ namespace MIER.MVC.Controllers
 {
     public class CustomerController : Controller
     {
+
         private readonly UserManager<AppUser> _userManager;
         private CustomerRepo _customerRepo;
         private CustomerCategoryRepo _customerCategoryRepo;
@@ -50,9 +51,9 @@ namespace MIER.MVC.Controllers
             if (listSearch != null)
             {
                 m = m.Where(m => m.Name.ToLower().Contains(listSearch.ToLower())
-                                    || m.Company.ToLower().Contains(listSearch.ToLower())
-                                    || m.Phone.ToLower().Contains(listSearch.ToLower())
-                                    || m.Description.ToLower().Contains(listSearch.ToLower())
+                                    || m.Company != null && m.Company.ToLower().Contains(listSearch.ToLower())
+                                    || m.Phone != null && m.Phone.ToLower().Contains(listSearch.ToLower())
+                                    || m.Description != null && m.Description.ToLower().Contains(listSearch.ToLower())
                                     || m.CustomerCategory.Name.ToLower().Contains(listSearch.ToLower())
                                     ).ToList();
             }
@@ -176,7 +177,7 @@ namespace MIER.MVC.Controllers
 
         private void ConfigureVM(CustomerVM vm)
         {
-            var customerCategory = _customerCategoryRepo.GetAll().OrderBy(m => m.Name);
+            var customerCategory = _customerCategoryRepo.GetAllActive().OrderBy(m => m.Name);
             vm.CustomerCategoryList = new SelectList(customerCategory, "Id", "Name");
 
             //Default values for insert mode

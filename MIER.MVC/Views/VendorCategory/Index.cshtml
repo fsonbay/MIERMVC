@@ -1,9 +1,9 @@
-﻿@using MIER.MVC.ViewModels.CustomerCategory
+﻿@using MIER.MVC.ViewModels.VendorCategory
 
 
 @{
-    ViewData["Title"] = "Customer Category Index";
-    const string EditLink = "#{#<a title='Edit' class='text-primary' href='/CustomerCategory/Edit/#=Id#'><i class='fa fa-pen text-primary'></i></a>#}#";
+    ViewData["Title"] = "Vendor Category Index";
+    const string EditLink = "#{#<a title='Edit' class='text-primary' href='/VendorCategory/Edit/#=Id#'><i class='fa fa-pen text-primary'></i></a>#}#";
 
 }
 
@@ -13,7 +13,7 @@
         <!--begin:PageInfo-->
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Page Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Customer Category</h5>
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Vendor Category</h5>
             <!--end::Page Title-->
             <!--begin::Actions-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
@@ -24,7 +24,7 @@
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
             <!--begin::Actions-->
-            <a asp-controller="CustomerCategory" asp-action="Create" class="btn btn-light-primary btn-sm"><i class="fa fa-plus-circle"></i>Create Customer Category</a>
+            <a asp-controller="VendorCategory" asp-action="Create" class="btn btn-light-primary btn-sm"><i class="fa fa-plus-circle"></i>Create Vendor Category</a>
 
             <!--end::Actions-->
         </div>
@@ -79,7 +79,7 @@
                             <!--end:GridFilter-->
                             <!--begin:GridData-->
                             <div>
-                                @(Html.Kendo().Grid<CustomerCategoriesVM>()
+                                @(Html.Kendo().Grid<VendorCategoriesVM>()
                                 .Name("ListGrid")
                                 .Columns(columns =>
                                 {
@@ -115,7 +115,6 @@
                                         .HeaderHtmlAttributes(new { @class = "text text-muted" })
                                         .Hidden();
                                     columns.Bound(m => m.Name);
-                                    columns.Bound(m => m.IsTaxable);
                                     columns.Bound(m => m.IsActive);
 
                                 })
@@ -140,7 +139,7 @@
                                     model.Id(p => p.Id);
                                 })
 
-                                .Read(read => read.Action("List", "CustomerCategory").Data("FilterData"))
+                                .Read(read => read.Action("List", "VendorCategory").Data("FilterData"))
                                 .Sort(sort => sort.Add("Id").Ascending()))
                                 .Events(e => e.DataBound("OnDataBound")))
 

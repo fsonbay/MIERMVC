@@ -6,7 +6,7 @@ using MIER.MVC.Areas.Identity.Data;
 using MIER.MVC.Data;
 using MIER.MVC.Data.Repos;
 using MIER.MVC.Models;
-using MIER.MVC.ViewModels.CustomerCategory;
+using MIER.MVC.ViewModels.VendorCategory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +14,16 @@ using System.Threading.Tasks;
 
 namespace MIER.MVC.Controllers
 {
-    public class CustomerCategoryController : Controller
+    public class VendorCategoryController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        private CustomerCategoryRepo _customerCategoryRepo;
+        private VendorCategoryRepo _customerCategoryRepo;
 
-        public CustomerCategoryController(AppDbContext context,
+        public VendorCategoryController(AppDbContext context,
             UserManager<AppUser> userManager)
         {
             _userManager = userManager;
-            _customerCategoryRepo = new CustomerCategoryRepo(context);
+            _customerCategoryRepo = new VendorCategoryRepo(context);
 
         }
 
@@ -34,7 +34,7 @@ namespace MIER.MVC.Controllers
 
         public IActionResult List([DataSourceRequest] DataSourceRequest request, string listSearch, bool showInactive)
         {
-            List<CustomerCategory> m = new List<CustomerCategory>();
+            List<VendorCategory> m = new List<VendorCategory>();
 
             if (showInactive)
             {
@@ -50,22 +50,17 @@ namespace MIER.MVC.Controllers
                 m = m.Where(m => m.Name.ToLower().Contains(listSearch.ToLower())).ToList();
             }
 
-            List<CustomerCategoriesVM> list = new List<CustomerCategoriesVM>();
-            foreach (var item in m)
+            List<VendorCategoriesVM> list = new List<VendorCategoriesVM>();
+            foreach (var i in m)
             {
-                var vm = new CustomerCategoriesVM
+                var viewModel = new VendorCategoriesVM
                 {
-                    Id = item.Id,
-                    Name = item.Name,
-                    IsTaxable = item.IsTaxable,
-                    IsActive = item.IsActive,
-                    InsertBy = item.InsertBy,
-                    InsertTime = item.InsertTime,
-                    UpdateBy = item.UpdateBy,
-                    UpdateTime = item.UpdateTime
+                    Id = i.Id,
+                    Name = i.Name,
+                    IsActive = i.IsActive
                 };
 
-                list.Add(vm);
+                list.Add(viewModel);
             }
 
             return Json(list.ToDataSourceResult(request));
@@ -74,22 +69,21 @@ namespace MIER.MVC.Controllers
 
         public IActionResult Create()
         {
-            CustomerCategoryVM vm = new CustomerCategoryVM();
+            VendorCategoryVM vm = new VendorCategoryVM();
             ConfigureVM(vm);
             return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Create(CustomerCategoryVM vm)
+        public IActionResult Create(VendorCategoryVM vm)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var m = new CustomerCategory
+                    var m = new VendorCategory
                     {
                         Name = vm.Name,
-                        IsTaxable = vm.IsTaxable,
                         IsActive = vm.IsActive,
                         InsertBy = _userManager.GetUserName(User),
                         InsertTime = DateTime.Now,
@@ -113,11 +107,10 @@ namespace MIER.MVC.Controllers
         public IActionResult Edit(int id)
         {
             var m = _customerCategoryRepo.GetById(id);
-            var vm = new CustomerCategoryVM
+            var vm = new VendorCategoryVM
             {
                 Id = m.Id,
                 Name = m.Name,
-                IsTaxable = m.IsTaxable,
                 IsActive = m.IsActive
             };
 
@@ -127,7 +120,7 @@ namespace MIER.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(CustomerCategoryVM vm)
+        public IActionResult Update(VendorCategoryVM vm)
         {
             if (ModelState.IsValid)
             {
@@ -136,7 +129,6 @@ namespace MIER.MVC.Controllers
                     var m = _customerCategoryRepo.GetById(vm.Id);
 
                     m.Name = vm.Name;
-                    m.IsTaxable = vm.IsTaxable;
                     m.IsActive = vm.IsActive;
                     m.UpdateBy = _userManager.GetUserName(User);
                     m.UpdateTime = DateTime.Now;
@@ -155,7 +147,7 @@ namespace MIER.MVC.Controllers
 
         }
 
-        private void ConfigureVM(CustomerCategoryVM vm)
+        private void ConfigureVM(VendorCategoryVM vm)
         {
             //Default values for insert mode
             if (!vm.IsEditMode)
@@ -163,6 +155,5 @@ namespace MIER.MVC.Controllers
                 vm.IsActive = true;
             }
         }
-
     }
 }

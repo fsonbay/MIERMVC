@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MIER.MVC.Models
@@ -6,6 +7,7 @@ namespace MIER.MVC.Models
     public class Customer : IEntity
     {
         [Column(TypeName = "int")]
+      
         public int Id { get; set; }
 
         [Column(TypeName = "int")]
@@ -13,6 +15,7 @@ namespace MIER.MVC.Models
         public int CustomerCategoryId { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
+        [Required]
         public string Name { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]

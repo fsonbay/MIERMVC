@@ -168,6 +168,36 @@
                                 </li>
                             }
 
+                            <li class="menu-section">
+                                <h4 class="menu-text text-muted">PROCESS</h4>
+                                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                            </li>
+
+                            @if (User.IsInRole("Boss") || User.IsInRole("Admin") || User.IsInRole("Design"))
+                            {
+                                <li class="menu-item " aria-haspopup="true">
+                                    <a asp-controller="Customer" asp-action="Index" class="menu-link">
+                                        <span class="svg-icon menu-icon">
+                                            <i class="fa fa-users text-theme" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="menu-text ">Sales</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item " aria-haspopup="true">
+                                    <a asp-controller="Vendor" asp-action="Index" class="menu-link">
+                                        <span class="svg-icon menu-icon">
+                                            <i class="fa fa-users text-theme" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="menu-text">Purchase</span>
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="menu-section">
+                                <h4 class="menu-text">REFERENCES</h4>
+                                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                            </li>
+
                             @if (User.IsInRole("Boss") || User.IsInRole("Admin") || User.IsInRole("Design"))
                             {
                                 <li class="menu-item " aria-haspopup="true">
@@ -176,6 +206,14 @@
                                             <i class="fa fa-users text-theme" aria-hidden="true"></i>
                                         </span>
                                         <span class="menu-text">Customer</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item " aria-haspopup="true">
+                                    <a asp-controller="Vendor" asp-action="Index" class="menu-link">
+                                        <span class="svg-icon menu-icon">
+                                            <i class="fa fa-users text-theme" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="menu-text">Vendor</span>
                                     </a>
                                 </li>
                             }
@@ -187,7 +225,7 @@
                                         <span class="svg-icon menu-icon">
                                             <i class="fa fa-cogs text-theme" aria-hidden="true"></i>
                                         </span>
-                                        <span class="menu-text">References</span>
+                                        <span class="menu-text">Categories</span>
                                         <i class="menu-arrow"></i>
                                     </a>
                                     <div class="menu-submenu">
@@ -201,16 +239,18 @@
                                                     <span class="menu-text">Customer Category</span>
                                                 </a>
                                             </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a asp-controller="VendorCategory" asp-action="Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Vendor Category</span>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </li>
                             }
-
-
-
-
-
-
                         </ul>
                     </div>
                     <!--end::Menu Container-->

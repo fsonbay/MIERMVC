@@ -4,17 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MIER.MVC.ViewModels.Customer
+namespace MIER.MVC.ViewModels.Vendor
 {
-    public class CustomersVM
+    public class VendorsVM
     {
         public int Id { get; set; }
 
-        public string CustomerCategory { get; set; }
+        public string VendorCategory { get; set; }
 
         public string Name { get; set; }
-
-        public string Company { get; set; }
 
         public string Phone { get; set; }
 
@@ -30,6 +28,5 @@ namespace MIER.MVC.ViewModels.Customer
         public DateTime UpdateTime { get; set; }
 
         public string UpdateBy { get; set; }
-
     }
 }

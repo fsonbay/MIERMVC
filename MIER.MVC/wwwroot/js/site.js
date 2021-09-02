@@ -12,6 +12,9 @@ $(function () {
     var _$select2 = $('.select2');
     var _$select2Multiple = $('.select2-multiple');
 
+    _$getList.click(function e() {
+        _$listGrid.data('kendoGrid').dataSource.read();
+    });
     _$clearFilter.click(function e() {
         _$listSearch.val("")
         _$listGrid.data('kendoGrid').dataSource.read();
@@ -58,7 +61,7 @@ $(function () {
     toastr.options.timeOut = 2000;
     toastr.options.fadeOut = 250;
     toastr.options.fadeIn = 250;
-    //variable message value is assigned on index.cshtml page 
+    //variable message value is assigned on cshtml page 
     if (message) { 
         if (message.includes("error")) {
             toastr.error(message, "");

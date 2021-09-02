@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MIER.MVC.ViewModels.CustomerCategory
+namespace MIER.MVC.ViewModels.VendorCategory
 {
-    public class CustomerCategoryVM
+    public class VendorCategoryVM
     {
         public bool IsEditMode => Id.HasValue;
 
@@ -16,9 +16,6 @@ namespace MIER.MVC.ViewModels.CustomerCategory
         [Required(ErrorMessage = "* Required")]
         [MaxLength(Consts.MaxLength_Name)]
         public string Name { get; set; }
-
-        [Display(Name = "Taxable")]
-        public bool IsTaxable { get; set; }
 
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
@@ -30,6 +27,5 @@ namespace MIER.MVC.ViewModels.CustomerCategory
         public string UpdateBy { get; set; }
 
         public DateTime UpdateTime { get; set; }
-
     }
 }

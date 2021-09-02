@@ -63,7 +63,7 @@
                             <!--begin:GridExport-->
                             <div class="col-6 d-flex">
                                 <div class="row">
-                                    @*CONTENT HERE*@
+                                    @* IF NEEEDED : EXPORT BUTTONS HERE *@
                                 </div>
                             </div>
                             <!--end:GridExport-->
@@ -122,6 +122,7 @@
                                     columns.Bound(m => m.CustomerCategory);
                                     columns.Bound(m => m.Description);
                                     columns.Bound(m => m.IsActive);
+
 
                                 })
                                 .HtmlAttributes(new { style = "height:10%; width:auto;" })
