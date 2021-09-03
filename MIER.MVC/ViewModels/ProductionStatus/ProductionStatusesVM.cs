@@ -4,16 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MIER.MVC.ViewModels.CustomerCategory
+namespace MIER.MVC.ViewModels.ProductionStatus
 {
-    public class CustomerCategoriesVM
+    public class ProductionStatusesVM
     {
         public int? Id { get; set; }
 
         public string Name { get; set; }
-
-        [Display(Name = "Taxable")]
-        public bool IsTaxable { get; set; }
 
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
@@ -25,6 +22,5 @@ namespace MIER.MVC.ViewModels.CustomerCategory
         public DateTime UpdateTime { get; set; }
 
         public string UpdateBy { get; set; }
-
     }
 }

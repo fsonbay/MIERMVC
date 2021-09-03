@@ -1,9 +1,9 @@
-﻿@using MIER.MVC.ViewModels.Customer
+﻿@using MIER.MVC.ViewModels.ProductionStatus
 
 
 @{
-    ViewData["Title"] = "Customer Index";
-    const string EditLink = "#{#<a title='Edit'  href='/Customer/Edit/#=Id#'><i class='fa fa-pen text-theme'></i></a>#}#";
+    ViewData["Title"] = "Production Status Index";
+    const string EditLink = "#{#<a title='Edit'  href='/ProductionStatus/Edit/#=Id#'><i class='fa fa-pen text-theme'></i></a>#}#";
 
 }
 
@@ -13,7 +13,7 @@
         <!--begin:PageInfo-->
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Page Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Customer</h5>
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Production Status</h5>
             <!--end::Page Title-->
             <!--begin::Actions-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
@@ -24,7 +24,8 @@
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
             <!--begin::Actions-->
-            <a asp-controller="Customer" asp-action="Create" class="btn btn-light-primary btn-sm"><i class="fa fa-plus-circle"></i>Create Customer</a>
+            <a asp-controller="ProductionStatus" asp-action="Create" class="btn btn-theme btn-sm"><i class="fa fa-plus-circle text-white"></i>Create Production Status</a>
+
             <!--end::Actions-->
         </div>
         <!--end::Toolbar-->
@@ -59,7 +60,7 @@
                         </div>
                         <!--end:Search-->
                         <!--begin:Grid-->
-                        <div class="row align-items-end mb-4">
+                        <div class="row align-items-center mb-4">
                             <!--begin:GridExport-->
                             <div class="col-6 d-flex">
                                 <div class="row">
@@ -78,12 +79,10 @@
                             <!--end:GridFilter-->
                             <!--begin:GridData-->
                             <div>
-                                @(Html.Kendo().Grid<CustomersVM>()
+                                @(Html.Kendo().Grid<ProductionStatusesVM>()
                                 .Name("ListGrid")
                                 .Columns(columns =>
                                 {
-
-
                                     columns.Bound(d => d.Id)
                                         .HtmlAttributes(new { style = "text-align: center;" })
                                         .ClientTemplate(string.Format("{0}", EditLink))
@@ -115,14 +114,8 @@
                                         .HtmlAttributes(new { @class = "text text-muted" })
                                         .HeaderHtmlAttributes(new { @class = "text text-muted" })
                                         .Hidden();
-
                                     columns.Bound(m => m.Name);
-                                    columns.Bound(m => m.Phone);
-                                    columns.Bound(m => m.Company);
-                                    columns.Bound(m => m.CustomerCategory);
-                                    columns.Bound(m => m.Description);
                                     columns.Bound(m => m.IsActive);
-
 
                                 })
                                 .HtmlAttributes(new { style = "height:10%; width:auto;" })
@@ -146,9 +139,10 @@
                                     model.Id(p => p.Id);
                                 })
 
-                                .Read(read => read.Action("List", "Customer").Data("FilterData"))
+                                .Read(read => read.Action("List", "ProductionStatus").Data("FilterData"))
                                 .Sort(sort => sort.Add("Id").Ascending()))
                                 .Events(e => e.DataBound("OnDataBound")))
+
                             </div>
                             <!--end:GridData-->
                         </div>

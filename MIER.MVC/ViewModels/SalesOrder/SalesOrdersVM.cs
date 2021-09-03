@@ -4,19 +4,20 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MIER.MVC.ViewModels.CustomerCategory
+namespace MIER.MVC.ViewModels.SalesOrder
 {
-    public class CustomerCategoriesVM
+    public class SalesOrdersVM
     {
         public int? Id { get; set; }
 
-        public string Name { get; set; }
+        public string Number { get; set; }
 
-        [Display(Name = "Taxable")]
-        public bool IsTaxable { get; set; }
+        public DateTime Date { get; set; }
 
-        [Display(Name = "Active")]
-        public bool IsActive { get; set; }
+        public DateTime Deadline { get; set; }
+
+        [Display(Name = "Delete")]
+        public bool IsDelete { get; set; }
 
         public DateTime InsertTime { get; set; }
 
@@ -25,6 +26,5 @@ namespace MIER.MVC.ViewModels.CustomerCategory
         public DateTime UpdateTime { get; set; }
 
         public string UpdateBy { get; set; }
-
     }
 }

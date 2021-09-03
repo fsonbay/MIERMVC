@@ -16,11 +16,15 @@ namespace MIER.MVC.Data
 
         }
 
+        public DbSet<ProductionStatus> ProductionStatus { get; set; }
         public DbSet<CustomerCategory> CustomerCategory { get; set; }
         public DbSet<VendorCategory> VendorCategory { get; set; }
 
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Vendor> Vendor { get; set; }
+
+        public DbSet<SalesOrder> SalesOrder { get; set; }
+
 
     }
 }

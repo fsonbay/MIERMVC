@@ -6,7 +6,7 @@ using MIER.MVC.Areas.Identity.Data;
 using MIER.MVC.Data;
 using MIER.MVC.Data.Repos;
 using MIER.MVC.Models;
-using MIER.MVC.ViewModels.VendorCategory;
+using MIER.MVC.ViewModels.ProductionStatus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +14,16 @@ using System.Threading.Tasks;
 
 namespace MIER.MVC.Controllers
 {
-    public class VendorCategoryController : Controller
+    public class ProductionStatusController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        private VendorCategoryRepo _vendorCategoryRepo;
+        private ProductionStatusRepo _productionStatusRepo;
 
-        public VendorCategoryController(AppDbContext context,
+        public ProductionStatusController(AppDbContext context,
             UserManager<AppUser> userManager)
         {
             _userManager = userManager;
-            _vendorCategoryRepo = new VendorCategoryRepo(context);
+            _productionStatusRepo = new ProductionStatusRepo(context);
 
         }
 
@@ -34,15 +34,15 @@ namespace MIER.MVC.Controllers
 
         public IActionResult List([DataSourceRequest] DataSourceRequest request, string listSearch, bool showInactive)
         {
-            List<VendorCategory> m = new List<VendorCategory>();
+            List<ProductionStatus> m = new List<ProductionStatus>();
 
             if (showInactive)
             {
-                m = _vendorCategoryRepo.GetAll();
+                m = _productionStatusRepo.GetAll();
             }
             else
             {
-                m = _vendorCategoryRepo.GetAllActive();
+                m = _productionStatusRepo.GetAllActive();
             }
 
             if (listSearch != null)
@@ -50,15 +50,19 @@ namespace MIER.MVC.Controllers
                 m = m.Where(m => m.Name.ToLower().Contains(listSearch.ToLower())).ToList();
             }
 
-            List<VendorCategoriesVM> list = new List<VendorCategoriesVM>();
+            List<ProductionStatusesVM> list = new List<ProductionStatusesVM>();
             foreach (var i in m)
             {
-                var viewModel = new VendorCategoriesVM
+                var viewModel = new ProductionStatusesVM
                 {
                     Id = i.Id,
                     Name = i.Name,
-                    IsActive = i.IsActive
-                };
+                    IsActive = i.IsActive,
+                    InsertBy = i.InsertBy,
+                    InsertTime = i.InsertTime,
+                    UpdateTime = i.UpdateTime,
+                    UpdateBy = i.UpdateBy
+            };
 
                 list.Add(viewModel);
             }
@@ -69,19 +73,19 @@ namespace MIER.MVC.Controllers
 
         public IActionResult Create()
         {
-            VendorCategoryVM vm = new VendorCategoryVM();
+            ProductionStatusVM vm = new ProductionStatusVM();
             ConfigureVM(vm);
             return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Create(VendorCategoryVM vm)
+        public IActionResult Create(ProductionStatusVM vm)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var m = new VendorCategory
+                    var m = new ProductionStatus
                     {
                         Name = vm.Name,
                         IsActive = vm.IsActive,
@@ -91,7 +95,7 @@ namespace MIER.MVC.Controllers
                         UpdateTime = DateTime.Now
                     };
 
-                    _vendorCategoryRepo.Create(m);
+                    _productionStatusRepo.Create(m);
                     TempData["Message"] = "Saved succesfully";
                 }
                 catch (Exception ex)
@@ -106,8 +110,8 @@ namespace MIER.MVC.Controllers
 
         public IActionResult Edit(int id)
         {
-            var m = _vendorCategoryRepo.GetById(id);
-            var vm = new VendorCategoryVM
+            var m = _productionStatusRepo.GetById(id);
+            var vm = new ProductionStatusVM
             {
                 Id = m.Id,
                 Name = m.Name,
@@ -120,20 +124,20 @@ namespace MIER.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(VendorCategoryVM vm)
+        public IActionResult Update(ProductionStatusVM vm)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var m = _vendorCategoryRepo.GetById(vm.Id);
+                    var m = _productionStatusRepo.GetById(vm.Id);
 
                     m.Name = vm.Name;
                     m.IsActive = vm.IsActive;
                     m.UpdateBy = _userManager.GetUserName(User);
                     m.UpdateTime = DateTime.Now;
 
-                    _vendorCategoryRepo.Update(m);
+                    _productionStatusRepo.Update(m);
                     TempData["Message"] = "Saved succesfully";
                 }
                 catch (Exception ex)
@@ -147,7 +151,7 @@ namespace MIER.MVC.Controllers
 
         }
 
-        private void ConfigureVM(VendorCategoryVM vm)
+        private void ConfigureVM(ProductionStatusVM vm)
         {
             //Default values for insert mode
             if (!vm.IsEditMode)

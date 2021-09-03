@@ -69,7 +69,7 @@ body {
 
 
 .text-theme {
-    color: #D63447 !important;
+    color: #ED3237 !important;
 }
 
 a.text-theme:hover, 
@@ -78,18 +78,46 @@ a.text-red:focus {
 }
 
 .bg-theme {
-    background-color: #D63447 !important;
+    background-color: #474343 !important;
 }
 
-a.bg-theme:hover, 
+a.bg-theme:hover,
 a.bg-red:focus,
 button.bg-theme:hover,
 button.bg-theme:focus {
-    background-color: #BFA2DB !important;
+    background-color: #1861ac !important;
 }
 
+
 .btn-theme {
-    color: #fff;
-    background-color: #D63447;
-    border-color: #fff;
+    color: #FFFFFF;
+    background-color: #ED3237;
 }
+
+    .btn-theme:hover {
+        color: #fff;
+        background-color: #f70707;
+        border-color: #ff6a00;
+    }
+
+    .btn-theme:focus, .btn-theme.focus {
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+    }
+
+    .btn-theme.disabled, .btn-theme:disabled {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-theme:not(:disabled):not(.disabled):active, .btn-theme:not(:disabled):not(.disabled).active,
+    .show > .btn-theme.dropdown-toggle {
+        color: #fff;
+        background-color: #0062cc;
+        border-color: #005cbf;
+    }
+
+        .btn-theme:not(:disabled):not(.disabled):active:focus, .btn-theme:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-theme.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+        }
