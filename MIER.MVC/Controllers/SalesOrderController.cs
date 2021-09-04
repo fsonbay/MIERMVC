@@ -57,7 +57,6 @@ namespace MIER.MVC.Controllers
                                     ).ToList();
             }
 
-
             List<SalesOrdersVM> list = new List<SalesOrdersVM>();
             foreach (var i in m)
             {

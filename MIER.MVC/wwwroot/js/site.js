@@ -11,6 +11,8 @@ $(function () {
     var _$clearFilter = $('#ClearSearchButton');
     var _$select2 = $('.select2');
     var _$select2Multiple = $('.select2-multiple');
+    var _$datePicker = $('.date-picker');
+
 
     _$getList.click(function e() {
         _$listGrid.data('kendoGrid').dataSource.read();
@@ -44,7 +46,6 @@ $(function () {
     });
 
 
-
     //SELECT2
     _$select2.select2({
         placeholder: "Please select...",
@@ -71,7 +72,13 @@ $(function () {
         }
     };
 
-
+    _$datePicker.daterangepicker({
+        locale: {
+            format: 'DD-MM-YYYY',
+        },
+        singleDatePicker: true,
+        showDropdowns: true
+    });
 
     $(document).keypress(function (e) {
         if (e.which === 13) {

@@ -85,12 +85,12 @@ a.bg-theme:hover,
 a.bg-red:focus,
 button.bg-theme:hover,
 button.bg-theme:focus {
-    background-color: #1861ac !important;
+    background-color: #ED3237 !important;
 }
 
 
 .btn-theme {
-    color: #FFFFFF;
+    color: #fff;
     background-color: #ED3237;
 }
 
@@ -106,14 +106,14 @@ button.bg-theme:focus {
 
     .btn-theme.disabled, .btn-theme:disabled {
         color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
+        background-color: #ED3237;
+        border-color: #ED3237;
     }
 
     .btn-theme:not(:disabled):not(.disabled):active, .btn-theme:not(:disabled):not(.disabled).active,
     .show > .btn-theme.dropdown-toggle {
         color: #fff;
-        background-color: #0062cc;
+        background-color: #ED3237;
         border-color: #005cbf;
     }
 
