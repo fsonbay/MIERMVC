@@ -10,14 +10,17 @@ namespace MIER.MVC.ViewModels.SalesOrder
     {
         public int? Id { get; set; }
 
+        public string Customer { get; set; }
+        public string ProductionStatus { get; set; }
+
         public string Number { get; set; }
 
         public DateTime Date { get; set; }
 
         public DateTime Deadline { get; set; }
 
-        [Display(Name = "Delete")]
-        public bool IsDelete { get; set; }
+        [Display(Name = "Active")]
+        public bool IsActive { get; set; }
 
         public DateTime InsertTime { get; set; }
 

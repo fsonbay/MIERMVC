@@ -116,6 +116,7 @@
                                         .HeaderHtmlAttributes(new { @class = "text text-muted" })
                                         .Hidden();
 
+                                    columns.Bound(m => m.Customer);
                                     columns.Bound(m => m.Number);
                                     columns.Bound(m => m.Date);
                                     columns.Bound(m => m.Deadline);

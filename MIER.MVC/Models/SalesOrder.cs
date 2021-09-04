@@ -12,6 +12,14 @@ namespace MIER.MVC.Models
         [Column(TypeName = "int")]
         public int Id { get; set; }
 
+        [Column(TypeName = "int")]
+        [ForeignKey("Customer")]
+        public int CustomerId { get; set; }
+
+        [Column(TypeName = "int")]
+        [ForeignKey("ProductionStatus")]
+        public int ProductionStatusId { get; set; }
+
         [Column(TypeName = "nvarchar(50)")]
         [Required]
         public string Number { get; set; }
@@ -23,7 +31,7 @@ namespace MIER.MVC.Models
         public DateTime Deadline { get; set; }
 
         [Column(TypeName = "bit")]
-        public bool IsDelete { get; set; }
+        public bool IsActive { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime InsertTime { get; set; }
@@ -36,6 +44,9 @@ namespace MIER.MVC.Models
 
         [Column(TypeName = "nvarchar(50)")]
         public string UpdateBy { get; set; }
+
+        public Customer Customer { get; set; }
+        public ProductionStatus ProductionStatus { get; set; }
 
     }
 }
