@@ -103,13 +103,12 @@ namespace MIER.MVC.Controllers
                         Date = vm.Date,
                         Deadline = vm.Deadline,
                         IsActive = vm.IsActive,
-
                         InsertBy = _userManager.GetUserName(User),
                         InsertTime = DateTime.Now,
                         UpdateBy = _userManager.GetUserName(User),
                         UpdateTime = DateTime.Now,
                     };
-                    _customerRepo.Create(m);
+                    _salesOrderRepo.Create(m);
                     TempData["Message"] = "Saved succesfully";
                 }
                 catch (Exception ex)
@@ -124,16 +123,16 @@ namespace MIER.MVC.Controllers
 
         public IActionResult Edit(int id)
         {
-            var m = _customerRepo.GetById(id);
-            var vm = new CustomerVM
+            var m = _salesOrderRepo.GetById(id);
+            var vm = new SalesOrderVM
             {
                 Id = m.Id,
-                Name = m.Name,
-                Company = m.Company,
-                Phone = m.Phone,
-                Description = m.Description,
-                IsActive = m.IsActive,
-                CustomerCategoryId = m.CustomerCategoryId,
+                CustomerId = m.CustomerId,
+                ProductionStatusId = m.ProductionStatusId,
+                Number = m.Number,
+                Date = m.Date,
+                Deadline = m.Deadline,
+                IsActive = m.IsActive
             };
 
             ConfigureVM(vm);
@@ -148,18 +147,18 @@ namespace MIER.MVC.Controllers
             {
                 try
                 {
-                    var m = _customerRepo.GetById(vm.Id);
+                    var m = _salesOrderRepo.GetById(vm.Id);
 
-                    m.Name = vm.Name;
-                    m.Company = vm.Company;
-                    m.Phone = vm.Phone;
-                    m.Description = vm.Description;
+                    m.Number = vm.Number;
+                    m.CustomerId = vm.CustomerId;
+                    m.ProductionStatusId = vm.ProductionStatusId;
+                    m.Date = vm.Date;
+                    m.Deadline = vm.Deadline;
                     m.IsActive = vm.IsActive;
-                    m.CustomerCategoryId = vm.CustomerCategoryId;
                     m.UpdateBy = _userManager.GetUserName(User);
                     m.UpdateTime = DateTime.Now;
 
-                    _customerRepo.Update(m);
+                    _salesOrderRepo.Update(m);
                     TempData["Message"] = "Saved succesfully";
                 }
                 catch (Exception ex)
