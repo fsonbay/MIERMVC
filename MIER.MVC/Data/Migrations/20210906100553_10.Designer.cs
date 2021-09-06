@@ -4,14 +4,16 @@ using MIER.MVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MIER.MVC.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210906100553_10")]
+    partial class _10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -332,8 +334,6 @@ namespace MIER.MVC.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SalesOrderId");
-
                     b.ToTable("SalesOrderLine");
                 });
 
@@ -542,17 +542,6 @@ namespace MIER.MVC.Data.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("ProductionStatus");
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.SalesOrderLine", b =>
-                {
-                    b.HasOne("MIER.MVC.Models.SalesOrder", "SalesOrder")
-                        .WithMany()
-                        .HasForeignKey("SalesOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SalesOrder");
                 });
 
             modelBuilder.Entity("MIER.MVC.Models.Vendor", b =>

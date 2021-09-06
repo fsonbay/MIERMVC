@@ -10,8 +10,8 @@ using MIER.MVC.Models;
 using MIER.MVC.ViewModels.SalesOrder;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MIER.MVC.Controllers
 {
@@ -182,7 +182,34 @@ namespace MIER.MVC.Controllers
             //Default values for insert mode
             if (!vm.IsEditMode)
             {
+                var salesOrderLine = new SalesOrderLine();
+                var salesOrderLineList = new List<SalesOrderLine>();
+
+                vm.ProductionStatusId = 1;
                 vm.IsActive = true;
+
+                salesOrderLine.Id = 0;
+                salesOrderLine.Name = "";
+                salesOrderLine.Description = "";
+                salesOrderLine.IsActive = true;
+
+                salesOrderLineList.Add(salesOrderLine);
+                vm.SalesOrderLines = salesOrderLineList;
+
+                ////EMPTY SALES ORDER
+                //salesOrderDto.Id = null;
+                //salesOrderDto.Number = "";
+                //salesOrderDto.Date = DateTime.Now;
+                //salesOrderDto.Deadline = DateTime.Now;
+
+                //output.SalesOrder = salesOrderDto;
+
+                ////EMPTY SALES ORDER LINE
+                //salesOrderLineDto.Id = 0;
+                //salesOrderLineDto.Name = "";
+                //salesOrderLineDto.Description = "";
+                //salesOrderLineDto.MarkForDelete = false;
+
             }
         }
     }

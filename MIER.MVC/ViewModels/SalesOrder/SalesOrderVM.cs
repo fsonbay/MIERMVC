@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using MIER.MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -38,6 +39,9 @@ namespace MIER.MVC.ViewModels.SalesOrder
         public string UpdateBy { get; set; }
 
         public SelectList CustomerList { get; set; }
+
         public SelectList ProductionStatusList { get; set; }
+
+        public List<SalesOrderLine> SalesOrderLines { get; set; }
     }
 }

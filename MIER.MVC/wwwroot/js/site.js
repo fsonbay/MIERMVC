@@ -72,13 +72,24 @@ $(function () {
         }
     };
 
+    //_$datePicker.daterangepicker({
+    //    locale: {
+    //        format: 'DD-MM-YYYY',
+    //    },
+    //    singleDatePicker: true,
+    //    showDropdowns: true
+    //});
+
+
+
     _$datePicker.daterangepicker({
-        locale: {
-            format: 'DD-MM-YYYY',
+        "locale": {
+            "format": "DD-MM-YYYY"
         },
         singleDatePicker: true,
-        showDropdowns: true
+        startDate: moment(),
     });
+
 
     $(document).keypress(function (e) {
         if (e.which === 13) {
