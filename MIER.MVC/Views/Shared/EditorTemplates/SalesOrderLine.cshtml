@@ -14,7 +14,7 @@
     <div class="col-4">
         <div class="form-group">
             <label asp-for="Description"></label>
-            @Html.TextAreaFor(m => m.Description, new { @class = "form-control m-input" })
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control m-input" , @rows="3"})
             <span class="form-text text-muted">Bahan, ketebalan, dimensi, finishing</span>
         </div>
     </div>

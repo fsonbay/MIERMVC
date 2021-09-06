@@ -30,6 +30,8 @@ namespace MIER.MVC.ViewModels.SalesOrder
 
         public DateTime Deadline { get; set; }
 
+        public decimal Amount { get; set; }
+
         public DateTime InsertTime { get; set; }
 
         public string InsertBy { get; set; }

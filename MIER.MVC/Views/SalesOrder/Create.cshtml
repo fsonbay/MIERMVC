@@ -75,7 +75,6 @@
                                             </div>
                                             <div class="col-4">
                                                 <label asp-for="Deadline"></label>
-
                                                 <div>
                                                     @Html.TextBoxFor(model => model.Deadline, new { @class = "form-control col-8 date-picker", @id = "SalesOrder_Deadline" })
                                                     @Html.ValidationMessageFor(model => model.Deadline, String.Empty, new { @class = "text-danger" })
@@ -90,18 +89,22 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div>
                                         <div class="input-group">
                                             <div class="form-group">
-                                                <button id="AddLineButton" class="btn btn-outline-success btn-sm" title="Add Line"><i class="fa fa-bars"></i> Add Line</button>
+                                                <button id="AddLineButton" class="btn btn-light-danger btn-sm" title="Add Line"><i class="fa fa-plus-circle"></i> Add Line</button>
                                             </div>
                                         </div>
                                         <div class="form-horizontal line-sets">
                                             @Html.EditorFor(model => model.SalesOrderLines)
                                         </div>
                                     </div>
-
+                                    <div class="row justify-content-end">
+                                        <div>
+                                            <label asp-for="Amount"></label>
+                                            <input id="Total" name="Total" type="text" value="@Model.Amount.ToString("N0")" class="form-control m-input bg-light-primary currency-format" readonly width="200" />
+                                        </div>
+                                    </div>
 
                                     <!--begin:Fields-->
                                     <!--begin:Action-->
