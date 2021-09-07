@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,10 @@ namespace MIER.MVC.Models
         [Column(TypeName = "int")]
         [ForeignKey("SalesOrder")]
         public int SalesOrderId { get; set; }
+
+        [Column(TypeName = "nvarchar(50)")]
+        [Required]
+        public string Number { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }

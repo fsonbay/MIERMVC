@@ -10,10 +10,12 @@ namespace MIER.MVC.ViewModels.SalesOrder
     {
         public int? Id { get; set; }
 
+        public string Number { get; set; }
+
         public string Customer { get; set; }
+
         public string ProductionStatus { get; set; }
 
-        public string Number { get; set; }
 
         public DateTime Date { get; set; }
 

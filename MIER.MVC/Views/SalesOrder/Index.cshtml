@@ -2,7 +2,7 @@
 
 
 @{
-    ViewData["Title"] = "Sales Index";
+    ViewData["Title"] = "Order Index";
     const string EditLink = "#{#<a title='Edit'  href='/SalesOrder/Edit/#=Id#'><i class='fa fa-pen text-theme'></i></a>#}#";
 
 }
@@ -13,7 +13,7 @@
         <!--begin:PageInfo-->
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Page Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Sales Order</h5>
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Order</h5>
             <!--end::Page Title-->
             <!--begin::Actions-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
@@ -24,7 +24,7 @@
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
             <!--begin::Actions-->
-            <a asp-controller="SalesOrder" asp-action="Create" class="btn btn-light-danger btn-sm"><i class="fa fa-plus-circle"></i>Create Sales Order</a>
+            <a asp-controller="SalesOrder" asp-action="Create" class="btn btn-light-danger btn-sm"><i class="fa fa-plus-circle"></i>Create Order</a>
             <!--end::Actions-->
         </div>
         <!--end::Toolbar-->

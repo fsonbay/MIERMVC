@@ -269,5 +269,6 @@ namespace MIER.MVC.Controllers
 
             return prefix + '-' + customerId + '-' + custOrderCount;
         }
+
     }
 }
