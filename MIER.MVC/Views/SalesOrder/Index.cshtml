@@ -118,8 +118,9 @@
 
                                     columns.Bound(m => m.Customer);
                                     columns.Bound(m => m.Number);
-                                    columns.Bound(m => m.Date);
-                                    columns.Bound(m => m.Deadline);
+                                    columns.Bound(m => m.Date).Format("{0:dd-MM-yyyy}");
+                                    columns.Bound(m => m.Deadline).Format("{0:dd-MM-yyyy}");
+                                    columns.Bound(m => m.LinesName);
                                 })
                                 .HtmlAttributes(new { style = "height:10%; width:auto;" })
                                 .ColumnMenu(col => col.Filterable(false))

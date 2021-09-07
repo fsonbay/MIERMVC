@@ -19,6 +19,7 @@ namespace MIER.MVC.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private SalesOrderRepo _salesOrderRepo;
+        private SalesInvoiceRepo _salesInvoiceRepo;
         private CustomerRepo _customerRepo;
         private ProductionStatusRepo _productionStatusRepo;
 
@@ -27,6 +28,7 @@ namespace MIER.MVC.Controllers
         {
             _userManager = userManager;
             _salesOrderRepo = new SalesOrderRepo(context);
+            _salesInvoiceRepo = new SalesInvoiceRepo(context);
             _customerRepo = new CustomerRepo(context);
             _productionStatusRepo = new ProductionStatusRepo(context);
         }
@@ -54,6 +56,7 @@ namespace MIER.MVC.Controllers
                 m = m.Where(m => m.Number.ToLower().Contains(listSearch.ToLower())
                                     || m.Customer.Name.ToLower().Contains(listSearch.ToLower())
                                     || m.ProductionStatus.Name.ToLower().Contains(listSearch.ToLower())
+                                    || m.LinesName.ToLower().Contains(listSearch.ToLower())
                                     ).ToList();
             }
 
@@ -66,6 +69,9 @@ namespace MIER.MVC.Controllers
                     Number = i.Number,
                     Customer = i.Customer.Name,
                     ProductionStatus = i.ProductionStatus.Name,
+                    LinesName = i.LinesName,
+                    Date = i.Date,
+                    Deadline = i.Deadline,
                     IsActive = i.IsActive,
                     InsertBy = i.InsertBy,
                     InsertTime = i.InsertTime,
@@ -94,25 +100,84 @@ namespace MIER.MVC.Controllers
             {
                 try
                 {
-                    var m = new SalesOrder
+                    var order = new SalesOrder
                     {
-                        Number = vm.Number,
+                        Number = CreateSalesOrderNumber(vm.Date, vm.CustomerId),
                         CustomerId = vm.CustomerId,
                         ProductionStatusId = vm.ProductionStatusId,
                         Date = vm.Date,
                         Deadline = vm.Deadline,
+                        Amount = vm.Amount,
                         IsActive = vm.IsActive,
                         InsertBy = _userManager.GetUserName(User),
                         InsertTime = DateTime.Now,
                         UpdateBy = _userManager.GetUserName(User),
                         UpdateTime = DateTime.Now,
                     };
-                    _salesOrderRepo.Create(m);
+
+                    //ITERATE LINES
+                    var linesList = new List<SalesOrderLine>();
+                    List<string> linesName = new List<string>();
+
+                    foreach (var i in vm.SalesOrderLines.ToList())
+                    {
+                        //CREATE SUBS
+                        var isActive = i.IsActive;
+                        var name = i.Name;
+
+                        if (!isActive)
+                        {
+                            //REMOVE FROM COLLECTION
+                            vm.SalesOrderLines.Remove(i);
+                        }
+                        else
+                        {
+                            var salesOrderLine = new SalesOrderLine
+                            {
+                                Name = i.Name,
+                                Description = i.Description,
+                                Quantity = i.Quantity,
+                                Price = i.Price,
+                                Amount = i.Amount,
+                                SalesOrderId = 0, //Default value will be replaced by actual value
+                                IsActive = i.IsActive
+                            };
+
+                            //ADD SUB TO COLLECTION
+                            linesName.Add(i.Name);
+                            linesList.Add(salesOrderLine);
+                        }
+                    }
+
+                    //ADD SUBS TO PARENT
+                    order.LinesName = string.Join(", ", linesName);
+                    order.SalesOrderLines = linesList;
+
+                    _salesOrderRepo.Create(order);
+                    var newOrderId = order.Id;
+
+                    //INVOICE
+                    var invoice = new SalesInvoice
+                    {
+                        SalesOrderId = newOrderId,
+                        Date = order.Date,
+                        DueDate = order.Deadline,
+                        Total = order.Amount,
+                        Paid = 0,
+                        Outstanding = order.Amount,
+                        LinesName = order.LinesName,
+                        IsActive = true,
+                        InsertBy = _userManager.GetUserName(User),
+                        InsertTime = DateTime.Now,
+                        UpdateBy = _userManager.GetUserName(User),
+                        UpdateTime = DateTime.Now
+                    };
+
+                    _salesInvoiceRepo.Create(invoice);
                     TempData["Message"] = "Saved succesfully";
                 }
                 catch (Exception ex)
                 {
-                    var err = ex.InnerException.Message;
                     TempData["Message"] = ex.Message;
                 }
             }
@@ -195,22 +260,14 @@ namespace MIER.MVC.Controllers
 
                 salesOrderLineList.Add(salesOrderLine);
                 vm.SalesOrderLines = salesOrderLineList;
-
-                ////EMPTY SALES ORDER
-                //salesOrderDto.Id = null;
-                //salesOrderDto.Number = "";
-                //salesOrderDto.Date = DateTime.Now;
-                //salesOrderDto.Deadline = DateTime.Now;
-
-                //output.SalesOrder = salesOrderDto;
-
-                ////EMPTY SALES ORDER LINE
-                //salesOrderLineDto.Id = 0;
-                //salesOrderLineDto.Name = "";
-                //salesOrderLineDto.Description = "";
-                //salesOrderLineDto.MarkForDelete = false;
-
             }
+        }
+        private string CreateSalesOrderNumber(DateTime salesOrderDate, int customerId)
+        {
+            string prefix = "O" + salesOrderDate.ToString("yyyyMMdd");
+            int custOrderCount = _salesOrderRepo.CountCustomerOrder(customerId) + 1;
+
+            return prefix + '-' + customerId + '-' + custOrderCount;
         }
     }
 }

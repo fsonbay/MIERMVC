@@ -4,14 +4,16 @@ using MIER.MVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MIER.MVC.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210907072314_12")]
+    partial class _12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,53 +256,6 @@ namespace MIER.MVC.Data.Migrations
                     b.ToTable("ProductionStatus");
                 });
 
-            modelBuilder.Entity("MIER.MVC.Models.SalesInvoice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("InsertBy")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("InsertTime")
-                        .HasColumnType("datetime");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal?>("Outstanding")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("Paid")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SalesOrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SalesOrderId");
-
-                    b.ToTable("SalesInvoice");
-                });
-
             modelBuilder.Entity("MIER.MVC.Models.SalesOrder", b =>
                 {
                     b.Property<int>("Id")
@@ -329,15 +284,15 @@ namespace MIER.MVC.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LinesName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("ProductionStatusId")
                         .HasColumnType("int");
+
+                    b.Property<string>("SalesOrderLineNames")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(50)");
@@ -576,17 +531,6 @@ namespace MIER.MVC.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("CustomerCategory");
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.SalesInvoice", b =>
-                {
-                    b.HasOne("MIER.MVC.Models.SalesOrder", "SalesOrder")
-                        .WithMany()
-                        .HasForeignKey("SalesOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SalesOrder");
                 });
 
             modelBuilder.Entity("MIER.MVC.Models.SalesOrder", b =>

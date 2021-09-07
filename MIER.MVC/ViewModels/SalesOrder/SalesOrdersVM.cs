@@ -19,6 +19,9 @@ namespace MIER.MVC.ViewModels.SalesOrder
 
         public DateTime Deadline { get; set; }
 
+        [Display(Name = "Orders")]
+        public string LinesName { get; set; }
+
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
 

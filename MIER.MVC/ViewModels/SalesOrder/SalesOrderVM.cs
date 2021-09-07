@@ -24,11 +24,13 @@ namespace MIER.MVC.ViewModels.SalesOrder
 
         public string Number { get; set; }
 
+        [Required(ErrorMessage = "* Required")]
         public DateTime Date { get; set; }
 
-        public bool IsActive { get; set; }
-
+        [Required(ErrorMessage = "* Required")]
         public DateTime Deadline { get; set; }
+
+        public bool IsActive { get; set; }
 
         public decimal Amount { get; set; }
 

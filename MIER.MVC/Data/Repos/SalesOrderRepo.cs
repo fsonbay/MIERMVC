@@ -43,5 +43,12 @@ namespace MIER.MVC.Data.Repos
                 .ToList();
             return result;
         }
+
+        public int CountCustomerOrder(int customerId)
+        {
+            return _context.SalesOrder
+                .Where(c => c.CustomerId == customerId)
+                .Count();
+        }
     }
 }

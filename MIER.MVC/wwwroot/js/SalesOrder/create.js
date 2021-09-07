@@ -3,7 +3,7 @@
 
 (function ($) {
 
-    var _$deadline = $('#SalesOrder_Deadline');
+    var _$deadline = $('#Deadline');
     var _$todayBtn = $('#TodayButton');
     var _$minus1Btn = $('#Minus1Button');
     var _$plus1Btn = $('#Plus1Button');
@@ -21,7 +21,7 @@
     var _$lineCalc = $('.line-calculation');
 
     //TOTAL AMOUNT
-    var _$total = $('#Total');
+    var _$total = $('.total-amount');
 
     ButtonVisibility();
 
@@ -86,8 +86,8 @@
             $(this).val('');
 
             //mark-for-delete
-            if ($(this).hasClass("mark-for-delete")) {
-                $(this).val('False');
+            if ($(this).hasClass("isActive")) {
+                $(this).val('true');
             }
 
             //ID
@@ -109,13 +109,14 @@
         ButtonVisibility();
 
     });
+
     _$delLineBtn.click(function (e) {
 
         //Cancel default postback
         e.preventDefault();
 
         //Set hidden value
-        $(this).parents('.line-set').find('.mark-for-delete').val("true");
+        $(this).parents('.line-set').find('.isActive').val("false");
 
         //Check Id, if ID = 0 ==> new set, remove. else hide.
         var id = $(this).parents('.line-set').find('.line-id').val();

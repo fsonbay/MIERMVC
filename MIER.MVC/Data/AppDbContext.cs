@@ -25,6 +25,7 @@ namespace MIER.MVC.Data
 
         public DbSet<SalesOrder> SalesOrder { get; set; }
         public DbSet<SalesOrderLine> SalesOrderLine { get; set; }
+        public DbSet<SalesInvoice> SalesInvoice { get; set; }
 
     }
 }

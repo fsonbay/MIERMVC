@@ -3,12 +3,14 @@
 
 <div class="row line-set">
     @Html.HiddenFor(m => m.Id, new { @class = "line-id" })
-    @Html.HiddenFor(m => m.IsActive, new { @class = "mark-for-delete" })
+    @Html.HiddenFor(m => m.IsActive, new { @class = "isActive" })
+
     <div class="col-3">
         <div class="form-group">
             <label asp-for="Name"></label>
             @Html.TextBoxFor(m => m.Name, new { @class = "form-control m-input" })
             <span class="form-text text-muted">Nama barang</span>
+            @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
     <div class="col-4">
@@ -22,19 +24,22 @@
         <div class="form-group">
             <label asp-for="Quantity"></label>
             @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control m-input line-calculation" })
+            @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
     <div class="col-2">
         <div class="form-group">
             <label asp-for="Price"></label>
             @Html.TextBoxFor(m => m.Price, new { @class = "form-control m-input line-calculation" })
+            @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
     <div class="col-2">
         <div class="form-group">
             <label asp-for="Amount"></label>
             <div class="input-group">
-                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control m-input line-amount" }) &nbsp;&nbsp;
+                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control m-input line-amount bg-light-primary", @readonly = true })
+                &nbsp;&nbsp;
                 <button id="DeleteLineButton" name="DeleteLine[0]" class="btn btn-text-danger btn-sm delete-line" title="Delete Line"><i class="fa fa-trash-alt"></i></button>
             </div>
         </div>

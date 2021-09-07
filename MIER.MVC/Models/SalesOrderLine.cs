@@ -17,7 +17,7 @@ namespace MIER.MVC.Models
         public int SalesOrderId { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
-        [Required]
+        [Required(ErrorMessage = "* Required")]
         public string Name { get; set; }
 
         [Column(TypeName = "nvarchar(max)")]

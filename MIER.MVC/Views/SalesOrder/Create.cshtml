@@ -43,6 +43,8 @@
                             <div class="col-12">
                                 <!--begin:Form-->
                                 <form asp-controller="SalesOrder" asp-action="Create">
+                                    @Html.HiddenFor(m => m.IsActive)
+
                                     <!--begin:Fields-->
                                     <div class="form-group">
                                         <div class="row">
@@ -76,7 +78,7 @@
                                             <div class="col-4">
                                                 <label asp-for="Deadline"></label>
                                                 <div>
-                                                    @Html.TextBoxFor(model => model.Deadline, new { @class = "form-control col-8 date-picker", @id = "SalesOrder_Deadline" })
+                                                    @Html.TextBoxFor(model => model.Deadline, new { @class = "form-control col-8 date-picker" })
                                                     @Html.ValidationMessageFor(model => model.Deadline, String.Empty, new { @class = "text-danger" })
                                                     <button id="Minus1Button" class="btn btn-text-danger" title="Deadline -1 day">- 1</button>
                                                     <button id="TodayButton" class="btn btn-text-success" title="Today">today</button>
@@ -99,13 +101,14 @@
                                             @Html.EditorFor(model => model.SalesOrderLines)
                                         </div>
                                     </div>
-                                    <div class="row justify-content-end">
-                                        <div>
-                                            <label asp-for="Amount"></label>
-                                            <input id="Total" name="Total" type="text" value="@Model.Amount.ToString("N0")" class="form-control m-input bg-light-primary currency-format" readonly width="200" />
+                                    <div class="form-group mr-5">
+                                        <div class="row justify-content-end">
+                                            <div>
+                                                <label asp-for="Amount"></label>
+                                                <input id="Amount" name="Amount" type="text" value="@Model.Amount.ToString("N0")" class="form-control m-input bg-light-primary currency-format total-amount" readonly width="200" />
+                                            </div>
                                         </div>
                                     </div>
-
                                     <!--begin:Fields-->
                                     <!--begin:Action-->
                                     <div class="form-group">
