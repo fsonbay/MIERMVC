@@ -11,6 +11,8 @@ $(function () {
     var _$clearFilter = $('#ClearSearchButton');
     var _$select2 = $('.select2');
     var _$select2Multiple = $('.select2-multiple');
+    var _$selectTags = $('.select-tags');
+
     var _$datePicker = $('.date-picker');
 
 
@@ -54,6 +56,12 @@ $(function () {
     _$select2Multiple.select2({
         placeholder: "Please select...",
         closeOnSelect: false
+    });
+    _$selectTags.select2({
+        placeholder: "Please select...",
+        allowClear: true,
+        tags: true,
+       
     });
 
     //TOASTR

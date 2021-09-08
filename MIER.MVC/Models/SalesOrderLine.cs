@@ -29,6 +29,7 @@ namespace MIER.MVC.Models
 
         public decimal? Amount { get; set; }
 
+
         public bool IsActive { get; set; }
 
         public SalesOrder SalesOrder { get; set; }

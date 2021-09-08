@@ -22,6 +22,7 @@ namespace MIER.MVC.Controllers
         private SalesInvoiceRepo _salesInvoiceRepo;
         private CustomerRepo _customerRepo;
         private ProductionStatusRepo _productionStatusRepo;
+        private ProductRepo _productRepo;
 
         public SalesOrderController(AppDbContext context,
             UserManager<AppUser> userManager)
@@ -31,6 +32,7 @@ namespace MIER.MVC.Controllers
             _salesInvoiceRepo = new SalesInvoiceRepo(context);
             _customerRepo = new CustomerRepo(context);
             _productionStatusRepo = new ProductionStatusRepo(context);
+            _productRepo = new ProductRepo(context);
         }
 
         public IActionResult Index()
@@ -160,6 +162,7 @@ namespace MIER.MVC.Controllers
                     var invoice = new SalesInvoice
                     {
                         SalesOrderId = newOrderId,
+                        Number = order.Number.Substring(1),
                         Date = order.Date,
                         DueDate = order.Deadline,
                         Total = order.Amount,
@@ -187,7 +190,7 @@ namespace MIER.MVC.Controllers
 
         public IActionResult Edit(int id)
         {
-            var m = _salesOrderRepo.GetById(id);
+            var m = _salesOrderRepo.GetByIdIncludes(id);
             var vm = new SalesOrderVM
             {
                 Id = m.Id,
@@ -196,7 +199,9 @@ namespace MIER.MVC.Controllers
                 Number = m.Number,
                 Date = m.Date,
                 Deadline = m.Deadline,
-                IsActive = m.IsActive
+                Amount = m.Amount,
+                IsActive = m.IsActive,
+                SalesOrderLines = m.SalesOrderLines
             };
 
             ConfigureVM(vm);
@@ -250,6 +255,8 @@ namespace MIER.MVC.Controllers
                 var salesOrderLine = new SalesOrderLine();
                 var salesOrderLineList = new List<SalesOrderLine>();
 
+                vm.Date = DateTime.Now;
+                vm.Deadline = DateTime.Now;
                 vm.ProductionStatusId = 1;
                 vm.IsActive = true;
 

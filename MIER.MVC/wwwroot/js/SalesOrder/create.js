@@ -108,6 +108,9 @@
         //Button
         ButtonVisibility();
 
+        //Reset validator
+        ResetValidator();
+
     });
 
     _$delLineBtn.click(function (e) {
@@ -189,13 +192,36 @@
                 this.id = this.id.replace(/[0-9]+/, index);
             });
 
-            ////Rename spans
-            //$(this).find('.field-validation-valid, .field-validation-error').each(function () {
-            //    var oldName = $(this).attr('data-valmsg-for');
-            //    var newName = $(this).attr('data-valmsg-for').replace(/[0-9]+/, index);
-            //    $(this).attr("data-valmsg-for", newName);
-
+            ////Rename select2 inputs
+            //$("select", this).each(function () {
+          
+            //    var oldName = this.name;
+            //    alert(oldName);
+            //    //this.name = this.name.replace(/[0-9]+/, index);
+            //    //this.id = this.id.replace(/[0-9]+/, index);
             //});
+
+            //Rename select2 span
+            $(this).find('.select2-selection').each(function () {
+               // var i = "select2-SalesOrderLines_1__Name-container";
+
+                var oldName = $(this).attr('data-select2-id');
+                var newName = $(this).attr('data-select2-id').replace(/[0-9]+/, index);
+               // $(this).attr("data-select2-id", newName);
+                alert(oldName);
+
+                // 
+
+            });
+            
+
+            //Rename validators span
+            $(this).find('.field-validation-valid, .field-validation-error').each(function () {
+                var oldName = $(this).attr('data-valmsg-for');
+                var newName = $(this).attr('data-valmsg-for').replace(/[0-9]+/, index);
+                $(this).attr("data-valmsg-for", newName);
+
+            });
 
         });
     }
@@ -235,6 +261,12 @@
 
         // var totalAmount = addSeparatorsNF(sum.toFixed(0), '.', ',', '.');
         //_$total.val(totalAmount);
+    }
+    function ResetValidator() {
+        //Reset validator
+        $('#FormSalesOrder').removeData('validator');
+        $('#FormSalesOrder').removeData('unobtrusiveValidation');
+        $.validator.unobtrusive.parse('#FormSalesOrder');
     }
 
     function FormatDateToString(dt) {

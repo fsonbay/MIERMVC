@@ -20,6 +20,9 @@ namespace MIER.MVC.Data
         public DbSet<CustomerCategory> CustomerCategory { get; set; }
         public DbSet<VendorCategory> VendorCategory { get; set; }
 
+        public DbSet<Product> Product { get; set; }
+
+
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Vendor> Vendor { get; set; }
 

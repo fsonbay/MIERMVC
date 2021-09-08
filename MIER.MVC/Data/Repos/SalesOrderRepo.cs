@@ -16,6 +16,7 @@ namespace MIER.MVC.Data.Repos
             _context = context;
         }
 
+
         public List<SalesOrder> GetAllIncludes()
         {
             var result = _context.SalesOrder
@@ -41,6 +42,16 @@ namespace MIER.MVC.Data.Repos
                 .Include(s => s.Customer)
                 .Include(s => s.ProductionStatus)
                 .ToList();
+            return result;
+        }
+
+        public SalesOrder GetByIdIncludes(int id)
+        {
+            var result = _context.SalesOrder
+                .Include(m => m.Customer)
+                .Include(m => m.ProductionStatus)
+                .Include(m => m.SalesOrderLines)
+                .FirstOrDefault(m => m.Id == id);
             return result;
         }
 

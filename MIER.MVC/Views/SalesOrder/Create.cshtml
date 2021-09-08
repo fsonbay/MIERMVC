@@ -42,9 +42,8 @@
                         <div class="row align-items-center mb-4">
                             <div class="col-12">
                                 <!--begin:Form-->
-                                <form asp-controller="SalesOrder" asp-action="Create">
+                                <form asp-controller="SalesOrder" asp-action="Create" id="FormSalesOrder">
                                     @Html.HiddenFor(m => m.IsActive)
-
                                     <!--begin:Fields-->
                                     <div class="form-group">
                                         <div class="row">
@@ -71,14 +70,14 @@
                                             <div class="col-4">
                                                 <label asp-for="Date"></label>
                                                 <div>
-                                                    @Html.TextBoxFor(model => model.Date, new { @class = "form-control col-8 date-picker" })
+                                                    @Html.TextBoxFor(model => model.Date,"{0:dd-mm-yyyy}", new { @class = "form-control col-8 date-picker" })
                                                     @Html.ValidationMessageFor(model => model.Date, String.Empty, new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-4">
                                                 <label asp-for="Deadline"></label>
                                                 <div>
-                                                    @Html.TextBoxFor(model => model.Deadline, new { @class = "form-control col-8 date-picker" })
+                                                    @Html.TextBoxFor(model => model.Deadline,"{0:dd-mm-yyyy}", new { @class = "form-control col-8 date-picker" })
                                                     @Html.ValidationMessageFor(model => model.Deadline, String.Empty, new { @class = "text-danger" })
                                                     <button id="Minus1Button" class="btn btn-text-danger" title="Deadline -1 day">- 1</button>
                                                     <button id="TodayButton" class="btn btn-text-success" title="Today">today</button>
@@ -105,6 +104,7 @@
                                         <div class="row justify-content-end">
                                             <div>
                                                 <label asp-for="Amount"></label>
+
                                                 <input id="Amount" name="Amount" type="text" value="@Model.Amount.ToString("N0")" class="form-control m-input bg-light-primary currency-format total-amount" readonly width="200" />
                                             </div>
                                         </div>

@@ -30,7 +30,7 @@ namespace MIER.MVC.Models
         [Column(TypeName = "datetime")]
         public DateTime Deadline { get; set; }
 
-        public decimal? Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public string LinesName { get; set; }
 
