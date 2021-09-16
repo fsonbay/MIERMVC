@@ -114,11 +114,15 @@
                                         .HeaderHtmlAttributes(new { @class = "text text-muted" })
                                         .Hidden();
 
-                                    columns.Bound(m => m.Customer);
                                     columns.Bound(m => m.Number);
+                                    columns.Bound(m => m.Customer);
+                                    columns.Bound(m => m.LinesName);
                                     columns.Bound(m => m.Date).Format("{0:dd-MM-yyyy}");
                                     columns.Bound(m => m.DueDate).Format("{0:dd-MM-yyyy}");
-                                    columns.Bound(m => m.LinesName);
+                                    columns.Bound(m => m.Total);
+                                    columns.Bound(m => m.Paid);
+                                    columns.Bound(m => m.Outstanding);
+
                                 })
                                 .HtmlAttributes(new { style = "height:10%; width:auto;" })
                                 .ColumnMenu(col => col.Filterable(false))

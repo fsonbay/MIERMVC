@@ -24,15 +24,13 @@
         <div class="form-group">
             <label asp-for="Quantity"></label>
             @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control input-sm line-calculation", @type = "number" })
-            @*@Html.TextBoxFor(m => m.Quantity, "{0:N0}", new { @class = "form-control m-input line-calculation", @type = "number" })*@
             @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
     <div class="col-2">
         <div class="form-group">
             <label asp-for="Price"></label>
-            @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control input-sm line-calculation", @type = "number" })
-            @*@Html.TextBoxFor(m => m.Price, "{0:N0}", new { @class = "form-control m-input line-calculation", @type = "number" })*@
+            @Html.TextBoxFor(m => m.Price, new { @class = "form-control input-sm line-calculation", @type = "number" })
             @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
@@ -40,9 +38,7 @@
         <div class="form-group">
             <label asp-for="Amount"></label>
             <div class="input-group">
-                @*@Html.TextBoxFor(m => m.Amount, "{0:N0}", new { @class = "form-control m-input line-amount bg-light-primary", @readonly = true })*@
-                @*@Html.TextBoxFor(m => m.LineAmountString, new { @class = "form-control input-sm calc lineAmount" })*@
-                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control input-sm calc line-Amount" })
+                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary calc line-amount" })
                 &nbsp;&nbsp;
                 <button id="DeleteLineButton" name="DeleteLine[0]" class="btn btn-text-danger btn-sm delete-line" title="Delete Line"><i class="fa fa-trash-alt"></i></button>
             </div>

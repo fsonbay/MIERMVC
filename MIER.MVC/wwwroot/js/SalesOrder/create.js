@@ -157,6 +157,7 @@
             return FormatCurrency(value, '.', ',', '.');
         });
 
+
         CalculateTotalAmount();
 
     });
@@ -237,6 +238,7 @@
         }
     }
     function CalculateTotalAmount() {
+
         var sum = 0;
 
         //iterate through each textboxes and add the values
@@ -259,8 +261,6 @@
 
         _$total.val(FormatCurrency(sum.toString(), '.', ',', '.'));
 
-        // var totalAmount = addSeparatorsNF(sum.toFixed(0), '.', ',', '.');
-        //_$total.val(totalAmount);
     }
     function ResetValidator() {
         //Reset validator

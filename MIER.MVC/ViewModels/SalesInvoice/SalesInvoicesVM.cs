@@ -21,6 +21,15 @@ namespace MIER.MVC.ViewModels.SalesInvoice
         [Display(Name = "Orders")]
         public string LinesName { get; set; }
 
+        [Display(Name = "Total")]
+        public string Total { get; set; }
+
+        [Display(Name = "Paid")]
+        public string Paid { get; set; }
+
+        [Display(Name = "Outstanding")]
+        public string Outstanding { get; set; }
+
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
 

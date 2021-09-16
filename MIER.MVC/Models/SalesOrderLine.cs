@@ -23,12 +23,11 @@ namespace MIER.MVC.Models
         [Column(TypeName = "nvarchar(max)")]
         public string Description { get; set; }
 
-        public decimal? Quantity { get; set; }
+        public decimal Quantity { get; set; }
 
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
-        public decimal? Amount { get; set; }
-
+        public decimal Amount { get; set; }
 
         public bool IsActive { get; set; }
 

@@ -104,8 +104,8 @@
                                         <div class="row justify-content-end">
                                             <div>
                                                 <label asp-for="Amount"></label>
+                                                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary total-amount", @readonly = true })
 
-                                                <input id="Amount" name="Amount" type="text" value="@Model.Amount.ToString("N0")" class="form-control m-input bg-light-primary currency-format total-amount" readonly width="200" />
                                             </div>
                                         </div>
                                     </div>

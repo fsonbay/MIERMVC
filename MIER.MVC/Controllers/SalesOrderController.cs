@@ -19,6 +19,7 @@ namespace MIER.MVC.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private SalesOrderRepo _salesOrderRepo;
+        private SalesOrderLineRepo _salesOrderLineRepo;
         private SalesInvoiceRepo _salesInvoiceRepo;
         private CustomerRepo _customerRepo;
         private ProductionStatusRepo _productionStatusRepo;
@@ -29,6 +30,7 @@ namespace MIER.MVC.Controllers
         {
             _userManager = userManager;
             _salesOrderRepo = new SalesOrderRepo(context);
+            _salesOrderLineRepo = new SalesOrderLineRepo(context);
             _salesInvoiceRepo = new SalesInvoiceRepo(context);
             _customerRepo = new CustomerRepo(context);
             _productionStatusRepo = new ProductionStatusRepo(context);
@@ -42,75 +44,76 @@ namespace MIER.MVC.Controllers
 
         public IActionResult List([DataSourceRequest] DataSourceRequest request, string listSearch, bool showInactive)
         {
-            List<SalesOrder> m = new List<SalesOrder>();
+            List<SalesOrder> salesOrderList = new List<SalesOrder>();
 
             if (showInactive)
             {
-                m = _salesOrderRepo.GetAllIncludes();
+                salesOrderList = _salesOrderRepo.GetAllIncludes();
             }
             else
             {
-                m = _salesOrderRepo.GetAllActiveIncludes();
+                salesOrderList = _salesOrderRepo.GetAllActiveIncludes();
             }
 
             if (listSearch != null)
             {
-                m = m.Where(m => m.Number.ToLower().Contains(listSearch.ToLower())
+                salesOrderList = salesOrderList.Where(m => m.Number.ToLower().Contains(listSearch.ToLower())
                                     || m.Customer.Name.ToLower().Contains(listSearch.ToLower())
                                     || m.ProductionStatus.Name.ToLower().Contains(listSearch.ToLower())
                                     || m.LinesName.ToLower().Contains(listSearch.ToLower())
                                     ).ToList();
             }
 
-            List<SalesOrdersVM> list = new List<SalesOrdersVM>();
-            foreach (var i in m)
+            List<SalesOrdersVM> salesOrdersVMList = new List<SalesOrdersVM>();
+            foreach (var item in salesOrderList)
             {
-                var vm = new SalesOrdersVM
+                var salesOrdersVM = new SalesOrdersVM
                 {
-                    Id = i.Id,
-                    Number = i.Number,
-                    Customer = i.Customer.Name,
-                    ProductionStatus = i.ProductionStatus.Name,
-                    LinesName = i.LinesName,
-                    Date = i.Date,
-                    Deadline = i.Deadline,
-                    IsActive = i.IsActive,
-                    InsertBy = i.InsertBy,
-                    InsertTime = i.InsertTime,
-                    UpdateBy = i.UpdateBy,
-                    UpdateTime = i.UpdateTime
+                    Id = item.Id,
+                    Number = item.Number,
+                    Customer = item.Customer.Name,
+                    ProductionStatus = item.ProductionStatus.Name,
+                    LinesName = item.LinesName,
+                    Amount = item.Amount.ToString("N0"),
+                    Date = item.Date,
+                    Deadline = item.Deadline,
+                    IsActive = item.IsActive,
+                    InsertBy = item.InsertBy,
+                    InsertTime = item.InsertTime,
+                    UpdateBy = item.UpdateBy,
+                    UpdateTime = item.UpdateTime
                 };
 
-                list.Add(vm);
+                salesOrdersVMList.Add(salesOrdersVM);
             }
 
-            return Json(list.ToDataSourceResult(request));
+            return Json(salesOrdersVMList.ToDataSourceResult(request));
 
         }
 
         public IActionResult Create()
         {
-            SalesOrderVM vm = new SalesOrderVM();
-            ConfigureVM(vm);
-            return View(vm);
+            SalesOrder model = new SalesOrder();
+            var viewModel = ConfigureVM(model);
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Create(SalesOrderVM vm)
+        public IActionResult Create(SalesOrderVM viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var order = new SalesOrder
+                    var salesOrder = new SalesOrder
                     {
-                        Number = CreateSalesOrderNumber(vm.Date, vm.CustomerId),
-                        CustomerId = vm.CustomerId,
-                        ProductionStatusId = vm.ProductionStatusId,
-                        Date = vm.Date,
-                        Deadline = vm.Deadline,
-                        Amount = vm.Amount,
-                        IsActive = vm.IsActive,
+                        Number = CreateSalesOrderNumber(viewModel.Date, viewModel.CustomerId),
+                        CustomerId = viewModel.CustomerId,
+                        ProductionStatusId = viewModel.ProductionStatusId,
+                        Date = viewModel.Date,
+                        Deadline = viewModel.Deadline,
+                        Amount = decimal.Parse(viewModel.Amount.Replace(".", "")),
+                        IsActive = viewModel.IsActive,
                         InsertBy = _userManager.GetUserName(User),
                         InsertTime = DateTime.Now,
                         UpdateBy = _userManager.GetUserName(User),
@@ -118,57 +121,57 @@ namespace MIER.MVC.Controllers
                     };
 
                     //ITERATE LINES
-                    var linesList = new List<SalesOrderLine>();
+                    var salesOrderLineList = new List<SalesOrderLine>();
                     List<string> linesName = new List<string>();
 
-                    foreach (var i in vm.SalesOrderLines.ToList())
+                    foreach (var item in viewModel.SalesOrderLines.ToList())
                     {
                         //CREATE SUBS
-                        var isActive = i.IsActive;
-                        var name = i.Name;
+                        var isActive = item.IsActive;
+                        var name = item.Name;
 
                         if (!isActive)
                         {
                             //REMOVE FROM COLLECTION
-                            vm.SalesOrderLines.Remove(i);
+                            viewModel.SalesOrderLines.Remove(item);
                         }
                         else
                         {
                             var salesOrderLine = new SalesOrderLine
                             {
-                                Name = i.Name,
-                                Description = i.Description,
-                                Quantity = i.Quantity,
-                                Price = i.Price,
-                                Amount = i.Amount,
+                                Name = item.Name,
+                                Description = item.Description,
+                                Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
+                                Price = decimal.Parse(item.Price.Replace(".", "")),
+                                Amount = decimal.Parse(item.Amount.Replace(".", "")),
                                 SalesOrderId = 0, //Default value will be replaced by actual value
-                                IsActive = i.IsActive
+                                IsActive = item.IsActive
                             };
 
                             //ADD SUB TO COLLECTION
-                            linesName.Add(i.Name);
-                            linesList.Add(salesOrderLine);
+                            linesName.Add(item.Name);
+                            salesOrderLineList.Add(salesOrderLine);
                         }
                     }
 
                     //ADD SUBS TO PARENT
-                    order.LinesName = string.Join(", ", linesName);
-                    order.SalesOrderLines = linesList;
+                    salesOrder.LinesName = string.Join(", ", linesName);
+                    salesOrder.SalesOrderLines = salesOrderLineList;
 
-                    _salesOrderRepo.Create(order);
-                    var newOrderId = order.Id;
+                    _salesOrderRepo.Create(salesOrder);
+                    var newOrderId = salesOrder.Id;
 
                     //INVOICE
                     var invoice = new SalesInvoice
                     {
                         SalesOrderId = newOrderId,
-                        Number = order.Number.Substring(1),
-                        Date = order.Date,
-                        DueDate = order.Deadline,
-                        Total = order.Amount,
+                        Number = salesOrder.Number.Substring(1),
+                        Date = salesOrder.Date,
+                        DueDate = salesOrder.Deadline,
+                        Total = salesOrder.Amount,
                         Paid = 0,
-                        Outstanding = order.Amount,
-                        LinesName = order.LinesName,
+                        Outstanding = salesOrder.Amount,
+                        LinesName = salesOrder.LinesName,
                         IsActive = true,
                         InsertBy = _userManager.GetUserName(User),
                         InsertTime = DateTime.Now,
@@ -190,44 +193,91 @@ namespace MIER.MVC.Controllers
 
         public IActionResult Edit(int id)
         {
-            var m = _salesOrderRepo.GetByIdIncludes(id);
-            var vm = new SalesOrderVM
-            {
-                Id = m.Id,
-                CustomerId = m.CustomerId,
-                ProductionStatusId = m.ProductionStatusId,
-                Number = m.Number,
-                Date = m.Date,
-                Deadline = m.Deadline,
-                Amount = m.Amount,
-                IsActive = m.IsActive,
-                SalesOrderLines = m.SalesOrderLines
-            };
-
-            ConfigureVM(vm);
-
-            return View(vm);
+            var model = _salesOrderRepo.GetByIdIncludes(id);
+            var viewModel = ConfigureVM(model);
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Update(SalesOrderVM vm)
+        public IActionResult Update(SalesOrderVM viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var m = _salesOrderRepo.GetById(vm.Id);
+                    //SALES ORDER
+                    var salesOrder = _salesOrderRepo.GetById(viewModel.Id);
+                    salesOrder.Number = viewModel.Number;
+                    salesOrder.CustomerId = viewModel.CustomerId;
+                    salesOrder.ProductionStatusId = viewModel.ProductionStatusId;
+                    salesOrder.Date = viewModel.Date;
+                    salesOrder.Deadline = viewModel.Deadline;
+                    salesOrder.Amount = decimal.Parse(viewModel.Amount.Replace(".", ""));
+                    salesOrder.IsActive = viewModel.IsActive;
+                    salesOrder.UpdateBy = _userManager.GetUserName(User);
+                    salesOrder.UpdateTime = DateTime.Now;
 
-                    m.Number = vm.Number;
-                    m.CustomerId = vm.CustomerId;
-                    m.ProductionStatusId = vm.ProductionStatusId;
-                    m.Date = vm.Date;
-                    m.Deadline = vm.Deadline;
-                    m.IsActive = vm.IsActive;
-                    m.UpdateBy = _userManager.GetUserName(User);
-                    m.UpdateTime = DateTime.Now;
+                    //SALES ORDER LINE
+                    var salesOrderLineList = new List<SalesOrderLine>();
+                    List<string> linesName = new List<string>();
+                    foreach (var item in viewModel.SalesOrderLines.ToList())
+                    {
+                        var id = item.Id;
+                        var isActive = item.IsActive;
+                        var name = item.Name;
 
-                    _salesOrderRepo.Update(m);
+                        if (!isActive)
+                        {
+                            //Existing item
+                            if (id != 0)
+                            {
+                                //Delete from database
+                                var salesOrderLine = _salesOrderLineRepo.GetById(id);
+                                _salesOrderLineRepo.Delete(salesOrderLine);
+                            }
+
+                            //Remove from collection
+                            viewModel.SalesOrderLines.Remove(item);
+                        }
+                        else
+                        {
+                            var salesOrderLine = new SalesOrderLine
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Description = item.Description,
+                                Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
+                                Price = decimal.Parse(item.Price.Replace(".", "")),
+                                Amount = decimal.Parse(item.Amount.Replace(".", "")),
+                                SalesOrderId = (int)viewModel.Id,
+                                IsActive = item.IsActive
+                            };
+
+                            //ADD SUB TO COLLECTION
+                            linesName.Add(item.Name);
+                            salesOrderLineList.Add(salesOrderLine);
+                        }
+                    }
+
+                    //ADD SUBS TO PARENT
+                    salesOrder.LinesName = string.Join(", ", linesName);
+                    salesOrder.SalesOrderLines = salesOrderLineList;
+
+                    //UPDATE ORDER
+                    _salesOrderRepo.Update(salesOrder);
+
+                    //UPDATE INVOICE
+                    var salesInvoice = _salesInvoiceRepo.GetBySalesOrderId(salesOrder.Id);
+                    salesInvoice.Total = salesOrder.Amount;
+                    salesInvoice.Outstanding = salesOrder.Amount - salesInvoice.Paid;
+                    _salesInvoiceRepo.Update(salesInvoice);
+
+                    //var salesInvoice = _salesInvoiceRepo.GetByID(salesOrder.SalesInvoiceID);
+                    //var sumSalesInvoiceLines = _salesInvoiceRepo.SumSalesInvoiceLines(salesOrder.SalesInvoiceID);
+                    //salesInvoice.TotalAmount = sumSalesInvoiceLines + salesOrder.TotalAmount;
+                    //salesInvoice.OutstandingAmount = sumSalesInvoiceLines + salesOrder.TotalAmount - salesInvoice.PaidAmount;
+                    //_salesInvoiceRepo.Update(salesInvoice);
+
                     TempData["Message"] = "Saved succesfully";
                 }
                 catch (Exception ex)
@@ -241,34 +291,78 @@ namespace MIER.MVC.Controllers
 
         }
 
-        private void ConfigureVM(SalesOrderVM vm)
+        private SalesOrderVM ConfigureVM(SalesOrder model)
         {
-            var customer = _customerRepo.GetAllActive().OrderBy(m => m.Name);
-            var productionStatus = _productionStatusRepo.GetAllActive().OrderBy(m => m.Id);
+            var salesOrderVM = new SalesOrderVM();
+            var salesOrderLineVM = new SalesOrderLineVM();
+            var salesOrderLineVMList = new List<SalesOrderLineVM>();
 
-            vm.CustomerList = new SelectList(customer, "Id", "Name");
-            vm.ProductionStatusList = new SelectList(productionStatus, "Id", "Name");
+            //GET LOOKUP LISTS (CUSTOMER & PRODUCTION STATUS)
+            var customerList = new SelectList(_customerRepo.GetAllActive().OrderBy(m => m.Name), "Id", "Name");
+            var productionStatusList = new SelectList(_productionStatusRepo.GetAllActive().OrderBy(m => m.Id), "Id", "Name");
 
-            //Default values for insert mode
-            if (!vm.IsEditMode)
+            //EDIT MODE
+            if (model.Id != 0)
             {
-                var salesOrderLine = new SalesOrderLine();
-                var salesOrderLineList = new List<SalesOrderLine>();
+                //CONVERT SALESORDERLINE TO SALESORDERLINEVM
+                foreach (var item in model.SalesOrderLines.ToList())
+                {
+                    salesOrderLineVM = new SalesOrderLineVM
+                    {
+                        Id = item.Id,
+                        SalesOrderId = item.SalesOrderId,
+                        Name = item.Name,
+                        Description = item.Description,
+                        Quantity = item.Quantity.ToString("N0"),
+                        Price = item.Price.ToString("N0"),
+                        Amount = item.Amount.ToString("N0"),
+                        IsActive = item.IsActive
+                    };
 
-                vm.Date = DateTime.Now;
-                vm.Deadline = DateTime.Now;
-                vm.ProductionStatusId = 1;
-                vm.IsActive = true;
+                    //ADD SUB TO COLLECTION
+                    salesOrderLineVMList.Add(salesOrderLineVM);
+                }
 
-                salesOrderLine.Id = 0;
-                salesOrderLine.Name = "";
-                salesOrderLine.Description = "";
-                salesOrderLine.IsActive = true;
-
-                salesOrderLineList.Add(salesOrderLine);
-                vm.SalesOrderLines = salesOrderLineList;
+                //CONVERT SALESORDER TO SALESORDERVM
+                salesOrderVM = new SalesOrderVM
+                {
+                    Id = model.Id,
+                    CustomerId = model.CustomerId,
+                    ProductionStatusId = model.ProductionStatusId,
+                    Number = model.Number,
+                    Date = model.Date,
+                    Deadline = model.Deadline,
+                    Amount = model.Amount.ToString("N0"),
+                    IsActive = model.IsActive,
+                    SalesOrderLines = salesOrderLineVMList,
+                    CustomerList = customerList,
+                    ProductionStatusList = productionStatusList
+                };
             }
+   
+            //INSERT MODE
+            else
+            {
+                salesOrderVM.Date = DateTime.Now;
+                salesOrderVM.Deadline = DateTime.Now;
+                salesOrderVM.ProductionStatusId = 1;
+                salesOrderVM.IsActive = true;
+                salesOrderVM.CustomerList = customerList;
+                salesOrderVM.ProductionStatusList = productionStatusList;
+
+                salesOrderLineVM.Id = 0;
+                salesOrderLineVM.Name = "";
+                salesOrderLineVM.Description = "";
+                salesOrderLineVM.IsActive = true;
+
+                salesOrderLineVMList.Add(salesOrderLineVM);
+                salesOrderVM.SalesOrderLines = salesOrderLineVMList;
+                
+            }
+
+            return salesOrderVM;
         }
+
         private string CreateSalesOrderNumber(DateTime salesOrderDate, int customerId)
         {
             string prefix = "O" + salesOrderDate.ToString("yyyyMMdd");

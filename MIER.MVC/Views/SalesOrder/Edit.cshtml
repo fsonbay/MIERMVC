@@ -42,7 +42,9 @@
                         <div class="row align-items-center mb-4">
                             <div class="col-12">
                                 <!--begin:Form-->
-                                <form asp-controller="SalesOrder" asp-action="Create" id="FormSalesOrder">
+                                <form asp-controller="SalesOrder" asp-action="Update" id="FormSalesOrder">
+                                    @Html.HiddenFor(m => m.Id)
+                                    @Html.HiddenFor(m => m.Number)
                                     @Html.HiddenFor(m => m.IsActive)
                                     <!--begin:Fields-->
                                     <div class="form-group">
@@ -56,11 +58,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-4">
-                                                <label asp-for="ProductionStatusId"></label>
+                                                <label asp-for="Date"></label>
                                                 <div>
-                                                    @Html.DropDownListFor(m => m.ProductionStatusId, Model.ProductionStatusList, "Please select...",
-                                                            new { @class = "form-control col-8 select2" })
-                                                    @Html.ValidationMessageFor(model => model.ProductionStatusId, String.Empty, new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(model => model.Date, "{0:dd-mm-yyyy}", new { @class = "form-control col-6 date-picker" })
+                                                    @Html.ValidationMessageFor(model => model.Date, String.Empty, new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                         </div>
@@ -68,24 +69,29 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-4">
-                                                <label asp-for="Date"></label>
+
+                                                <label asp-for="ProductionStatusId"></label>
                                                 <div>
-                                                    @Html.TextBoxFor(model => model.Date, "{0:dd-mm-yyyy}", new { @class = "form-control col-8 date-picker" })
-                                                    @Html.ValidationMessageFor(model => model.Date, String.Empty, new { @class = "text-danger" })
+                                                    @Html.DropDownListFor(m => m.ProductionStatusId, Model.ProductionStatusList, "Please select...",
+                                                            new { @class = "form-control col-8 select2" })
+                                                    @Html.ValidationMessageFor(model => model.ProductionStatusId, String.Empty, new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-4">
                                                 <label asp-for="Deadline"></label>
                                                 <div>
-                                                    @Html.TextBoxFor(model => model.Deadline, "{0:dd-mm-yyyy}" , new { @class = "form-control col-8 date-picker" })
+                                                    @Html.TextBoxFor(model => model.Deadline, "{0:dd-mm-yyyy}", new { @class = "form-control col-6 date-picker" })
                                                     @Html.ValidationMessageFor(model => model.Deadline, String.Empty, new { @class = "text-danger" })
-                                                    <button id="Minus1Button" class="btn btn-text-danger" title="Deadline -1 day">- 1</button>
-                                                    <button id="TodayButton" class="btn btn-text-success" title="Today">today</button>
-                                                    <button id="Plus1Button" class="btn btn-text-success" title="Deadline +1 day">+ 1</button>
-                                                    <button id="Plus2Button" class="btn btn-text-success" title="Deadline +1 day">+ 2</button>
-                                                    <button id="Plus3Button" class="btn btn-text-success" title="Deadline +1 day">+ 3</button>
-                                                    <button id="Plus4Button" class="btn btn-text-success" title="Deadline +1 day">+ 4</button>
-                                                    <button id="Plus5Button" class="btn btn-text-success" title="Deadline +1 day">+ 5</button>
+
+                                                
+                                                        <button id="Minus1Button" class="btn btn-text-danger" title="Deadline -1 day">-1</button>
+                                                        <button id="TodayButton" class="btn btn-text-success" title="Today">0</button>
+                                                        <button id="Plus1Button" class="btn btn-text-success" title="Deadline +1 day">+1</button>
+                                                        <button id="Plus2Button" class="btn btn-text-success" title="Deadline +1 day">+2</button>
+                                                        <button id="Plus3Button" class="btn btn-text-success" title="Deadline +1 day">+3</button>
+                                                        @*<button id="Plus4Button" class="btn btn-text-success" title="Deadline +1 day">+4</button>
+                                                        <button id="Plus5Button" class="btn btn-text-success" title="Deadline +1 day">+5</button>*@
+                                                
                                                 </div>
                                             </div>
                                         </div>
@@ -104,10 +110,7 @@
                                         <div class="row justify-content-end">
                                             <div>
                                                 <label asp-for="Amount"></label>
-
-                                                @Html.TextBoxFor(m => m.Amount, "{0:N0}", new { @class = "form-control m-input line-amount bg-light-primary", @readonly = true })
-
-                                                @*<input id="Amount" name="Amount" type="text" value="@Model.Amount.ToString("N0")" class="form-control m-input bg-light-primary currency-format total-amount" readonly width="200" />*@
+                                                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary total-amount", @readonly = true })
                                             </div>
                                         </div>
                                     </div>

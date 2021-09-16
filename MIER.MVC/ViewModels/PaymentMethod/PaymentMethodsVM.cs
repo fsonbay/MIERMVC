@@ -4,27 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MIER.MVC.ViewModels.SalesOrder
+namespace MIER.MVC.ViewModels.PaymentMethod
 {
-    public class SalesOrdersVM
+    public class PaymentMethodsVM
     {
         public int? Id { get; set; }
 
-        public string Number { get; set; }
+        public string Name { get; set; }
 
-        public string Customer { get; set; }
-
-        public string ProductionStatus { get; set; }
-
-        public DateTime Date { get; set; }
-
-        public DateTime Deadline { get; set; }
-
-        [Display(Name = "Orders")]
-        public string LinesName { get; set; }
-
-        [Display(Name = "Amount")]
-        public string Amount { get; set; }
+        public string Code { get; set; }
 
         [Display(Name = "Active")]
         public bool IsActive { get; set; }

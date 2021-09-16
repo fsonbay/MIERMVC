@@ -10,8 +10,6 @@ namespace MIER.MVC.ViewModels.SalesOrder
 {
     public class SalesOrderVM
     {
-        public bool IsEditMode => Id.HasValue;
-
         public int? Id { get; set; }
 
         [Display(Name = "Customer")]
@@ -32,7 +30,7 @@ namespace MIER.MVC.ViewModels.SalesOrder
 
         public bool IsActive { get; set; }
 
-        public decimal Amount { get; set; }
+        public string Amount { get; set; }
 
         public DateTime InsertTime { get; set; }
 
@@ -46,6 +44,6 @@ namespace MIER.MVC.ViewModels.SalesOrder
 
         public SelectList ProductionStatusList { get; set; }
 
-        public List<SalesOrderLine> SalesOrderLines { get; set; }
+        public List<SalesOrderLineVM> SalesOrderLines { get; set; }
     }
 }

@@ -35,49 +35,84 @@ namespace MIER.MVC.Controllers
 
         public IActionResult List([DataSourceRequest] DataSourceRequest request, string listSearch, bool showInactive)
         {
-            List<SalesInvoice> m = new List<SalesInvoice>();
+            List<SalesInvoice> salesInvoiceList = new List<SalesInvoice>();
 
             if (showInactive)
             {
-                m = _salesInvoiceRepo.GetAllIncludes();
+                salesInvoiceList = _salesInvoiceRepo.GetAllIncludes();
             }
             else
             {
-                m = _salesInvoiceRepo.GetAllActiveIncludes();
+                salesInvoiceList = _salesInvoiceRepo.GetAllActiveIncludes();
             }
 
             if (listSearch != null)
             {
-                m = m.Where(m => m.Number.ToLower().Contains(listSearch.ToLower())
+                salesInvoiceList = salesInvoiceList.Where(m => m.Number.ToLower().Contains(listSearch.ToLower())
                                     || m.SalesOrder.Customer.Name.ToLower().Contains(listSearch.ToLower())
                                     || m.LinesName.ToLower().Contains(listSearch.ToLower())
                                     ).ToList();
             }
 
-            List<SalesInvoicesVM> list = new List<SalesInvoicesVM>();
-            foreach (var i in m)
+            List<SalesInvoicesVM> salesInvoicesVMList = new List<SalesInvoicesVM>();
+            foreach (var item in salesInvoiceList)
             {
-                var vm = new SalesInvoicesVM
+                var salesInvoicesVM = new SalesInvoicesVM
                 {
-                    Id = i.Id,
-                    Number = i.Number,
-                    Customer = i.SalesOrder.Customer.Name,
-                    LinesName = i.LinesName,
-                    Date = i.Date,
-                    DueDate = i.DueDate,
-                    IsActive = i.IsActive,
-                    InsertBy = i.InsertBy,
-                    InsertTime = i.InsertTime,
-                    UpdateBy = i.UpdateBy,
-                    UpdateTime = i.UpdateTime
+                    Id = item.Id,
+                    Number = item.Number,
+                    Customer = item.SalesOrder.Customer.Name,
+                    LinesName = item.LinesName,
+                    Date = item.Date,
+                    DueDate = item.DueDate,
+                    Total = item.Total.ToString("N0"),
+                    Paid = item.Paid.ToString("N0"),
+                    Outstanding = item.Outstanding.ToString("N0"),
+                    IsActive = item.IsActive,
+                    InsertBy = item.InsertBy,
+                    InsertTime = item.InsertTime,
+                    UpdateBy = item.UpdateBy,
+                    UpdateTime = item.UpdateTime
                 };
 
-                list.Add(vm);
+                salesInvoicesVMList.Add(salesInvoicesVM);
             }
 
-            return Json(list.ToDataSourceResult(request));
+            return Json(salesInvoicesVMList.ToDataSourceResult(request));
 
         }
+        public IActionResult Edit(int id)
+        {
+            var model = _salesInvoiceRepo.GetByIdIncludes(id);
+            var viewModel = ConfigureVM(model);
+            return View(viewModel);
+        }
+
+        private SalesInvoiceVM ConfigureVM(SalesInvoice salesInvoice)
+        {
+            var salesInvoiceVM = new SalesInvoiceVM();
+
+            //EDIT MODE
+            if (salesInvoice.Id != 0)
+            {
+
+                //CONVERT SALESINVOICE TO SALESINVOICEVM
+                salesInvoiceVM = new SalesInvoiceVM
+                {
+                    Id = salesInvoice.Id,
+                    Number = salesInvoice.Number,
+                    Customer = salesInvoice.SalesOrder.Customer.Name,
+                    Date = salesInvoice.Date,
+                    DueDate = salesInvoice.DueDate
+                };
+
+            }
+
+
+                return salesInvoiceVM;
+
+        }
+
 
     }
 }

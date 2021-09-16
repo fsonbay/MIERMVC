@@ -38,9 +38,26 @@ namespace MIER.MVC.Data.Repos
             var result = _context.SalesInvoice
                 .Where(m => m.IsActive == true)
                 .Include(s => s.SalesOrder)
+                .Include(s => s.SalesOrder.Customer)
                 .ToList();
             return result;
         }
+
+        public SalesInvoice GetBySalesOrderId(int salesOrderId)
+        {
+            var result = _context.SalesInvoice
+                .FirstOrDefault(m => m.SalesOrderId == salesOrderId);
+            return result;
+        }
+        public SalesInvoice GetByIdIncludes(int id)
+        {
+            var result = _context.SalesInvoice
+                .Include(m => m.SalesOrder.Customer)
+                .Include(m => m.SalesOrder.SalesOrderLines)
+                .FirstOrDefault(m => m.Id == id);
+            return result;
+        }
+
 
     }
 }

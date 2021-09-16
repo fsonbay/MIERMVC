@@ -7,32 +7,18 @@ using System.Threading.Tasks;
 
 namespace MIER.MVC.Models
 {
-    public class SalesInvoice : IEntity
+    public class PaymentMethod : IEntity
     {
         [Column(TypeName = "int")]
         public int Id { get; set; }
 
-        [Column(TypeName = "int")]
-        [ForeignKey("SalesOrder")]
-        public int SalesOrderId { get; set; }
-
         [Column(TypeName = "nvarchar(50)")]
         [Required]
-        public string Number { get; set; }
+        public string Name { get; set; }
 
-        [Column(TypeName = "datetime")]
-        public DateTime Date { get; set; }
-
-        [Column(TypeName = "datetime")]
-        public DateTime DueDate { get; set; }
-
-        public decimal Total { get; set; }
-
-        public decimal Paid { get; set; }
-
-        public decimal Outstanding { get; set; }
-
-        public string LinesName { get; set; }
+        [Column(TypeName = "varchar(1)")]
+        [Required]
+        public string Code { get; set; }
 
         [Column(TypeName = "bit")]
         public bool IsActive { get; set; }
@@ -48,8 +34,5 @@ namespace MIER.MVC.Models
 
         [Column(TypeName = "nvarchar(50)")]
         public string UpdateBy { get; set; }
-
-        public SalesOrder SalesOrder { get; set; }
-
     }
 }

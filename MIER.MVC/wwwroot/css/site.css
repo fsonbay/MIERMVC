@@ -121,3 +121,16 @@ button.bg-theme:focus {
         .show > .btn-theme.dropdown-toggle:focus {
             box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
         }
+
+/*DISABLE NUMBER SPINNER ON TEXTBOX*/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
