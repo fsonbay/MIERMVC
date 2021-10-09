@@ -21,14 +21,35 @@
         e.preventDefault();
 
         //Check if class exist (meaning cost not exist yet)
-        if ($costSets.hasClass('d-none')) {
-            $costSets.removeClass('d-none');
-        }
-        else
-        {
-            var newItem = $(".cost-set:first-child").clone(true);
-            wrapperCost.append(newItem);
-        }
+        var newItem = $(".cost-template:first-child").clone(true);
+        newItem.addClass('cost-set').removeClass('cost-template');
+        newItem.show();
+
+        //Add clone
+        wrapperCost.append(newItem);
+
+        //Input Values
+        newItem.find(':input').each(function () {
+
+            var id = $(this).attr('id');
+            var name = $(this).attr('name');
+
+            $(this).attr('id', 'SalesInvoiceCosts_0__' + name);
+            $(this).attr('name', 'SalesInvoiceCosts[0].' + name);
+
+            //Texbox
+            $(this).val('');
+
+            //isActive
+            if ($(this).hasClass("isActive")) {
+                $(this).val('False');
+            }
+
+            //id
+            if ($(this).hasClass("cost-id")) {
+                $(this).val('0');
+            }
+        });
 
         //Focus
         $('.cost-set:last-child :input:enabled:visible:first').focus();
@@ -67,8 +88,8 @@
 
         $(".cost-set").each(function () {
 
-            //Current index
-            var index = $(this).index();
+            //Current index (minus 1 to exclude hidden template)
+            var index = $(this).index() - 1;
 
             //Rename inputs
             $(":input", this).each(function () {
