@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 
 namespace MIER.MVC.Models
 {
-    public class SalesOrderLine : IEntity
+    public class SalesInvoiceCost : IEntity
     {
         [Column(TypeName = "int")]
         public int Id { get; set; }
 
         [Column(TypeName = "int")]
-        [ForeignKey("SalesOrder")]
-        public int SalesOrderId { get; set; }
+        [ForeignKey("SalesInvoice")]
+        public int SalesInvoiceId { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
-        [Required(ErrorMessage = "* Required")]
         public string Name { get; set; }
 
         [Column(TypeName = "nvarchar(max)")]
@@ -43,6 +42,6 @@ namespace MIER.MVC.Models
         [Column(TypeName = "nvarchar(50)")]
         public string UpdateBy { get; set; }
 
-        public SalesOrder SalesOrder { get; set; }
+        public SalesInvoice SalesInvoice { get; set; }
     }
 }

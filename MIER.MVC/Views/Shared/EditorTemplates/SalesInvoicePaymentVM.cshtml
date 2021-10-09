@@ -1,0 +1,80 @@
+﻿
+@model MIER.MVC.ViewModels.SalesInvoice.SalesInvoicePaymentVM
+
+<div class="row line-set">
+    @Html.HiddenFor(m => m.Id, new { @class = "payment-id" })
+    @Html.HiddenFor(m => m.IsActive, new { @class = "isActive" })
+
+
+
+    <div class="col-2">
+        <div class="form-group">
+            <label asp-for="Date"></label>
+            @Html.TextBoxFor(model => model.Date, "{0:dd-mm-yyyy}", new { @class = "col-8 form-control date-picker" })
+            @Html.ValidationMessageFor(model => model.Date, String.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="form-group">
+            <label asp-for="Amount"></label>
+            <div class="input-group">
+                @Html.TextBoxFor(m => m.Amount, new { @class = "col-8 form-control input-sm payment-calculation", @type = "number" })
+            </div>
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="form-group">
+            <label asp-for="PaymentMethodId"></label>
+            <div class="input-group">
+                @Html.TextBoxFor(m => m.Amount, new { @class = "col-8 form-control input-sm payment-calculation", @type = "number" })
+                &nbsp;&nbsp;
+                <button id="DeleteCostButton" name="DeleteCost[0]" class="btn btn-text-danger btn-sm delete-cost" title="Delete Cost"><i class="fa fa-trash-alt"></i></button>
+            </div>
+        </div>
+    </div>
+
+
+    @*<div class="col-3">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control m-input", @list = "browsers" })
+                <span class="form-text text-muted">Nama barang</span>
+                @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control m-input", @rows = "3" })
+                <span class="form-text text-muted">Bahan, ketebalan, dimensi, finishing</span>
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <label asp-for="Quantity"></label>
+                @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control input-sm cost-calculation", @type = "number" })
+                @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control input-sm cost-calculation", @type = "number" })
+                @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label asp-for="Amount"></label>
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary calc cost-amount" })
+                    &nbsp;&nbsp;
+                    <button id="DeleteCostButton" name="DeleteCost[0]" class="btn btn-text-danger btn-sm delete-cost" title="Delete Cost"><i class="fa fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>*@
+
+</div>

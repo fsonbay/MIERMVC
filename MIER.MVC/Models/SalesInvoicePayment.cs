@@ -1,31 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MIER.MVC.Models
 {
-    public class SalesOrderLine : IEntity
+    public class SalesInvoicePayment : IEntity
     {
         [Column(TypeName = "int")]
         public int Id { get; set; }
 
         [Column(TypeName = "int")]
-        [ForeignKey("SalesOrder")]
-        public int SalesOrderId { get; set; }
+        [ForeignKey("SalesInvoice")]
+        public int SalesInvoiceId { get; set; }
 
-        [Column(TypeName = "nvarchar(50)")]
-        [Required(ErrorMessage = "* Required")]
-        public string Name { get; set; }
+        [Column(TypeName = "int")]
+        [ForeignKey("PaymentMethod")]
+        public int PaymentMethodId { get; set; }
 
-        [Column(TypeName = "nvarchar(max)")]
-        public string Description { get; set; }
-
-        public decimal Quantity { get; set; }
-
-        public decimal Price { get; set; }
+        public DateTime Date { get; set; }
 
         public decimal Amount { get; set; }
 
@@ -43,6 +37,9 @@ namespace MIER.MVC.Models
         [Column(TypeName = "nvarchar(50)")]
         public string UpdateBy { get; set; }
 
-        public SalesOrder SalesOrder { get; set; }
+        public SalesInvoice SalesInvoice { get; set; }
+
+        public PaymentMethod PaymentMethod { get; set; }
+
     }
 }

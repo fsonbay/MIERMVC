@@ -47,63 +47,166 @@
                                     <!--begin:Fields-->
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-4">
-                                                <label asp-for="Number"></label>
-                                                <div>
-                                                    @Html.TextBoxFor(model => model.Number, new { @class = "form-control bg-light-primary col-5", @readonly = true })
-                                                    @Html.ValidationMessageFor(model => model.Number, String.Empty, new { @class = "text-danger" })
+                                            <div class="col-4 row">
+                                                <div class="col-3 mt-3">
+                                                    <label asp-for="Number"></label>
+                                                </div>
+                                                <div class="col-9">
+                                                    @Html.TextBoxFor(model => model.Number, new { @class = "form-control bg-light-primary col-6", @readonly = true })
                                                 </div>
                                             </div>
-                                            <div class="col-4">
-                                                <label asp-for="Date"></label>
-                                                <div>
-                                                    @Html.TextBoxFor(model => model.Date, "{0:dd-mm-yyyy}", new { @class = "form-control col-6 date-picker" })
-                                                    @Html.ValidationMessageFor(model => model.Date, String.Empty, new { @class = "text-danger" })
+
+                                            <div class="col-4 row">
+                                                <div class="col-3 mt-3">
+                                                    <label asp-for="Customer"></label>
+                                                </div>
+                                                <div class="col-9">
+                                                    @Html.TextBoxFor(model => model.Customer, new { @class = "form-control bg-light-primary col-6", @readonly = true })
+                                                </div>
+                                            </div>
+                                            <div class="col-4 row">
+                                                <div class="col-3 mt-3">
+                                                    <label asp-for="Total"></label>
+                                                </div>
+                                                <div class="col-9">
+                                                    @Html.TextBoxFor(model => model.Total, new { @class = "form-control bg-light-primary col-6", @readonly = true })
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-4">
-                                                <label asp-for="Customer"></label>
-                                                <div>
-                                                    @Html.TextBoxFor(model => model.Customer, new { @class = "form-control bg-light-primary col-5", @readonly = true })
-                                                    @Html.ValidationMessageFor(model => model.Customer, String.Empty, new { @class = "text-danger" })
+                                            <div class="col-4 row">
+                                                <div class="col-3 mt-3">
+                                                    <label asp-for="Date"></label>
+                                                </div>
+                                                <div class="col-9">
+                                                    @Html.TextBoxFor(model => model.Date, "{0:dd-mm-yyyy}", new { @class = "form-control col-6 date-picker" })
+                                                    @Html.ValidationMessageFor(model => model.Date, String.Empty, new { @class = "text-danger" })
                                                 </div>
                                             </div>
-                                            <div class="col-4">
-                                                <label asp-for="DueDate"></label>
-                                                <div>
-                                                    @Html.TextBoxFor(model => model.DueDate, "{0:dd-mm-yyyy}", new { @class = "form-control col-6 date-picker" })
-                                                    @Html.ValidationMessageFor(model => model.DueDate, String.Empty, new { @class = "text-danger" })
-                                                    <button id="Minus1Button" class="btn btn-text-danger" title="Deadline -1 day">-1</button>
-                                                    <button id="TodayButton" class="btn btn-text-success" title="Today">0</button>
-                                                    <button id="Plus1Button" class="btn btn-text-success" title="Deadline +1 day">+1</button>
-                                                    <button id="Plus2Button" class="btn btn-text-success" title="Deadline +1 day">+2</button>
-                                                    <button id="Plus3Button" class="btn btn-text-success" title="Deadline +1 day">+3</button>
+                                            <div class="col-4 row">
+                                                <div class="col-3 mt-3">
+                                                    <label asp-for="SalesOrderDate"></label>
+                                                </div>
+                                                <div class="col-9">
+                                                    @Html.TextBoxFor(model => model.SalesOrderDate, "{0:dd-mm-yyyy}", new { @class = "form-control bg-light-primary col-6", @readonly = true })
+                                                </div>
+                                            </div>
+                                            <div class="col-4 row">
+                                                <div class="col-3 mt-3">
+                                                    <label asp-for="Paid"></label>
+                                                </div>
+                                                <div class="col-9">
+                                                    @Html.TextBoxFor(model => model.Paid, new { @class = "form-control bg-light-primary col-6", @readonly = true })
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <button id="AddLineButton" class="btn btn-light-danger btn-sm" title="Add Line"><i class="fa fa-plus-circle"></i> Add Line</button>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-4 row">
+                                                <div class="col-3 mt-3">
+                                                    <label asp-for="DueDate"></label>
+                                                </div>
+                                                <div class="col-9">
+                                                    @Html.TextBoxFor(model => model.DueDate, "{0:dd-mm-yyyy}", new { @class = "form-control col-6 date-picker" })
+                                                    @Html.ValidationMessageFor(model => model.DueDate, String.Empty, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-4 row">
+                                                <div class="col-3 mt-3">
+                                                    <label asp-for="SalesOrderDeadline"></label>
+                                                </div>
+                                                <div class="col-9">
+                                                    @Html.TextBoxFor(model => model.SalesOrderDeadline, "{0:dd-mm-yyyy}", new { @class = "form-control bg-light-primary col-6", @readonly = true })
+                                                </div>
+                                            </div>
+                                            <div class="col-4 row">
+                                                <div class="col-3 mt-3">
+                                                    <label asp-for="Outstanding"></label>
+                                                </div>
+                                                <div class="col-9">
+                                                    @Html.TextBoxFor(model => model.Outstanding, new { @class = "form-control bg-light-primary col-6", @readonly = true })
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="form-horizontal line-sets">
-                                            @*@Html.EditorFor(model => model.SalesInvoiceLines)*@
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-1 mt-3">
+                                                <label class="font-weight-bold text-muted">ORDER</label>
+                                            </div>
+                                            <div class="col-11 form-horizontal line-sets">
+                                                @Html.EditorFor(model => model.SalesInvoiceLines)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-1 mt-3">
+                                                <label class="font-weight-bold text-muted">COST</label>
+                                            </div>
+                                            <div class="col-11">
+                                                <div class="form-group">
+                                                    <button id="AddCostButton" class="btn btn-light-danger btn-sm" title="Add Cost"><i class="fa fa-plus-circle"></i>Add Cost</button>
+                                                    <label class="text-muted">(CTRL L)</label>
+                                                </div>
+                                                <div class="form-horizontal cost-sets">
+
+                                                    @Model.SalesInvoiceCosts.Count
+
+                                                    @if (Model.SalesInvoiceCosts.Count == 0)
+                                                    {
+
+                                                        <p>Empty</p>
+                                                        //Html.RenderPartial("~/Views/Shared/_templateSalesInvoicePayment.cshtml", Model.SalesInvoicePaymentList);
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Ada</p>
+                                                        @*Html.RenderPartial("~/Views/Shared/_templateSalesInvoicePayment.cshtml", new Polaris_MIS.ViewModels.SalesInvoicePaymentList());
+                                                        @Html.EditorFor(model => model.SalesInvoicePaymentList, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                    }
+
+
+
+                                                    @*<partial name="~/Views/Shared/PartialTemplates/_SalesInvoiceCostTemplate.cshtml" />
+
+                                                    @Html.EditorFor(model => model.SalesInvoiceCosts)*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-1 mt-3">
+                                                <label class="font-weight-bold text-muted">PAYMENT</label>
+                                            </div>
+                                            <div class="col-11">
+                                                <div class="form-group">
+                                                    <button id="AddPaymentButton" class="btn btn-light-danger btn-sm" title="Add Payment"><i class="fa fa-plus-circle"></i>Add Payment</button>
+                                                    <label class="text-muted">(CTRL P)</label>
+                                                </div>
+                                                <div class="form-horizontal payment-sets d-none">
+                                                    @Html.EditorFor(model => model.SalesInvoicePayments)
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group mr-5">
                                         <div class="row justify-content-end">
                                             <div>
                                                 @*<label asp-for="Amount"></label>
-                                                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary total-amount", @readonly = true })*@
+                                                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary total-amount", @readonly = true })*@
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <!--begin:Fields-->
                                     <!--begin:Action-->
                                     <div class="form-group">
@@ -131,7 +234,7 @@
 <!--end:PageContent-->
 <!--begin:PageScript-->
 @section Scripts {
-    <script type="text/javascript" src="~/js/SalesInvoice/create.js"></script>
+    <script type="text/javascript" src="~/js/SalesInvoice/createEdit.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script type="text/javascript">

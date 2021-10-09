@@ -94,8 +94,8 @@ $(function () {
         "locale": {
             "format": "DD-MM-YYYY"
         },
-        singleDatePicker: true,
-        startDate: moment(),
+        singleDatePicker: true
+/*        startDate: moment(),*/
     });
 
 

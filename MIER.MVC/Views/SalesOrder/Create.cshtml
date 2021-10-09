@@ -84,8 +84,8 @@
                                                     <button id="Plus1Button" class="btn btn-text-success" title="Deadline +1 day">+ 1</button>
                                                     <button id="Plus2Button" class="btn btn-text-success" title="Deadline +1 day">+ 2</button>
                                                     <button id="Plus3Button" class="btn btn-text-success" title="Deadline +1 day">+ 3</button>
-                                                    <button id="Plus4Button" class="btn btn-text-success" title="Deadline +1 day">+ 4</button>
-                                                    <button id="Plus5Button" class="btn btn-text-success" title="Deadline +1 day">+ 5</button>
+                                                    @*<button id="Plus4Button" class="btn btn-text-success" title="Deadline +1 day">+ 4</button>
+                                                    <button id="Plus5Button" class="btn btn-text-success" title="Deadline +1 day">+ 5</button>*@
                                                 </div>
                                             </div>
                                         </div>
@@ -100,12 +100,12 @@
                                             @Html.EditorFor(model => model.SalesOrderLines)
                                         </div>
                                     </div>
+
                                     <div class="form-group mr-5">
                                         <div class="row justify-content-end">
                                             <div>
                                                 <label asp-for="Amount"></label>
                                                 @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary total-amount", @readonly = true })
-
                                             </div>
                                         </div>
                                     </div>
@@ -136,7 +136,7 @@
 <!--end:PageContent-->
 <!--begin:PageScript-->
 @section Scripts {
-    <script type="text/javascript" src="~/js/SalesOrder/create.js"></script>
+    <script type="text/javascript" src="~/js/SalesOrder/createEdit.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script type="text/javascript">

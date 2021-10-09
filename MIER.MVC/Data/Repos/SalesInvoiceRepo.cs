@@ -54,6 +54,8 @@ namespace MIER.MVC.Data.Repos
             var result = _context.SalesInvoice
                 .Include(m => m.SalesOrder.Customer)
                 .Include(m => m.SalesOrder.SalesOrderLines)
+                .Include(m => m.SalesInvoiceCosts)
+                .Include(m=> m.SalesInvoicePayments)
                 .FirstOrDefault(m => m.Id == id);
             return result;
         }

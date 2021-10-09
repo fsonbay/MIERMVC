@@ -49,6 +49,9 @@ namespace MIER.MVC.Models
         [Column(TypeName = "nvarchar(50)")]
         public string UpdateBy { get; set; }
 
+        public List<SalesInvoiceCost> SalesInvoiceCosts { get; set; }
+        public List<SalesInvoicePayment> SalesInvoicePayments { get; set; }
+
         public SalesOrder SalesOrder { get; set; }
 
     }

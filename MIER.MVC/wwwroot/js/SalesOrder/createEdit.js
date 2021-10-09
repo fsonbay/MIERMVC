@@ -1,5 +1,5 @@
 ﻿
-//SalesOrder/create.js
+//SalesOrder/createEdit.js
 
 (function ($) {
 
@@ -77,7 +77,6 @@
 
         //Create new item and show (to override case style display none)
         var newItem = $(".line-set:last").clone(true);
-        // newItem.show();
 
         //Input Values
         newItem.find(':input').each(function () {
@@ -135,6 +134,7 @@
         ButtonVisibility();
         CalculateTotalAmount();
     });
+
     _$lineCalc.keyup(function (event) {
 
         var i = $(this).attr('name');

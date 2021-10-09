@@ -107,18 +107,20 @@ namespace MIER.MVC.Controllers
                 {
                     var salesOrder = new SalesOrder
                     {
-                        Number = CreateSalesOrderNumber(viewModel.Date, viewModel.CustomerId),
+   
+
+                        Number = CreateSalesOrderNumber(DateTime.Parse(viewModel.Date), viewModel.CustomerId),
                         CustomerId = viewModel.CustomerId,
                         ProductionStatusId = viewModel.ProductionStatusId,
-                        Date = viewModel.Date,
-                        Deadline = viewModel.Deadline,
+                        Date = DateTime.Parse(viewModel.Date),
+                        Deadline = DateTime.Parse(viewModel.Deadline),
                         Amount = decimal.Parse(viewModel.Amount.Replace(".", "")),
                         IsActive = viewModel.IsActive,
                         InsertBy = _userManager.GetUserName(User),
                         InsertTime = DateTime.Now,
                         UpdateBy = _userManager.GetUserName(User),
                         UpdateTime = DateTime.Now,
-                    };
+                };
 
                     //ITERATE LINES
                     var salesOrderLineList = new List<SalesOrderLine>();
@@ -145,7 +147,11 @@ namespace MIER.MVC.Controllers
                                 Price = decimal.Parse(item.Price.Replace(".", "")),
                                 Amount = decimal.Parse(item.Amount.Replace(".", "")),
                                 SalesOrderId = 0, //Default value will be replaced by actual value
-                                IsActive = item.IsActive
+                                IsActive = item.IsActive,
+                                InsertBy = _userManager.GetUserName(User),
+                                InsertTime = DateTime.Now,
+                                UpdateBy = _userManager.GetUserName(User),
+                                UpdateTime = DateTime.Now,
                             };
 
                             //ADD SUB TO COLLECTION
@@ -210,8 +216,8 @@ namespace MIER.MVC.Controllers
                     salesOrder.Number = viewModel.Number;
                     salesOrder.CustomerId = viewModel.CustomerId;
                     salesOrder.ProductionStatusId = viewModel.ProductionStatusId;
-                    salesOrder.Date = viewModel.Date;
-                    salesOrder.Deadline = viewModel.Deadline;
+                    salesOrder.Date = DateTime.Parse(viewModel.Date);
+                    salesOrder.Deadline = DateTime.Parse(viewModel.Deadline);
                     salesOrder.Amount = decimal.Parse(viewModel.Amount.Replace(".", ""));
                     salesOrder.IsActive = viewModel.IsActive;
                     salesOrder.UpdateBy = _userManager.GetUserName(User);
@@ -241,17 +247,15 @@ namespace MIER.MVC.Controllers
                         }
                         else
                         {
-                            var salesOrderLine = new SalesOrderLine
-                            {
-                                Id = item.Id,
-                                Name = item.Name,
-                                Description = item.Description,
-                                Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
-                                Price = decimal.Parse(item.Price.Replace(".", "")),
-                                Amount = decimal.Parse(item.Amount.Replace(".", "")),
-                                SalesOrderId = (int)viewModel.Id,
-                                IsActive = item.IsActive
-                            };
+                            var salesOrderLine = _salesOrderLineRepo.GetById(id);
+
+                            salesOrderLine.Name = item.Name;
+                            salesOrderLine.Description = item.Description;
+                            salesOrderLine.Quantity = decimal.Parse(item.Quantity.Replace(".", ""));
+                            salesOrderLine.Price = decimal.Parse(item.Price.Replace(".", ""));
+                            salesOrderLine.Amount = decimal.Parse(item.Amount.Replace(".", ""));
+                            salesOrderLine.UpdateBy = _userManager.GetUserName(User);
+                            salesOrderLine.UpdateTime = DateTime.Now;
 
                             //ADD SUB TO COLLECTION
                             linesName.Add(item.Name);
@@ -330,21 +334,21 @@ namespace MIER.MVC.Controllers
                     CustomerId = model.CustomerId,
                     ProductionStatusId = model.ProductionStatusId,
                     Number = model.Number,
-                    Date = model.Date,
-                    Deadline = model.Deadline,
+                    Date = model.Date.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture),
+                    Deadline = model.Deadline.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture),
                     Amount = model.Amount.ToString("N0"),
                     IsActive = model.IsActive,
                     SalesOrderLines = salesOrderLineVMList,
                     CustomerList = customerList,
                     ProductionStatusList = productionStatusList
-                };
+            };
             }
    
             //INSERT MODE
             else
             {
-                salesOrderVM.Date = DateTime.Now;
-                salesOrderVM.Deadline = DateTime.Now;
+                salesOrderVM.Date = DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
+                salesOrderVM.Deadline = DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
                 salesOrderVM.ProductionStatusId = 1;
                 salesOrderVM.IsActive = true;
                 salesOrderVM.CustomerList = customerList;
