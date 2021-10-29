@@ -3,18 +3,19 @@
 
 (function ($) {
 
-    //COST
-    var $costSets = $('.cost-sets');
+    //COST PARAMETERS
+    var _$costSets = $('.cost-sets');
     var _$addCostBtn = $('#AddCostButton');
     var _$delCostBtn = $('.delete-cost');
-    //var _$delCostBtn = $('.delete-line');
-    //var $costAmount = $(".cost-amount");
-    //var _$costCalc = $('.cost-calculation');
+    var _$costCalc = $('.cost-calculation');
 
-    var wrapperCost = $('.cost-sets');
+    //PAYMENT PARAMETERS
+    var _$paymentSets = $('.payment-sets');
+    var _$addPaymentBtn = $('#AddPaymentButton');
+    var _$delPaymentBtn = $('.delete-payment');
+    var _$paymentCalc = $('.payment-calculation');
 
-
-    //Line
+    //COST EVENTS
     _$addCostBtn.click(function (e) {
 
         //Cancel default postback
@@ -26,7 +27,7 @@
         newItem.show();
 
         //Add clone
-        wrapperCost.append(newItem);
+        _$costSets.append(newItem);
 
         //Input Values
         newItem.find(':input').each(function () {
@@ -42,7 +43,7 @@
 
             //isActive
             if ($(this).hasClass("isActive")) {
-                $(this).val('False');
+                $(this).val('True');
             }
 
             //id
@@ -78,12 +79,34 @@
 
         ReorderCostIndex();
 
-        //ButtonVisibility();
-        //CalculateTotalAmount();
+        CalculateTotalAmount();
 
     });
+    _$costCalc.keyup(function (event) {
 
+        var i = $(this).attr('name');
+        var start_pos = i.indexOf('[') + 1;
+        var end_pos = i.indexOf(']', start_pos);
+        var index = i.substring(start_pos, end_pos);
 
+        var quantityName = 'input[name="SalesInvoiceCosts[' + index + '].Quantity"]';
+        var priceName = 'input[name="SalesInvoiceCosts[' + index + '].Price"]';
+        var amountName = 'input[name="SalesInvoiceCosts[' + index + '].Amount"]';
+
+        var quantity = $(quantityName).val().replace(/\./g, '');
+        var price = $(priceName).val().replace(/\./g, '');
+
+        var formattedQuantity = FormatCurrency((quantity), '.', ',', '.');
+        var formattedPrice = FormatCurrency((price), '.', ',', '.');
+        var formattedAmount = FormatCurrency((price * quantity).toFixed(0), '.', ',', '.');
+
+        $(quantityName).val(formattedQuantity);
+        $(priceName).val(formattedPrice);
+        $(amountName).val(formattedAmount);
+
+        CalculateTotalAmount();
+
+    });
     function ReorderCostIndex() {
 
         $(".cost-set").each(function () {
@@ -106,6 +129,220 @@
             });
 
         });
+    }
+
+    //PAYMENT EVENTS
+    _$addPaymentBtn.click(function (e) {
+
+        //Cancel default postback
+        e.preventDefault();
+
+        //Check if class exist (meaning cost not exist yet)
+        var newItem = $(".payment-template:first-child").clone(true);
+        newItem.addClass('payment-set').removeClass('payment-template');
+        newItem.show();
+
+        //Add clone
+        _$paymentSets.append(newItem);
+
+        //Input Values
+        newItem.find(':input').each(function () {
+
+            var id = $(this).attr('id');
+            var name = $(this).attr('name');
+
+            $(this).attr('id', 'SalesInvoicePayments_0__' + name);
+            $(this).attr('name', 'SalesInvoicePayments[0].' + name);
+
+            if (name === "Date") {
+
+                var start = moment();
+
+                $(this).daterangepicker({
+                    "locale": {
+                        "format": "DD-MM-YYYY"
+                    },
+                    singleDatePicker: true,
+                    startDate: start
+                });
+
+            };
+
+            if (name === "PaymentMethodId") {
+
+                $(this).select2({
+                    placeholder: "Please select...",
+                    allowClear: true
+                });
+            };
+
+            //isActive
+            if ($(this).hasClass("isActive")) {
+                $(this).val('True');
+            }
+
+            //id
+            if ($(this).hasClass("payment-id")) {
+                $(this).val('0');
+            }
+        });
+
+        //Reorder index
+        ReorderPaymentIndex();
+
+    });
+    _$delPaymentBtn.click(function (e) {
+
+        alert(1);
+        //Cancel default postback
+        e.preventDefault();
+
+        //Set hidden value
+        $(this).parents('.payment-set').find('.isActive').val("false");
+
+        //Check Id, if ID = 0 ==> new set, remove. else hide.
+        var id = $(this).parents('.payment-set').find('.payment-id').val();
+
+        if (id === '0') {
+            $(this).parents('.payment-set').remove();
+        }
+        else {
+            $(this).parents('.payment-set').hide();
+        }
+
+        ReorderPaymentIndex();
+
+        CalculateTotalAmount();
+
+    });
+
+    _$paymentCalc.keyup(function (event) {
+
+        var i = $(this).attr('name');
+        var start_pos = i.indexOf('[') + 1;
+        var end_pos = i.indexOf(']', start_pos);
+        var index = i.substring(start_pos, end_pos);
+
+      //  alert(1);
+
+        var amountName = 'input[name="SalesInvoicePayments[' + index + '].Amount"]';
+        var amount = $(amountName).val().replace(/\./g, '');
+        var formattedAmount = FormatCurrency((amount), '.', ',', '.');
+
+     //   alert(amountName);
+
+        $(amountName).val(formattedAmount);
+
+     //   CalculateTotalAmount();
+
+    });
+    function ReorderPaymentIndex() {
+
+   
+        $(".payment-set").each(function () {
+
+            //Current index (minus 1 to exclude hidden template)
+            var index = $(this).index() - 1;
+           
+
+            //Rename inputs
+            $(":input", this).each(function () {
+                this.name = this.name.replace(/[0-9]+/, index);
+                this.id = this.id.replace(/[0-9]+/, index);
+            });
+
+            //Rename validators span
+            $(this).find('.field-validation-valid, .field-validation-error').each(function () {
+                var oldName = $(this).attr('data-valmsg-for');
+                var newName = $(this).attr('data-valmsg-for').replace(/[0-9]+/, index);
+                $(this).attr("data-valmsg-for", newName);
+
+            });
+
+        });
+    }
+
+    //GENERIC METHODS
+    function FormatCurrency(value, inD, outD, sep) {
+
+        //clean previously added dot
+      //  value = value.replace(/\./g, '');
+
+        var nStr = value.replace(/\./g, '');
+        nStr += '';
+        var dpos = nStr.indexOf(inD);
+        var nStrEnd = '';
+        if (dpos !== -1) {
+            nStrEnd = outD + nStr.substring(dpos + 1, nStr.length);
+            nStr = nStr.substring(0, dpos);
+        }
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(nStr)) {
+            nStr = nStr.replace(rgx, '$1' + sep + '$2');
+        }
+        return nStr + nStrEnd;
+    }
+    function FormatDateToString(dt) {
+        var year = dt.getFullYear();
+        var month = (1 + dt.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+        var day = dt.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+        return day + '-' + month + '-' + year;
+    }
+    function FormatStringToDate(str) {
+        var parts = str.split("-");
+        var dt = new Date(+parts[2], parts[1] - 1, +parts[0]);
+        return dt;
+    }
+    function CalculateTotalAmount() {
+
+        var totalAmount = 0.00;
+        var paidAmount = 0.00;
+        var orderAmount = parseFloat($(".order-amount").val().replace(/\./g, ""));
+
+        //Calculation
+        totalAmount = orderAmount; //Start with order amount
+
+        //iterate through each textboxes and add the values
+        $('.cost-amount').each(function () {
+            var costAmount = this.value.replace(/\./g, '');
+
+            //add only if the value is number and visible
+            if (!isNaN(costAmount) && costAmount.length !== 0) {
+                var parent = $(this).parents('.cost-set');
+                if (parent.is(':visible')) {
+                    totalAmount += parseFloat(costAmount);
+                    $(this).css("background-color", "#FEFFB0");
+
+                }
+            }
+            else if (costAmount.length !== 0) {
+                $(this).css("background-color", "red");
+            }           
+        });
+
+        //iterate through each textboxes and add the values
+        $('.payment-amount').each(function () {
+            var paymentAmount = this.value.replace(/\./g, '');
+
+            //add only if the value is number and visible
+            if (!isNaN(paymentAmount) && paymentAmount.length !== 0) {
+                var parent = $(this).parents('.cost-set');
+                if (parent.is(':visible')) {
+                    totalAmount += parseFloat(paymentAmount);
+                    $(this).css("background-color", "#FEFFB0");
+
+                }
+            }
+            else if (paymentAmount.length !== 0) {
+                $(this).css("background-color", "red");
+            }
+        });
+
+      
+        $(".total-amount").val(FormatCurrency(totalAmount.toFixed(0), '.', ',', '.'));
+
     }
 
 }(jQuery));

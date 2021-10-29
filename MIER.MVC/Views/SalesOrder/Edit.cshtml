@@ -82,8 +82,6 @@
                                                 <div>
                                                     @Html.TextBoxFor(model => model.Deadline, "{0:dd-mm-yyyy}", new { @class = "form-control col-6 date-picker" })
                                                     @Html.ValidationMessageFor(model => model.Deadline, String.Empty, new { @class = "text-danger" })
-
-                                                
                                                         <button id="Minus1Button" class="btn btn-text-danger" title="Deadline -1 day">-1</button>
                                                         <button id="TodayButton" class="btn btn-text-success" title="Today">0</button>
                                                         <button id="Plus1Button" class="btn btn-text-success" title="Deadline +1 day">+1</button>

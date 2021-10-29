@@ -21,6 +21,8 @@ namespace MIER.MVC.ViewModels.SalesInvoice
         [Display(Name = "Deadline")]
         public string SalesOrderDeadline { get; set; }
 
+        public string SalesOrderAmount { get; set; }
+
         public string Total { get; set; }
 
         public string Paid { get; set; }

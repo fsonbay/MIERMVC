@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +11,8 @@ namespace MIER.MVC.ViewModels.SalesInvoice
     {
         public int Id { get; set; }
         public int SalesInvoiceId { get; set; }
+
+        [Display(Name = "Payment Method")]
         public int PaymentMethodId { get; set; }
         public string Date { get; set; }
         public string Amount { get; set; }

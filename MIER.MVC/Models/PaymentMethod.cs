@@ -16,7 +16,7 @@ namespace MIER.MVC.Models
         [Required]
         public string Name { get; set; }
 
-        [Column(TypeName = "varchar(1)")]
+        [Column(TypeName = "varchar(2)")]
         [Required]
         public string Code { get; set; }
 

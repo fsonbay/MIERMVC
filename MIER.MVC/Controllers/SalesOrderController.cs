@@ -107,7 +107,7 @@ namespace MIER.MVC.Controllers
                 {
                     var salesOrder = new SalesOrder
                     {
-   
+
 
                         Number = CreateSalesOrderNumber(DateTime.Parse(viewModel.Date), viewModel.CustomerId),
                         CustomerId = viewModel.CustomerId,
@@ -120,7 +120,7 @@ namespace MIER.MVC.Controllers
                         InsertTime = DateTime.Now,
                         UpdateBy = _userManager.GetUserName(User),
                         UpdateTime = DateTime.Now,
-                };
+                    };
 
                     //ITERATE LINES
                     var salesOrderLineList = new List<SalesOrderLine>();
@@ -146,12 +146,7 @@ namespace MIER.MVC.Controllers
                                 Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
                                 Price = decimal.Parse(item.Price.Replace(".", "")),
                                 Amount = decimal.Parse(item.Amount.Replace(".", "")),
-                                SalesOrderId = 0, //Default value will be replaced by actual value
-                                IsActive = item.IsActive,
-                                InsertBy = _userManager.GetUserName(User),
-                                InsertTime = DateTime.Now,
-                                UpdateBy = _userManager.GetUserName(User),
-                                UpdateTime = DateTime.Now,
+                                SalesOrderId = 0 //Default value will be replaced by actual value
                             };
 
                             //ADD SUB TO COLLECTION
@@ -247,15 +242,16 @@ namespace MIER.MVC.Controllers
                         }
                         else
                         {
-                            var salesOrderLine = _salesOrderLineRepo.GetById(id);
+                            var salesOrderLine = new SalesOrderLine
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Description = item.Description,
+                                Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
+                                Price = decimal.Parse(item.Price.Replace(".", "")),
+                                Amount = decimal.Parse(item.Amount.Replace(".", ""))
+                            };
 
-                            salesOrderLine.Name = item.Name;
-                            salesOrderLine.Description = item.Description;
-                            salesOrderLine.Quantity = decimal.Parse(item.Quantity.Replace(".", ""));
-                            salesOrderLine.Price = decimal.Parse(item.Price.Replace(".", ""));
-                            salesOrderLine.Amount = decimal.Parse(item.Amount.Replace(".", ""));
-                            salesOrderLine.UpdateBy = _userManager.GetUserName(User);
-                            salesOrderLine.UpdateTime = DateTime.Now;
 
                             //ADD SUB TO COLLECTION
                             linesName.Add(item.Name);
@@ -286,7 +282,6 @@ namespace MIER.MVC.Controllers
                 }
                 catch (Exception ex)
                 {
-                    var err = ex.InnerException.Message;
                     TempData["Message"] = ex.Message;
                 }
 
@@ -320,7 +315,7 @@ namespace MIER.MVC.Controllers
                         Quantity = item.Quantity.ToString("N0"),
                         Price = item.Price.ToString("N0"),
                         Amount = item.Amount.ToString("N0"),
-                        IsActive = item.IsActive
+                        IsActive = true
                     };
 
                     //ADD SUB TO COLLECTION
@@ -341,9 +336,9 @@ namespace MIER.MVC.Controllers
                     SalesOrderLines = salesOrderLineVMList,
                     CustomerList = customerList,
                     ProductionStatusList = productionStatusList
-            };
+                };
             }
-   
+
             //INSERT MODE
             else
             {
@@ -361,7 +356,7 @@ namespace MIER.MVC.Controllers
 
                 salesOrderLineVMList.Add(salesOrderLineVM);
                 salesOrderVM.SalesOrderLines = salesOrderLineVMList;
-                
+
             }
 
             return salesOrderVM;

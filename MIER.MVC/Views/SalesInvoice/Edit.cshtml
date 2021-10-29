@@ -44,6 +44,7 @@
                                 <!--begin:Form-->
                                 <form asp-controller="SalesInvoice" asp-action="Update" id="FormSalesInvoice">
                                     @Html.HiddenFor(m => m.Id)
+                                    @Html.HiddenFor(m => m.SalesOrderAmount, new { @class = "order-amount" }) @*To save order amount value for js calculation*@
                                     <!--begin:Fields-->
                                     <div class="form-group">
                                         <div class="row">
@@ -69,7 +70,8 @@
                                                     <label asp-for="Total"></label>
                                                 </div>
                                                 <div class="col-9">
-                                                    @Html.TextBoxFor(model => model.Total, new { @class = "form-control bg-light-primary col-6", @readonly = true })
+                                                    @Html.TextBoxFor(model => model.Total, new { @class = "form-control bg-light-primary col-6 total-amount", @readonly = true })
+
                                                 </div>
                                             </div>
                                         </div>
@@ -98,7 +100,7 @@
                                                     <label asp-for="Paid"></label>
                                                 </div>
                                                 <div class="col-9">
-                                                    @Html.TextBoxFor(model => model.Paid, new { @class = "form-control bg-light-primary col-6", @readonly = true })
+                                                    @Html.TextBoxFor(model => model.Paid, new { @class = "form-control bg-light-primary col-6 paid-amount", @readonly = true })
                                                 </div>
                                             </div>
                                         </div>
@@ -127,7 +129,7 @@
                                                     <label asp-for="Outstanding"></label>
                                                 </div>
                                                 <div class="col-9">
-                                                    @Html.TextBoxFor(model => model.Outstanding, new { @class = "form-control bg-light-primary col-6", @readonly = true })
+                                                    @Html.TextBoxFor(model => model.Outstanding, new { @class = "form-control bg-light-primary col-6 outstanding-amount", @readonly = true })
                                                 </div>
                                             </div>
                                         </div>
@@ -155,25 +157,16 @@
                                                     <label class="text-muted">(CTRL L)</label>
                                                 </div>
                                                 <div class="form-horizontal cost-sets">
-
-         
-
                                                     @if (Model.SalesInvoiceCosts.Count == 0)
                                                     {
                                                         @await Html.PartialAsync("~/Views/Shared/PartialTemplates/_SalesInvoiceCostTemplate.cshtml", new MIER.MVC.ViewModels.SalesInvoice.SalesInvoiceCostVM())
                                                     }
                                                     else
                                                     {
-                                                        <p>Ada</p>
-                                                        @*Html.RenderPartial("~/Views/Shared/_templateSalesInvoicePayment.cshtml", new Polaris_MIS.ViewModels.SalesInvoicePaymentList());
-            @Html.EditorFor(model => model.SalesInvoicePaymentList, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                        @await Html.PartialAsync("~/Views/Shared/PartialTemplates/_SalesInvoiceCostTemplate.cshtml", new MIER.MVC.ViewModels.SalesInvoice.SalesInvoiceCostVM())
+                                                        @Html.EditorFor(model => model.SalesInvoiceCosts)
                                                     }
 
-
-
-                                                    @*
-
-        @Html.EditorFor(model => model.SalesInvoiceCosts)*@
                                                 </div>
                                             </div>
                                         </div>
@@ -189,22 +182,21 @@
                                                     <button id="AddPaymentButton" class="btn btn-light-danger btn-sm" title="Add Payment"><i class="fa fa-plus-circle"></i>Add Payment</button>
                                                     <label class="text-muted">(CTRL P)</label>
                                                 </div>
-                                                <div class="form-horizontal payment-sets d-none">
-                                                    @Html.EditorFor(model => model.SalesInvoicePayments)
+                                                <div class="form-horizontal payment-sets">
+                                                    @if (Model.SalesInvoicePayments.Count == 0)
+                                                    {
+                                                        @await Html.PartialAsync("~/Views/Shared/PartialTemplates/_SalesInvoicePaymentTemplate.cshtml", new MIER.MVC.ViewModels.SalesInvoice.SalesInvoicePaymentVM())
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @await Html.PartialAsync("~/Views/Shared/PartialTemplates/_SalesInvoicePaymentTemplate.cshtml", new MIER.MVC.ViewModels.SalesInvoice.SalesInvoicePaymentVM())
+                                                        @Html.EditorFor(model => model.SalesInvoicePayments)
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group mr-5">
-                                        <div class="row justify-content-end">
-                                            <div>
-                                                @*<label asp-for="Amount"></label>
-                                                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary total-amount", @readonly = true })*@
-                                            </div>
-                                        </div>
-                                    </div>
-
-
                                     <!--begin:Fields-->
                                     <!--begin:Action-->
                                     <div class="form-group">

@@ -8,6 +8,6 @@ namespace MIER.MVC
     public class Consts
     {
         public const int MaxLength_Name = 100;
-        public const int MaxLength_Code = 1;
+        public const int MaxLength_Code = 2;
     }
 }

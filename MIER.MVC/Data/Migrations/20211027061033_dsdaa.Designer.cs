@@ -4,14 +4,16 @@ using MIER.MVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MIER.MVC.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211027061033_dsdaa")]
+    partial class dsdaa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -387,6 +389,12 @@ namespace MIER.MVC.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("InsertBy")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(50)");
 
@@ -398,6 +406,12 @@ namespace MIER.MVC.Data.Migrations
 
                     b.Property<int>("SalesInvoiceId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
@@ -419,11 +433,23 @@ namespace MIER.MVC.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("InsertBy")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime");
+
                     b.Property<int>("PaymentMethodId")
                         .HasColumnType("int");
 
                     b.Property<int>("SalesInvoiceId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 

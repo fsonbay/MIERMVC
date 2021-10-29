@@ -29,20 +29,7 @@ namespace MIER.MVC.Models
 
         public decimal Amount { get; set; }
 
-        public bool IsActive { get; set; }
-
-        [Column(TypeName = "datetime")]
-        public DateTime InsertTime { get; set; }
-
-        [Column(TypeName = "nvarchar(50)")]
-        public string InsertBy { get; set; }
-
-        [Column(TypeName = "datetime")]
-        public DateTime UpdateTime { get; set; }
-
-        [Column(TypeName = "nvarchar(50)")]
-        public string UpdateBy { get; set; }
-
         public SalesOrder SalesOrder { get; set; }
+
     }
 }
