@@ -223,17 +223,13 @@
         var end_pos = i.indexOf(']', start_pos);
         var index = i.substring(start_pos, end_pos);
 
-      //  alert(1);
-
         var amountName = 'input[name="SalesInvoicePayments[' + index + '].Amount"]';
         var amount = $(amountName).val().replace(/\./g, '');
         var formattedAmount = FormatCurrency((amount), '.', ',', '.');
 
-     //   alert(amountName);
-
         $(amountName).val(formattedAmount);
 
-     //   CalculateTotalAmount();
+        CalculateTotalAmount();
 
     });
     function ReorderPaymentIndex() {
@@ -266,7 +262,7 @@
     function FormatCurrency(value, inD, outD, sep) {
 
         //clean previously added dot
-      //  value = value.replace(/\./g, '');
+        value = value.replace(/\./g, '');
 
         var nStr = value.replace(/\./g, '');
         nStr += '';
@@ -297,12 +293,14 @@
     }
     function CalculateTotalAmount() {
 
-        var totalAmount = 0.00;
-        var paidAmount = 0.00;
+        var TOTAL = 0.00;
+        var PAID = 0.00;
+        var OUTSTANDING = 0.00;
+
         var orderAmount = parseFloat($(".order-amount").val().replace(/\./g, ""));
 
         //Calculation
-        totalAmount = orderAmount; //Start with order amount
+        TOTAL = orderAmount; //Start with order amount
 
         //iterate through each textboxes and add the values
         $('.cost-amount').each(function () {
@@ -312,7 +310,7 @@
             if (!isNaN(costAmount) && costAmount.length !== 0) {
                 var parent = $(this).parents('.cost-set');
                 if (parent.is(':visible')) {
-                    totalAmount += parseFloat(costAmount);
+                    TOTAL += parseFloat(costAmount);
                     $(this).css("background-color", "#FEFFB0");
 
                 }
@@ -325,13 +323,14 @@
         //iterate through each textboxes and add the values
         $('.payment-amount').each(function () {
             var paymentAmount = this.value.replace(/\./g, '');
+          //  alert(paymentAmount);
 
             //add only if the value is number and visible
             if (!isNaN(paymentAmount) && paymentAmount.length !== 0) {
-                var parent = $(this).parents('.cost-set');
+                var parent = $(this).parents('.payment-set');
                 if (parent.is(':visible')) {
-                    totalAmount += parseFloat(paymentAmount);
-                    $(this).css("background-color", "#FEFFB0");
+                    PAID += parseFloat(paymentAmount);
+        /*            $(this).css("background-color", "#FEFFB0");*/
 
                 }
             }
@@ -340,8 +339,15 @@
             }
         });
 
-      
-        $(".total-amount").val(FormatCurrency(totalAmount.toFixed(0), '.', ',', '.'));
+        OUTSTANDING = TOTAL - PAID;
+
+        $(".total-amount").val(FormatCurrency(TOTAL.toFixed(0), '.', ',', '.'));
+        $(".paid-amount").val(FormatCurrency(PAID.toFixed(0), '.', ',', '.'));
+        $(".outstanding-amount").val(FormatCurrency(OUTSTANDING.toFixed(0), '.', ',', '.'));
+
+        $(".total-amount").css("background-color", "#FEFFB0");
+        $(".paid-amount").css("background-color", "#FEFFB0");
+        $(".outstanding-amount").css("background-color", "#FEFFB0");
 
     }
 

@@ -25,6 +25,7 @@ namespace MIER.MVC.Controllers
         private SalesInvoicePaymentRepo _salesInvoicePaymentRepo;
         private SalesInvoiceCostRepo _salesInvoiceCostRepo;
 
+
         public SalesInvoiceController(AppDbContext context,
             UserManager<AppUser> userManager)
         {
@@ -104,6 +105,9 @@ namespace MIER.MVC.Controllers
                 {
                     //SALES INVOICE
                     var salesInvoice = _salesInvoiceRepo.GetById(viewModel.Id);
+                    salesInvoice.Total = decimal.Parse(viewModel.Total.Replace(".", ""));
+                    salesInvoice.Paid = decimal.Parse(viewModel.Paid.Replace(".", ""));
+                    salesInvoice.Outstanding = decimal.Parse(viewModel.Outstanding.Replace(".", ""));
                     salesInvoice.Date = DateTime.Parse(viewModel.Date);
                     salesInvoice.DueDate = DateTime.Parse(viewModel.DueDate);
                     salesInvoice.UpdateBy = _userManager.GetUserName(User);
@@ -148,7 +152,6 @@ namespace MIER.MVC.Controllers
 
                     //Add cost list to parent
                     salesInvoice.SalesInvoiceCosts = salesInvoiceCostList;
-
 
                     //SALES INVOICE PAYMENT
                     var salesInvoicePaymentList = new List<SalesInvoicePayment>();
@@ -278,25 +281,12 @@ namespace MIER.MVC.Controllers
                             Amount = item.Amount.ToString("N0"),
                             IsActive = true
                         };
+
+                        //Add sub to list
+                        salesInvoicePaymentVMList.Add(salesInvoicePaymentVM);
                     }
 
-                    //Add sub to list
-                    salesInvoicePaymentVMList.Add(salesInvoicePaymentVM);
                 }
-                // If no existing payment create default values
-                //else
-                //{
-                //    salesInvoicePaymentVM.Id = 0;
-                //    salesInvoicePaymentVM.SalesInvoiceId = salesInvoice.Id;
-                //    salesInvoicePaymentVM.PaymentMethodId = 1;
-                //    salesInvoicePaymentVM.Amount = "0";
-                //    salesInvoicePaymentVM.Date = DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
-                //    salesInvoicePaymentVM.IsActive = true;
-                //    salesInvoicePaymentVM.PaymentMethodList = paymentMethodList;
-
-                //}
-
-
 
                 //CONVERT SALESINVOICE TO SALESINVOICEVM
                 salesInvoiceVM = new SalesInvoiceVM

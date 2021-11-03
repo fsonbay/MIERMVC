@@ -11,22 +11,30 @@
             @Html.ValidationMessageFor(model => model.Date, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
-    <div class="col-3">
+    <div class="col-2">
         <div class="form-group">
-            <label asp-for="Amount"></label>
-            <div class="input-group">
-                @Html.TextBoxFor(m => m.Amount, new { @class = "col-8 form-control input-sm payment-calculation", @type = "number"})
-            </div>
+            @Html.LabelFor(m => m.PaymentMethodId)
+            @Html.DropDownListFor(m => m.PaymentMethodId, (SelectList)ViewData["PaymentMethod"], "Please select...",
+                new { @class = "form-control" })
         </div>
     </div>
     <div class="col-3">
         <div class="form-group">
-            <label asp-for="PaymentMethodId"></label>
+            <label asp-for="Amount"></label>
             <div class="input-group">
-                @Html.TextBoxFor(m => m.Amount, new { @class = "col-8 form-control input-sm payment-calculation", @type = "number" })
+                @Html.TextBoxFor(m => m.Amount, new { @class = "col-8 form-control input-sm payment-calculation payment-amount" })
                 &nbsp;&nbsp;
                 <button id="DeletePaymentButton" name="DeletePayment[0]" class="btn btn-text-danger btn-sm delete-payment" title="Delete Payment"><i class="fa fa-trash-alt"></i></button>
             </div>
         </div>
     </div>
+    @*<div class="col-3">
+        <div class="form-group">
+            <label asp-for="PaymentMethodId"></label>
+            <div class="input-group">
+                @Html.TextBoxFor(m => m.Amount, new { @class = "col-8 form-control input-sm payment-calculation", @type = "number" })
+
+            </div>
+        </div>
+    </div>*@
 </div>
