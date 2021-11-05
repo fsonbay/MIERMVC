@@ -282,7 +282,7 @@ namespace MIER.MVC.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["Message"] = ex.Message;
+                    TempData["Message"] = "Error : " + ex.Message;
                 }
 
             }

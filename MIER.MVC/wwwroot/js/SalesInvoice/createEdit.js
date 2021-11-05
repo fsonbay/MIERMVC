@@ -26,9 +26,6 @@
         newItem.addClass('cost-set').removeClass('cost-template');
         newItem.show();
 
-        //Add clone
-        _$costSets.append(newItem);
-
         //Input Values
         newItem.find(':input').each(function () {
 
@@ -52,11 +49,25 @@
             }
         });
 
+        //Validation message
+        newItem.find('span').each(function () {
+
+            var name = $(this).attr('data-valmsg-for');
+            $(this).attr('data-valmsg-for', 'SalesInvoiceCosts[0].' + name);
+
+        });
+
+        //Add clone
+        _$costSets.append(newItem);
+
         //Focus
         $('.cost-set:last-child :input:enabled:visible:first').focus();
 
         //Reorder index
         ReorderCostIndex();
+
+        //Reset validator
+        ResetValidator();
 
     });
     _$delCostBtn.click(function (e) {
@@ -349,6 +360,13 @@
         $(".paid-amount").css("background-color", "#FEFFB0");
         $(".outstanding-amount").css("background-color", "#FEFFB0");
 
+    }
+    function ResetValidator() {
+
+        //Reset validator
+        $('#FormSalesInvoice').removeData('validator');
+        $('#FormSalesInvoice').removeData('unobtrusiveValidation');
+        $.validator.unobtrusive.parse('#FormSalesInvoice');
     }
 
 }(jQuery));

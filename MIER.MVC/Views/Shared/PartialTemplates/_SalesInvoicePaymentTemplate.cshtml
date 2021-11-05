@@ -6,7 +6,7 @@
     <div class="col-2">
         <div class="form-group">
             <label asp-for="Date"></label>
-            @Html.TextBoxFor(model => model.Date, "{0:dd-mm-yyyy}", new { @class = "col-12 form-control payment-date", Value = "31-01-2001" })
+            @Html.TextBoxFor(model => model.Date, "{0:dd-mm-yyyy}", new { @class = "col-8 form-control payment-date", Value = "31-01-2001" })
             @Html.ValidationMessageFor(model => model.Date, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
@@ -21,7 +21,7 @@
         <div class="form-group">
             <label asp-for="Amount"></label>
             <div class="input-group">
-                @Html.TextBoxFor(m => m.Amount, new { @class = "col-12 form-control payment-calculation payment-amount" })
+                @Html.TextBoxFor(m => m.Amount, new { @class = "col-8 form-control payment-calculation payment-amount" })
                 &nbsp;&nbsp;
                 <button id="DeletePaymentButton" name="DeletePayment[0]" class="btn btn-text-danger btn-sm delete-payment" title="Delete Payment"><i class="fa fa-trash-alt"></i></button>
             </div>

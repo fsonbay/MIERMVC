@@ -104,7 +104,7 @@ namespace MIER.MVC.Controllers
                 try
                 {
                     //SALES INVOICE
-                    var salesInvoice = _salesInvoiceRepo.GetById(viewModel.Id);
+                    var salesInvoice = _salesInvoiceRepo.GetByIdIncludes((int)viewModel.Id);
                     salesInvoice.Total = decimal.Parse(viewModel.Total.Replace(".", ""));
                     salesInvoice.Paid = decimal.Parse(viewModel.Paid.Replace(".", ""));
                     salesInvoice.Outstanding = decimal.Parse(viewModel.Outstanding.Replace(".", ""));
@@ -115,38 +115,43 @@ namespace MIER.MVC.Controllers
 
                     //SALES INVOICE COST
                     var salesInvoiceCostList = new List<SalesInvoiceCost>();
-                    foreach (var item in viewModel.SalesInvoiceCosts.ToList())
+
+                    //if additional sales invoice line is created
+                    if (viewModel.SalesInvoiceCosts != null)
                     {
-                        var salesInvoiceCost = new SalesInvoiceCost();
-
-                        var id = item.Id;
-                        var isActive = item.IsActive;
-                        var name = item.Name;
-
-                        if (!isActive)
+                        foreach (var item in viewModel.SalesInvoiceCosts.ToList())
                         {
-                            //Existing item
-                            if (id != 0)
+                            var salesInvoiceCost = new SalesInvoiceCost();
+
+                            var id = item.Id;
+                            var isActive = item.IsActive;
+                            var name = item.Name;
+
+                            if (!isActive)
                             {
-                                //Delete from database
-                                 salesInvoiceCost = _salesInvoiceCostRepo.GetById(id);
-                                _salesInvoiceCostRepo.Delete(salesInvoiceCost);
+                                //Existing item
+                                if (id != 0)
+                                {
+                                    //Delete from database
+                                    salesInvoiceCost = _salesInvoiceCostRepo.GetById(id);
+                                    _salesInvoiceCostRepo.Delete(salesInvoiceCost);
+                                }
+
+                                //Remove from collection
+                                viewModel.SalesInvoiceCosts.Remove(item);
                             }
+                            else
+                            {
+                                salesInvoiceCost.Id = item.Id;
+                                salesInvoiceCost.Name = item.Name;
+                                salesInvoiceCost.Description = item.Description;
+                                salesInvoiceCost.Quantity = decimal.Parse(item.Quantity.Replace(".", ""));
+                                salesInvoiceCost.Price = decimal.Parse(item.Price.Replace(".", ""));
+                                salesInvoiceCost.Amount = decimal.Parse(item.Amount.Replace(".", ""));
 
-                            //Remove from collection
-                            viewModel.SalesInvoiceCosts.Remove(item);
-                        }
-                        else
-                        {
-                            salesInvoiceCost.Id = item.Id;
-                            salesInvoiceCost.Name = item.Name;
-                            salesInvoiceCost.Description = item.Description;
-                            salesInvoiceCost.Quantity = decimal.Parse(item.Quantity.Replace(".", ""));
-                            salesInvoiceCost.Price = decimal.Parse(item.Price.Replace(".", ""));
-                            salesInvoiceCost.Amount = decimal.Parse(item.Amount.Replace(".", ""));
-
-                            //Add to collection
-                            salesInvoiceCostList.Add(salesInvoiceCost);
+                                //Add to collection
+                                salesInvoiceCostList.Add(salesInvoiceCost);
+                            }
                         }
                     }
 
@@ -155,39 +160,43 @@ namespace MIER.MVC.Controllers
 
                     //SALES INVOICE PAYMENT
                     var salesInvoicePaymentList = new List<SalesInvoicePayment>();
-                    foreach(var item in viewModel.SalesInvoicePayments.ToList())
+
+                    //if additional sales invoice line is created
+                    if (viewModel.SalesInvoicePayments != null)
                     {
-                        var salesInvoicePayment = new SalesInvoicePayment();
-
-                        var id = item.Id;
-                        var isActive = item.IsActive;
-                        var name = item.Amount;
-
-                        if (!isActive)
+                        foreach (var item in viewModel.SalesInvoicePayments.ToList())
                         {
-                            //Existing item
-                            if (id != 0)
+                            var salesInvoicePayment = new SalesInvoicePayment();
+
+                            var id = item.Id;
+                            var isActive = item.IsActive;
+                            var name = item.Amount;
+
+                            if (!isActive)
                             {
-                                //Delete from database
-                                salesInvoicePayment = _salesInvoicePaymentRepo.GetById(id);
-                                _salesInvoicePaymentRepo.Delete(salesInvoicePayment);
+                                //Existing item
+                                if (id != 0)
+                                {
+                                    //Delete from database
+                                    salesInvoicePayment = _salesInvoicePaymentRepo.GetById(id);
+                                    _salesInvoicePaymentRepo.Delete(salesInvoicePayment);
+                                }
+
+                                //Remove from collection
+                                viewModel.SalesInvoicePayments.Remove(item);
                             }
+                            else
+                            {
+                                salesInvoicePayment.Id = item.Id;
+                                salesInvoicePayment.PaymentMethodId = item.PaymentMethodId;
+                                salesInvoicePayment.Date = DateTime.Parse(item.Date);
+                                salesInvoicePayment.Amount = decimal.Parse(item.Amount.Replace(".", ""));
 
-                            //Remove from collection
-                            viewModel.SalesInvoicePayments.Remove(item);
-                        }
-                        else
-                        {
-                            salesInvoicePayment.Id = item.Id;
-                            salesInvoicePayment.PaymentMethodId = item.PaymentMethodId;
-                            salesInvoicePayment.Date = DateTime.Parse(item.Date);
-                            salesInvoicePayment.Amount = decimal.Parse(item.Amount.Replace(".", ""));
-
-                            //Add to collection
-                            salesInvoicePaymentList.Add(salesInvoicePayment);
+                                //Add to collection
+                                salesInvoicePaymentList.Add(salesInvoicePayment);
+                            }
                         }
                     }
-
                     //Add cost list to parent
                     salesInvoice.SalesInvoicePayments = salesInvoicePaymentList;
 
@@ -198,7 +207,7 @@ namespace MIER.MVC.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["Message"] = ex.Message;
+                    TempData["Message"] = "Error : " + ex.Message;
                 }
             }
 

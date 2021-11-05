@@ -72,7 +72,7 @@ $(function () {
     toastr.options.fadeIn = 250;
     //variable message value is assigned on cshtml page 
     if (message) { 
-        if (message.includes("error")) {
+        if (message.includes("Error")) {
             toastr.error(message, "");
         }
         else {
