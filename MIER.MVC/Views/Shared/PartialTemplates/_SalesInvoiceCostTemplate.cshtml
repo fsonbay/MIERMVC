@@ -11,7 +11,7 @@
             @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-3">
         <div class="form-group">
             <label asp-for="Description"></label>
             @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "3" })
@@ -28,18 +28,22 @@
     <div class="col-2">
         <div class="form-group">
             <label asp-for="Price"></label>
-            @Html.TextBoxFor(m => m.Price, new { @class = "form-control input-sm cost-calculation"})
+            @Html.TextBoxFor(m => m.Price, new { @class = "form-control input-sm cost-calculation" })
             @Html.ValidationMessageFor(m => m.Price, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
     <div class="col-2">
         <div class="form-group">
-            <label asp-for="Amount"></label>
-            <div class="input-group">
-                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary cost-amount" })
-                &nbsp;&nbsp;
-                <button id="DeleteCostButton" name="DeleteCost[0]" class="btn btn-text-danger btn-sm delete-cost" title="Delete Cost"><i class="fa fa-trash-alt"></i></button>
-            </div>
+            <label asp-for="CostAmount"></label>
+            @Html.TextBoxFor(m => m.CostAmount, new { @class = "form-control bg-light-primary cost-amount" })
+            @Html.ValidationMessageFor(m => m.CostAmount, String.Empty, new { @class = "text-danger" })
+
+        </div>
+
+    </div>
+    <div class="col-1">
+        <div class="form-group">
+            <button id="DeleteCostButton" name="DeleteCost[0]" class="btn btn-text-danger btn-sm delete-cost" title="Delete Cost"><i class="fa fa-trash-alt"></i></button>
         </div>
     </div>
 </div>

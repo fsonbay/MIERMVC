@@ -102,7 +102,7 @@
 
         var quantityName = 'input[name="SalesInvoiceCosts[' + index + '].Quantity"]';
         var priceName = 'input[name="SalesInvoiceCosts[' + index + '].Price"]';
-        var amountName = 'input[name="SalesInvoiceCosts[' + index + '].Amount"]';
+        var amountName = 'input[name="SalesInvoiceCosts[' + index + '].CostAmount"]';
 
         var quantity = $(quantityName).val().replace(/\./g, '');
         var price = $(priceName).val().replace(/\./g, '');
@@ -148,13 +148,10 @@
         //Cancel default postback
         e.preventDefault();
 
-        //Check if class exist (meaning cost not exist yet)
+        //Check if class exist (meaning payment not exist yet)
         var newItem = $(".payment-template:first-child").clone(true);
         newItem.addClass('payment-set').removeClass('payment-template');
         newItem.show();
-
-        //Add clone
-        _$paymentSets.append(newItem);
 
         //Input Values
         newItem.find(':input').each(function () {
@@ -198,8 +195,22 @@
             }
         });
 
+        //Validation message
+        newItem.find('span').each(function () {
+
+            var name = $(this).attr('data-valmsg-for');
+            $(this).attr('data-valmsg-for', 'SalesInvoicePayments[0].' + name);
+
+        });
+
+        //Add clone
+        _$paymentSets.append(newItem);
+
         //Reorder index
         ReorderPaymentIndex();
+
+        //Reset validator
+        ResetValidator();
 
     });
     _$delPaymentBtn.click(function (e) {
@@ -234,7 +245,7 @@
         var end_pos = i.indexOf(']', start_pos);
         var index = i.substring(start_pos, end_pos);
 
-        var amountName = 'input[name="SalesInvoicePayments[' + index + '].Amount"]';
+        var amountName = 'input[name="SalesInvoicePayments[' + index + '].PaymentAmount"]';
         var amount = $(amountName).val().replace(/\./g, '');
         var formattedAmount = FormatCurrency((amount), '.', ',', '.');
 

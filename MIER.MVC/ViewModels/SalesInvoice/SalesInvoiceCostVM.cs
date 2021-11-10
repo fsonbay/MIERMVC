@@ -22,7 +22,9 @@ namespace MIER.MVC.ViewModels.SalesInvoice
         [Required(ErrorMessage = "* Required")]
         public string Price { get; set; }
 
-        public string Amount { get; set; }
+        [Required(ErrorMessage = "* Required")]
+        [Display(Name = "Amount")]
+        public string CostAmount { get; set; }
 
         public bool IsActive { get; set; }
     }

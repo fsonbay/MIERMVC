@@ -16,16 +16,22 @@
             @Html.LabelFor(m => m.PaymentMethodId)
             @Html.DropDownListFor(m => m.PaymentMethodId, (SelectList)ViewData["PaymentMethod"], "Please select...",
                 new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PaymentMethodId, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
     <div class="col-2">
         <div class="form-group">
-            <label asp-for="Amount"></label>
+            <label asp-for="PaymentAmount"></label>
             <div class="input-group">
-                @Html.TextBoxFor(m => m.Amount, new { @class = "col-8 form-control input-sm payment-calculation payment-amount" })
+                @Html.TextBoxFor(m => m.PaymentAmount, new { @class = "col-8 form-control input-sm payment-calculation payment-amount" })
                 &nbsp;&nbsp;
-                <button id="DeletePaymentButton" name="DeletePayment[0]" class="btn btn-text-danger btn-sm delete-payment" title="Delete Payment"><i class="fa fa-trash-alt"></i></button>
             </div>
+            @Html.ValidationMessageFor(model => model.PaymentAmount, String.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-1">
+        <div class="form-group">
+            <button id="DeletePaymentButton" name="DeletePayment[0]" class="btn btn-text-danger btn-sm delete-payment" title="Delete Payment"><i class="fa fa-trash-alt"></i></button>
         </div>
     </div>
 </div>

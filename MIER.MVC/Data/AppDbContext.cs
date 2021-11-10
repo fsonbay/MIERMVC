@@ -22,7 +22,6 @@ namespace MIER.MVC.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<PaymentMethod> PaymentMethod { get; set; }
 
-
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Vendor> Vendor { get; set; }
 
@@ -31,6 +30,9 @@ namespace MIER.MVC.Data
         public DbSet<SalesInvoice> SalesInvoice { get; set; }
         public DbSet<SalesInvoiceCost> SalesInvoiceCost { get; set; }
         public DbSet<SalesInvoicePayment> SalesInvoicePayment { get; set; }
+
+        public DbSet<Purchase> Purchase { get; set; }
+        public DbSet<PurchaseLine> PurchaseLine { get; set; }
 
     }
 }

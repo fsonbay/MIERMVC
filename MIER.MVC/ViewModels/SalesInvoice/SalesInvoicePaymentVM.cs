@@ -13,9 +13,16 @@ namespace MIER.MVC.ViewModels.SalesInvoice
         public int SalesInvoiceId { get; set; }
 
         [Display(Name = "Payment Method")]
+        [Required(ErrorMessage = "* Required")]
         public int PaymentMethodId { get; set; }
+
+        [Required(ErrorMessage = "* Required")]
         public string Date { get; set; }
-        public string Amount { get; set; }
+
+        [Required(ErrorMessage = "* Required")]
+        [Display(Name = "Amount")]
+        public string PaymentAmount { get; set; }
+
         public bool IsActive { get; set; }
 
         public SelectList PaymentMethodList { get; set; }

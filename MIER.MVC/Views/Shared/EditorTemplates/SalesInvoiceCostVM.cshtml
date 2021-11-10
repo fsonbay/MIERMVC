@@ -36,12 +36,13 @@
     </div>
     <div class="col-2">
         <div class="form-group">
-            <label asp-for="Amount"></label>
+            <label asp-for="CostAmount"></label>
             <div class="input-group">
-                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary cost-amount" })
+                @Html.TextBoxFor(m => m.CostAmount, new { @class = "form-control bg-light-primary cost-amount" })
                 &nbsp;&nbsp;
                 <button id="DeleteCostButton" name="DeleteCost[0]" class="btn btn-text-danger btn-sm delete-cost" title="Delete Cost"><i class="fa fa-trash-alt"></i></button>
             </div>
+            @Html.ValidationMessageFor(m => m.CostAmount, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
 

@@ -147,7 +147,7 @@ namespace MIER.MVC.Controllers
                                 salesInvoiceCost.Description = item.Description;
                                 salesInvoiceCost.Quantity = decimal.Parse(item.Quantity.Replace(".", ""));
                                 salesInvoiceCost.Price = decimal.Parse(item.Price.Replace(".", ""));
-                                salesInvoiceCost.Amount = decimal.Parse(item.Amount.Replace(".", ""));
+                                salesInvoiceCost.Amount = decimal.Parse(item.CostAmount.Replace(".", ""));
 
                                 //Add to collection
                                 salesInvoiceCostList.Add(salesInvoiceCost);
@@ -170,7 +170,7 @@ namespace MIER.MVC.Controllers
 
                             var id = item.Id;
                             var isActive = item.IsActive;
-                            var name = item.Amount;
+                            var name = item.PaymentAmount;
 
                             if (!isActive)
                             {
@@ -190,7 +190,7 @@ namespace MIER.MVC.Controllers
                                 salesInvoicePayment.Id = item.Id;
                                 salesInvoicePayment.PaymentMethodId = item.PaymentMethodId;
                                 salesInvoicePayment.Date = DateTime.Parse(item.Date);
-                                salesInvoicePayment.Amount = decimal.Parse(item.Amount.Replace(".", ""));
+                                salesInvoicePayment.Amount = decimal.Parse(item.PaymentAmount.Replace(".", ""));
 
                                 //Add to collection
                                 salesInvoicePaymentList.Add(salesInvoicePayment);
@@ -264,7 +264,7 @@ namespace MIER.MVC.Controllers
                             Description = item.Description,
                             Price = item.Price.ToString("N0"),
                             Quantity = item.Quantity.ToString("N0"),
-                            Amount = item.Amount.ToString("N0"),
+                            CostAmount = item.Amount.ToString("N0"),
                             IsActive = true
                         };
 
@@ -287,7 +287,7 @@ namespace MIER.MVC.Controllers
                             SalesInvoiceId = item.SalesInvoiceId,
                             PaymentMethodId = item.PaymentMethodId,
                             Date = item.Date.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture),
-                            Amount = item.Amount.ToString("N0"),
+                            PaymentAmount = item.Amount.ToString("N0"),
                             IsActive = true
                         };
 
