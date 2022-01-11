@@ -222,7 +222,7 @@ namespace MIER.MVC.Controllers
             var salesInvoicePaymentVMList = new List<SalesInvoicePaymentVM>();
 
             //GET LOOKUP LISTS (PAYMENT METHOD)
-            var paymentMethod = _paymentMethodRepo.GetAllActive().OrderBy(m => m.Name);
+            var paymentMethod = _paymentMethodRepo.GetInsActive().OrderBy(m => m.Name);
             ViewData["PaymentMethod"] = new SelectList(paymentMethod, "Id", "Name");
 
             //EDIT MODE

@@ -11,7 +11,7 @@ namespace MIER.MVC.Data.Repos
         private readonly AppDbContext _context;
 
         public PaymentMethodRepo(AppDbContext context)
-    : base(context)
+            : base(context)
         {
             _context = context;
         }
@@ -23,5 +23,22 @@ namespace MIER.MVC.Data.Repos
                 .ToList();
             return result;
         }
+
+        public List<PaymentMethod> GetInsActive()
+        {
+            var result = _context.PaymentMethod
+                .Where(m => m.IsActive == true && m.In == true)
+                .ToList();
+            return result;
+        }
+
+        public List<PaymentMethod> GetOutsActive()
+        {
+            var result = _context.PaymentMethod
+                .Where(m => m.IsActive == true && m.Out == true)
+                .ToList();
+            return result;
+        }
+
     }
 }

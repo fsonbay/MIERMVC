@@ -58,6 +58,8 @@ namespace MIER.MVC.Controllers
                     Id = item.Id,
                     Name = item.Name,
                     Code = item.Code,
+                    In = item.In,
+                    Out = item.Out,
                     IsActive = item.IsActive,
                     InsertBy = item.InsertBy,
                     InsertTime = item.InsertTime,
@@ -90,6 +92,8 @@ namespace MIER.MVC.Controllers
                     {
                         Name = paymentMethodVM.Name,
                         Code = paymentMethodVM.Code,
+                        In = paymentMethodVM.In,
+                        Out = paymentMethodVM.Out,
                         IsActive = paymentMethodVM.IsActive,
                         InsertBy = _userManager.GetUserName(User),
                         InsertTime = DateTime.Now,
@@ -117,6 +121,8 @@ namespace MIER.MVC.Controllers
                 Id = paymentMethod.Id,
                 Name = paymentMethod.Name,
                 Code = paymentMethod.Code,
+                In = paymentMethod.In,
+                Out = paymentMethod.Out,
                 IsActive = paymentMethod.IsActive
             };
 
@@ -136,6 +142,8 @@ namespace MIER.MVC.Controllers
 
                     paymentMethod.Name = paymentMethodVM.Name;
                     paymentMethod.Code = paymentMethodVM.Code;
+                    paymentMethod.In = paymentMethodVM.In;
+                    paymentMethod.Out = paymentMethodVM.Out;
                     paymentMethod.IsActive = paymentMethodVM.IsActive;
                     paymentMethod.UpdateBy = _userManager.GetUserName(User);
                     paymentMethod.UpdateTime = DateTime.Now;

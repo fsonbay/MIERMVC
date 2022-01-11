@@ -35,6 +35,15 @@ namespace MIER.MVC.Data.Repos
             return result;
         }
 
+        public List<SalesOrder> GetOpenActive()
+        {
+            var result = _context.SalesOrder
+                .Where(m => m.IsActive == true && m.ProductionStatusId != 6)
+                .Include(s => s.Customer)
+                .ToList();
+            return result;
+        }
+
         public List<SalesOrder> GetAllActiveIncludes()
         {
             var result = _context.SalesOrder

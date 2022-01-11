@@ -4,14 +4,16 @@ using MIER.MVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MIER.MVC.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211119055920_mtrl")]
+    partial class mtrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,9 +245,6 @@ namespace MIER.MVC.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("TypesName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(50)");
 
@@ -304,9 +303,6 @@ namespace MIER.MVC.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(2)");
 
-                    b.Property<bool>("In")
-                        .HasColumnType("bit");
-
                     b.Property<string>("InsertBy")
                         .HasColumnType("nvarchar(50)");
 
@@ -319,9 +315,6 @@ namespace MIER.MVC.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("Out")
-                        .HasColumnType("bit");
 
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(50)");
@@ -426,9 +419,6 @@ namespace MIER.MVC.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("SalesOrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(50)");
 
@@ -443,37 +433,6 @@ namespace MIER.MVC.Data.Migrations
                     b.HasIndex("VendorId");
 
                     b.ToTable("Purchase");
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.PurchaseCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("InsertBy")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("InsertTime")
-                        .HasColumnType("datetime");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PurchaseCategory");
                 });
 
             modelBuilder.Entity("MIER.MVC.Models.PurchaseLine", b =>

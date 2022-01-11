@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MIER.MVC.Models
 {
-    public class PaymentMethod : IEntity
+    public class Material : IEntity
     {
         [Column(TypeName = "int")]
         public int Id { get; set; }
@@ -16,17 +16,8 @@ namespace MIER.MVC.Models
         [Required]
         public string Name { get; set; }
 
-        [Column(TypeName = "varchar(2)")]
-        [Required]
-        public string Code { get; set; }
+        public string TypesName { get; set; }
 
-        [Column(TypeName = "bit")]
-        public bool In { get; set; }
-
-        [Column(TypeName = "bit")]
-        public bool Out { get; set; }
-
-        [Column(TypeName = "bit")]
         public bool IsActive { get; set; }
 
         [Column(TypeName = "datetime")]
@@ -40,5 +31,7 @@ namespace MIER.MVC.Models
 
         [Column(TypeName = "nvarchar(50)")]
         public string UpdateBy { get; set; }
+
+        public List<MaterialType> MaterialTypes { get; set; }
     }
 }

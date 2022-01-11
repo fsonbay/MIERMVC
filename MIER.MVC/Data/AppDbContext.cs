@@ -19,20 +19,20 @@ namespace MIER.MVC.Data
         public DbSet<ProductionStatus> ProductionStatus { get; set; }
         public DbSet<CustomerCategory> CustomerCategory { get; set; }
         public DbSet<VendorCategory> VendorCategory { get; set; }
+        public DbSet<PurchaseCategory> PurchaseCategory { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<PaymentMethod> PaymentMethod { get; set; }
-
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Vendor> Vendor { get; set; }
-
         public DbSet<SalesOrder> SalesOrder { get; set; }
         public DbSet<SalesOrderLine> SalesOrderLine { get; set; }
         public DbSet<SalesInvoice> SalesInvoice { get; set; }
         public DbSet<SalesInvoiceCost> SalesInvoiceCost { get; set; }
         public DbSet<SalesInvoicePayment> SalesInvoicePayment { get; set; }
-
         public DbSet<Purchase> Purchase { get; set; }
         public DbSet<PurchaseLine> PurchaseLine { get; set; }
+        public DbSet<Material> Material { get; set; }
+        public DbSet<MaterialType> MaterialType { get; set; }
 
     }
 }

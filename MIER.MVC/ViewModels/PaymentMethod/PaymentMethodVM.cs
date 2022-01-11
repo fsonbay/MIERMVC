@@ -22,6 +22,10 @@ namespace MIER.MVC.ViewModels.PaymentMethod
         [MaxLength(Consts.MaxLength_Code)]
         public string Code { get; set; }
 
+        public bool In { get; set; }
+
+        public bool Out { get; set; }
+
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
 
