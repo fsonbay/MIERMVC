@@ -61,8 +61,9 @@ $(function () {
         placeholder: "Please select...",
         allowClear: true,
         tags: true,
-       
     });
+
+
 
     //TOASTR
     toastr.options.positionClass = 'toast-bottom-right';

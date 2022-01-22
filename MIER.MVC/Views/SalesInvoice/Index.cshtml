@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Invoice Index";
     const string EditLink = "#{#<a title='Edit'  href='/SalesInvoice/Edit/#=Id#'><i class='fa fa-pen text-theme'></i></a>#}#";
-
+    const string PrintLink = "#{#<a title='Print'  href='/SalesInvoice/Print/#=Id#'><i class='fa fa-print text-theme'></i></a>#}#";
 }
 
 <!--begin:PageHeader-->
@@ -84,11 +84,11 @@
                                 {
                                     columns.Bound(d => d.Id)
                                         .HtmlAttributes(new { style = "text-align: center;" })
-                                        .ClientTemplate(string.Format("{0}", EditLink))
+                                        .ClientTemplate(string.Format("{0} &nbsp;&nbsp; &nbsp; {1}", EditLink, PrintLink))
                                         .Filterable(false)
                                         .Sortable(false)
                                         .Groupable(false)
-                                        .Width(60)
+                                        .Width(80)
                                         .Title(" ");
 
                                     columns.Bound(m => m.Id).Width(60)

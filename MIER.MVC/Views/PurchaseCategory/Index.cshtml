@@ -1,9 +1,9 @@
-﻿@using MIER.MVC.ViewModels.Purchase
+﻿@using MIER.MVC.ViewModels.PurchaseCategory
 
 
 @{
-    ViewData["Title"] = "Purchase Index";
-    const string EditLink = "#{#<a title='Edit'  href='/Purchase/Edit/#=Id#'><i class='fa fa-pen text-theme'></i></a>#}#";
+    ViewData["Title"] = "Purchase Category Index";
+    const string EditLink = "#{#<a title='Edit' class='text-primary' href='/PurchaseCategory/Edit/#=Id#'><i class='fa fa-pen text-theme'></i></a>#}#";
 
 }
 
@@ -13,7 +13,7 @@
         <!--begin:PageInfo-->
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Page Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Purchase</h5>
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Purchase Category</h5>
             <!--end::Page Title-->
             <!--begin::Actions-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
@@ -24,7 +24,8 @@
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
             <!--begin::Actions-->
-            <a asp-controller="Purchase" asp-action="Create" class="btn btn-light-danger btn-sm"><i class="fa fa-plus-circle"></i>Create Purchase</a>
+            <a asp-controller="PurchaseCategory" asp-action="Create" class="btn btn-light-primary btn-sm"><i class="fa fa-plus-circle"></i>Create Purchase Category</a>
+
             <!--end::Actions-->
         </div>
         <!--end::Toolbar-->
@@ -48,7 +49,7 @@
                                     <div class="input-group">
                                         <input type="text" id="ListSearch" class="form-control" placeholder="Search...">
                                         <span class="input-group-btn">
-                                            <button id="GetListButton" class="btn btn-light-danger"><i class="fa fa-search fa-sm"></i></button>
+                                            <button id="GetListButton" class="btn btn-primary ml-2"><i class="fa fa-search fa-sm"></i></button>
                                         </span>
                                         <span class="input-group-btn">
                                             <button id="ClearSearchButton" class="btn btn-link">Clear search</button>
@@ -59,7 +60,7 @@
                         </div>
                         <!--end:Search-->
                         <!--begin:Grid-->
-                        <div class="row align-items-end mb-4">
+                        <div class="row align-items-center mb-4">
                             <!--begin:GridExport-->
                             <div class="col-6 d-flex">
                                 <div class="row">
@@ -78,7 +79,7 @@
                             <!--end:GridFilter-->
                             <!--begin:GridData-->
                             <div>
-                                @(Html.Kendo().Grid<PurchasesVM>()
+                                @(Html.Kendo().Grid<PurchaseCategoriesVM>()
                                 .Name("ListGrid")
                                 .Columns(columns =>
                                 {
@@ -113,15 +114,8 @@
                                         .HtmlAttributes(new { @class = "text text-muted" })
                                         .HeaderHtmlAttributes(new { @class = "text text-muted" })
                                         .Hidden();
-
-                                    columns.Bound(m => m.Date).Format("{0:dd-MM-yyyy}");
-                                    columns.Bound(m => m.Number);
-                                    columns.Bound(m => m.Vendor);
-                                    columns.Bound(m => m.Payment);
-                                    columns.Bound(m => m.RelatedOrder);
-                                    columns.Bound(m => m.LinesName);
-                                    columns.Bound(m => m.Amount);
-
+                                    columns.Bound(m => m.Name);
+                                    columns.Bound(m => m.IsActive);
 
                                 })
                                 .HtmlAttributes(new { style = "height:10%; width:auto;" })
@@ -145,9 +139,10 @@
                                     model.Id(p => p.Id);
                                 })
 
-                                .Read(read => read.Action("List", "Purchase").Data("FilterData"))
+                                .Read(read => read.Action("List", "PurchaseCategory").Data("FilterData"))
                                 .Sort(sort => sort.Add("Id").Ascending()))
                                 .Events(e => e.DataBound("OnDataBound")))
+
                             </div>
                             <!--end:GridData-->
                         </div>

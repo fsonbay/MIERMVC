@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "Create Purchase";
+
 }
 
 <!--begin:PageHeader-->
@@ -57,13 +58,12 @@
                                             <div class="col-4">
                                                 <label asp-for="VendorId"></label>
                                                 <div>
-                                                    @Html.DropDownListFor(m => m.VendorId, Model.VendorList, "Please select...",
+                                                    @Html.DropDownListFor(m => m.VendorId, (SelectList)ViewData["Vendor"], "Please select...",
                                                             new { @class = "form-control col-8 select2" })
                                                     @Html.ValidationMessageFor(model => model.VendorId, String.Empty, new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-4">
-                              
                                             </div>
                                         </div>
                                     </div>
@@ -72,15 +72,15 @@
                                             <div class="col-4">
                                                 <label asp-for="SalesOrderId"></label>
                                                 <div>
-                                                    @Html.DropDownListFor(m => m.SalesOrderId, Model.OpenOrderList, "Please select...",
+                                                    @Html.DropDownListFor(m => m.SalesOrderId, (SelectList)ViewData["OpenOrder"], "Please select...",
                                                             new { @class = "form-control col-8 select2" })
-                                                    @Html.ValidationMessageFor(model => model.SalesOrderId, String.Empty, new { @class = "text-danger" })
+                                                    @*@Html.ValidationMessageFor(model => model.SalesOrderId, String.Empty, new { @class = "text-danger" })*@
                                                 </div>
                                             </div>
                                             <div class="col-4">
                                                 <label asp-for="PaymentMethodId"></label>
                                                 <div>
-                                                    @Html.DropDownListFor(m => m.PaymentMethodId, Model.PaymentMethodList, "Please select...",
+                                                    @Html.DropDownListFor(m => m.PaymentMethodId, (SelectList)ViewData["PaymentMethod"], "Please select...",
                                                             new { @class = "form-control col-8 select2" })
                                                     @Html.ValidationMessageFor(model => model.PaymentMethodId, String.Empty, new { @class = "text-danger" })
                                                 </div>
@@ -97,7 +97,6 @@
                                             @Html.EditorFor(model => model.PurchaseLines)
                                         </div>
                                     </div>
-
                                     <div class="form-group mr-5">
                                         <div class="row justify-content-end">
                                             <div>
@@ -134,7 +133,8 @@
 <!--begin:PageScript-->
 @section Scripts {
     <script type="text/javascript" src="~/js/Purchase/createEdit.js"></script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script type="text/javascript">
         //Page Message

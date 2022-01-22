@@ -23,9 +23,7 @@
             <label asp-for="PaymentAmount"></label>
             @Html.TextBoxFor(m => m.PaymentAmount, new { @class = "col-12 form-control payment-calculation payment-amount" })
             @Html.ValidationMessageFor(model => model.PaymentAmount, String.Empty, new { @class = "text-danger" })
-
         </div>
-
     </div>
     <div class="col-1">
         <div class="form-group">

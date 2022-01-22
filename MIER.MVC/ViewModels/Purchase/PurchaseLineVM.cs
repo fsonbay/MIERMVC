@@ -18,10 +18,8 @@ namespace MIER.MVC.ViewModels.Purchase
         public string Description { get; set; }
 
         [Display(Name = "Category")]
-        public int CategoryId { get; set; }
-
-        [Display(Name = "SubCategory")]
-        public int SubCategoryId { get; set; }
+        [Required(ErrorMessage = "* Required")]
+        public int PurchaseCategoryId { get; set; }
 
         [Required(ErrorMessage = "* Required")]
         public string Quantity { get; set; }

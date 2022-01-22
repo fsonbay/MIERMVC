@@ -20,7 +20,10 @@ namespace MIER.MVC.Data.Repos
         public List<Purchase> GetAllIncludes()
         {
             var result = _context.Purchase
-                .Include(s => s.Vendor)
+                .Include(m => m.Vendor)
+                .Include(s => s.PaymentMethod)
+                .Include(m => m.SalesOrder)
+                .Include(m => m.SalesOrder.Customer)
                 .ToList();
 
             return result;
@@ -39,9 +42,26 @@ namespace MIER.MVC.Data.Repos
             var result = _context.Purchase
                 .Where(m => m.IsActive == true)
                 .Include(s => s.Vendor)
+                .Include(s => s.PaymentMethod)
+                .Include(m => m.SalesOrder)
+                .Include(m => m.SalesOrder.Customer)
                 .ToList();
             return result;
         }
 
+        public Purchase GetByIdIncludes(int id)
+        {
+            var result = _context.Purchase
+                .Include(m => m.PurchaseLines)
+                .FirstOrDefault(m => m.Id == id);
+            return result;
+        }
+
+        public int CountVendorOrder(int vendorId)
+        {
+            return _context.Purchase
+                .Where(p => p.VendorId == vendorId)
+                .Count();
+        }
     }
 }

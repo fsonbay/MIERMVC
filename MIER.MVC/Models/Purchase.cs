@@ -18,7 +18,11 @@ namespace MIER.MVC.Models
 
         [Column(TypeName = "int")]
         [ForeignKey("Sales Order")]
-        public int SalesOrderId { get; set; }
+        public int? SalesOrderId { get; set; }
+
+        [Column(TypeName = "int")]
+        [ForeignKey("PaymentMethod")]
+        public int PaymentMethodId { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
         [Required(ErrorMessage = "* Required")]
@@ -52,6 +56,9 @@ namespace MIER.MVC.Models
         public List<PurchaseLine> PurchaseLines { get; set; }
 
         public Vendor Vendor { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
+
+        public SalesOrder SalesOrder { get; set; }
 
     }
 }

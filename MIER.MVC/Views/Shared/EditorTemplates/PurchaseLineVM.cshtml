@@ -20,16 +20,12 @@
             <span class="form-text text-muted">Bahan, ketebalan, dimensi</span>
         </div>
     </div>
-    <div class="col-1">
+    <div class="col-2">
+        <label asp-for="PurchaseCategoryId"></label>
         <div class="form-group">
-            <label asp-for="CategoryId"></label>
-            @Html.TextBoxFor(m => m.CategoryId, new { @class = "form-control m-input"})
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="form-group">
-            <label asp-for="SubCategoryId"></label>
-            @Html.TextBoxFor(m => m.SubCategoryId, new { @class = "form-control m-input" })
+            @Html.DropDownListFor(m => m.PurchaseCategoryId, (SelectList)ViewData["PurchaseCategory"], "",
+            new { @class = "form-control col-8" })
+            @Html.ValidationMessageFor(model => model.PurchaseCategoryId, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
     <div class="col-1">

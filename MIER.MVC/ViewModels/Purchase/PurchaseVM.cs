@@ -20,8 +20,7 @@ namespace MIER.MVC.ViewModels.Purchase
         public int PaymentMethodId { get; set; }
 
         [Display(Name = "Related Order")]
-        [Required(ErrorMessage = "* Required")]
-        public int SalesOrderId { get; set; }
+        public int? SalesOrderId { get; set; }
 
         public string Number { get; set; }
 
@@ -39,12 +38,6 @@ namespace MIER.MVC.ViewModels.Purchase
         public DateTime UpdateTime { get; set; }
 
         public string UpdateBy { get; set; }
-
-        public SelectList VendorList { get; set; }
-
-        public SelectList PaymentMethodList { get; set; }
-
-        public SelectList OpenOrderList { get; set; }
 
         public List<PurchaseLineVM> PurchaseLines { get; set; }
     }

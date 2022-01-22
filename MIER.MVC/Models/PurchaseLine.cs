@@ -24,6 +24,10 @@ namespace MIER.MVC.Models
         [Column(TypeName = "nvarchar(max)")]
         public string Description { get; set; }
 
+        [Column(TypeName = "int")]
+        [ForeignKey("PurchaseCategory")]
+        public int PurchaseCategoryId { get; set; }
+
         [Required(ErrorMessage = "* Required")]
         public decimal Quantity { get; set; }
 

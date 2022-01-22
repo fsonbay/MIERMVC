@@ -95,6 +95,11 @@ namespace MIER.MVC.Controllers
             var viewModel = ConfigureVM(model);
             return View(viewModel);
         }
+        public IActionResult Print(int id)
+        {
+            return View();
+        }
+
 
         [HttpPost]
         public IActionResult Update(SalesInvoiceVM viewModel)

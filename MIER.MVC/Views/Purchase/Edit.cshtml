@@ -1,5 +1,146 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
+@using MIER.MVC.ViewModels.Purchase
+@model PurchaseVM
+
 @{
+    ViewData["Title"] = "Edit Purchase";
 }
+
+<!--begin:PageHeader-->
+<div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin:PageInfo-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Page Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Purchase</h5>
+            <!--end::Page Title-->
+            <!--begin:Actions-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
+            <span class="text-muted font-weight-bold mr-4">Create</span>
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
+            <div class="col-offset-1">
+                <a asp-controller="Purchase" asp-action="Index" class="btn btn-light-danger btn-sm"><i class="fa fa-arrow-circle-left"></i>Back to Index</a>
+            </div>
+            <!--end:Actions-->
+        </div>
+        <!--end:PageInfo-->
+
+    </div>
+</div>
+<!--end:PageHeader-->
+<!--begin:PageContent-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+
+        <!--begin::Row-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom card-stretch gutter-b">
+                    <div class="card-body">
+                        <!--begin:Fields-->
+                        <div class="row align-items-center mb-4">
+                            <div class="col-12">
+                                <!--begin:Form-->
+                                <form asp-controller="Purchase" asp-action="Update" id="FormPurchase">
+                                    @Html.HiddenFor(m => m.Id)
+                                    @Html.HiddenFor(m => m.Number)
+                                    @Html.HiddenFor(m => m.IsActive)
+                                    <!--begin:Fields-->
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label asp-for="Date"></label>
+                                                <div>
+                                                    @Html.TextBoxFor(model => model.Date, "{0:dd-mm-yyyy}", new { @class = "form-control col-8 date-picker" })
+                                                    @Html.ValidationMessageFor(model => model.Date, String.Empty, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <label asp-for="VendorId"></label>
+                                                <div>
+                                                    @Html.DropDownListFor(m => m.VendorId, (SelectList)ViewData["Vendor"], "Please select...",
+                                                            new { @class = "form-control col-8 select2" })
+                                                    @Html.ValidationMessageFor(model => model.VendorId, String.Empty, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label asp-for="SalesOrderId"></label>
+                                                <div>
+                                                    @Html.DropDownListFor(m => m.SalesOrderId, (SelectList)ViewData["OpenOrder"], "Please select...",
+                                                            new { @class = "form-control col-8 select2" })
+                                                    @Html.ValidationMessageFor(model => model.SalesOrderId, String.Empty, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <label asp-for="PaymentMethodId"></label>
+                                                <div>
+                                                    @Html.DropDownListFor(m => m.PaymentMethodId, (SelectList)ViewData["PaymentMethod"], "",
+                                                            new { @class = "form-control col-8" })
+                                                    @Html.ValidationMessageFor(model => model.PaymentMethodId, String.Empty, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="input-group">
+                                            <div class="form-group">
+                                                <button id="AddLineButton" class="btn btn-light-danger btn-sm" title="Add Line"><i class="fa fa-plus-circle"></i> Add Line</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-horizontal line-sets">
+                                            @Html.EditorFor(model => model.PurchaseLines)
+                                        </div>
+                                    </div>
+                                    <div class="form-group mr-5">
+                                        <div class="row justify-content-end">
+                                            <div>
+                                                <label asp-for="Amount"></label>
+                                                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control bg-light-primary total-amount", @readonly = true })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--begin:Fields-->
+                                    <!--begin:Action-->
+                                    <div class="form-group">
+                                        <div class="col-md-offset-1 col-md-10">
+                                            <button class="btn btn-light btn-sm" type="reset">Cancel</button>
+                                            <button type="submit" class="btn btn-light-danger btn-sm"><i class="fa fa-save"></i><span>Update</span></button>
+                                        </div>
+                                    </div>
+                                    <!--begin:Action-->
+
+                                </form>
+                                <!--end:Form-->
+                            </div>
+                        </div>
+                        <!--end:Fields-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Row-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end:PageContent-->
+<!--begin:PageScript-->
+@section Scripts {
+    <script type="text/javascript" src="~/js/Purchase/createEdit.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        //Page Message
+        var message = '@TempData["Message"]';
+    </script>
+
+}
+
+<!--end:PageScript-->
