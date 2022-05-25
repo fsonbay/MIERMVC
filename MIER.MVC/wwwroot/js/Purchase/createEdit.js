@@ -70,7 +70,9 @@
     });
 
     //SALES ORDER LINES
+
     var wrapper = $sets;
+
     _$addLineBtn.click(function (e) {
 
         //Cancel default postback

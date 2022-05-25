@@ -16,6 +16,7 @@ $(function () {
     var _$datePicker = $('.date-picker');
 
 
+
     _$getList.click(function e() {
         _$listGrid.data('kendoGrid').dataSource.read();
     });
@@ -48,6 +49,9 @@ $(function () {
     });
 
 
+    //Implement culture for Kendo controls
+    kendo.culture('id-ID');
+
     //SELECT2
     _$select2.select2({
         placeholder: "Please select...",
@@ -62,7 +66,6 @@ $(function () {
         allowClear: true,
         tags: true,
     });
-
 
 
     //TOASTR

@@ -6,6 +6,7 @@
     @Html.HiddenFor(m => m.IsActive, new { @class = "isActive" })
 
     <div class="col-2">
+  
         <div class="form-group">
             <label asp-for="Name"></label>
             @Html.TextBoxFor(m => m.Name, new { @class = "form-control m-input", @list = "browsers" })

@@ -24,6 +24,9 @@ namespace MIER.MVC.Controllers
         private CustomerRepo _customerRepo;
         private ProductionStatusRepo _productionStatusRepo;
         private ProductRepo _productRepo;
+       // private MachineRepo machineRepo;
+
+
 
         public SalesOrderController(AppDbContext context,
             UserManager<AppUser> userManager)
@@ -299,6 +302,10 @@ namespace MIER.MVC.Controllers
             //GET LOOKUP LISTS (CUSTOMER & PRODUCTION STATUS)
             var customerList = new SelectList(_customerRepo.GetAllActive().OrderBy(m => m.Name), "Id", "Name");
             var productionStatusList = new SelectList(_productionStatusRepo.GetAllActive().OrderBy(m => m.Id), "Id", "Name");
+            var materialList = new SelectList(_productionStatusRepo.GetAllActive().OrderBy(m => m.Id), "Id", "Name");
+
+
+
 
             //EDIT MODE
             if (model.Id != 0)

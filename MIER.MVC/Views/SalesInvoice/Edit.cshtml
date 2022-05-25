@@ -156,7 +156,9 @@
                                                     <button id="AddCostButton" class="btn btn-light-danger btn-sm" title="Add Cost"><i class="fa fa-plus-circle"></i>Add Cost</button>
                                                     <label class="text-muted">(CTRL L)</label>
                                                 </div>
+
                                                 <div class="form-horizontal cost-sets">
+
                                                     @if (Model.SalesInvoiceCosts.Count == 0)
                                                     {
                                                         @await Html.PartialAsync("~/Views/Shared/PartialTemplates/_SalesInvoiceCostTemplate.cshtml", new MIER.MVC.ViewModels.SalesInvoice.SalesInvoiceCostVM())

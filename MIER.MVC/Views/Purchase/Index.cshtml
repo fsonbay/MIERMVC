@@ -7,6 +7,8 @@
 
 }
 
+
+
 <!--begin:PageHeader-->
 <div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
@@ -116,13 +118,24 @@
 
                                     columns.Bound(m => m.Date).Format("{0:dd-MM-yyyy}");
                                     columns.Bound(m => m.Number);
+                                    // .Format("{0:n0}");
+
+                                    //.ClientTemplate("#= kendo.format('{0:N0}', parseInt(Actual)) #");
+
+                                    //.ClientGroupFooterTemplate(@<text>Total Count: @data</text>);
+                                    // .ClientFooterTemplate("Total Count: #=count#");
+                                    //.ClientGroupFooterTemplate("Count: #=count#");
                                     columns.Bound(m => m.Vendor);
                                     columns.Bound(m => m.Payment);
                                     columns.Bound(m => m.RelatedOrder);
                                     columns.Bound(m => m.LinesName);
-                                    columns.Bound(m => m.Amount);
+                                    columns.Bound(m => m.Amount)
+                                         .ClientFooterTemplate("Total Sum: #=sum#")
+                                        .Format("{0:n0}");
 
-
+                                    //.ClientGroupFooterTemplate(@<text>Total Count: @data</text>);
+                                    //.ClientFooterTemplate("Total ss:#= calculate() #");
+                                    //.ClientGroupFooterTemplate("Sum: ");
                                 })
                                 .HtmlAttributes(new { style = "height:10%; width:auto;" })
                                 .ColumnMenu(col => col.Filterable(false))
@@ -138,16 +151,23 @@
                                 .Filterable()
                                 .Scrollable()
                                 .DataSource(datasource => datasource
-                                .Ajax()
-                                .PageSize(10)
-                                .Model(model =>
-                                {
-                                    model.Id(p => p.Id);
-                                })
+                                    .Ajax()
+                                    .Aggregates(aggregates =>
+                                    {
+                                        //aggregates.Add(p => p.UnitsInStock).Min().Max().Count();
+                                        aggregates.Add(p => p.Amount).Sum();
+                                        aggregates.Add(p => p.Amount).Count();
+                                        //aggregates.Add(p => p.Number).Count();
+                                    })
+                                    .PageSize(10)
+                                    .Model(model =>
+                                    {
+                                        model.Id(p => p.Id);
+                                    })
 
-                                .Read(read => read.Action("List", "Purchase").Data("FilterData"))
-                                .Sort(sort => sort.Add("Id").Ascending()))
-                                .Events(e => e.DataBound("OnDataBound")))
+                                    .Read(read => read.Action("List", "Purchase").Data("FilterData"))
+                                    .Sort(sort => sort.Add("Id").Ascending()))
+                                    .Events(e => e.DataBound("OnDataBound")))
                             </div>
                             <!--end:GridData-->
                         </div>
@@ -192,6 +212,18 @@
                 }
             })
         }
+
+
+
+
+function calculate(e) {
+
+    var result = '@TempData["123"]';
+        //"xxx";
+        //p.UnitPrice * p.Quantity * p.Tax;
+    return result;
+}
+
 
 
     </script>

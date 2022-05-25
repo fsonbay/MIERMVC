@@ -17,6 +17,12 @@ namespace MIER.MVC.ViewModels.SalesOrder
 
         public string Description { get; set; }
 
+        [Display(Name = "Material")]
+        public int MaterialId { get; set; }
+
+        [Display(Name = "Machine")]
+        public int MachineId { get; set; }
+
         [Required(ErrorMessage = "* Required")]
         public string Quantity { get; set; }
 

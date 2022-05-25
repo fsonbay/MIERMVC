@@ -24,7 +24,7 @@ namespace MIER.MVC.ViewModels.Purchase
         public string LinesName { get; set; }
 
         [Display(Name = "Amount")]
-        public string Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [Display(Name = "Active")]
         public bool IsActive { get; set; }

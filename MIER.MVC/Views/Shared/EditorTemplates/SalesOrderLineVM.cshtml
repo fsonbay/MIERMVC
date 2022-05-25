@@ -5,7 +5,7 @@
     @Html.HiddenFor(m => m.Id, new { @class = "line-id" })
     @Html.HiddenFor(m => m.IsActive, new { @class = "isActive" })
 
-    <div class="col-3">
+    <div class="col-2">
         <div class="form-group">
             <label asp-for="Name"></label>
             @Html.TextBoxFor(m => m.Name, new { @class = "form-control m-input", @list = "browsers" })
@@ -13,13 +13,30 @@
             @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-3">
         <div class="form-group">
             <label asp-for="Description"></label>
             @Html.TextAreaFor(m => m.Description, new { @class = "form-control m-input", @rows = "3" })
             <span class="form-text text-muted">Bahan, ketebalan, dimensi, finishing</span>
         </div>
     </div>
+
+    <div class="col-1">
+        <div class="form-group">
+            <label asp-for="MaterialId"></label>
+            @*@Html.TextAreaFor(m => m.Description, new { @class = "form-control m-input", @rows = "3" })*@
+            <span class="form-text text-muted">Bahan, ketebalan, dimensi, finishing</span>
+        </div>
+    </div>
+
+    <div class="col-1">
+        <div class="form-group">
+            <label asp-for="MachineId"></label>
+            @*@Html.TextAreaFor(m => m.Description, new { @class = "form-control m-input", @rows = "3" })*@
+            <span class="form-text text-muted">Bahan, ketebalan, dimensi, finishing</span>
+        </div>
+    </div>
+
     <div class="col-1">
         <div class="form-group">
             <label asp-for="Quantity"></label>

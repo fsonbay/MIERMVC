@@ -33,6 +33,7 @@ namespace MIER.MVC.Data
         public DbSet<PurchaseLine> PurchaseLine { get; set; }
         public DbSet<Material> Material { get; set; }
         public DbSet<MaterialType> MaterialType { get; set; }
+        public DbSet<Machine> Machine { get; set; }
 
     }
 }

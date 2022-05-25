@@ -100,7 +100,6 @@ namespace MIER.MVC.Controllers
             return View();
         }
 
-
         [HttpPost]
         public IActionResult Update(SalesInvoiceVM viewModel)
         {

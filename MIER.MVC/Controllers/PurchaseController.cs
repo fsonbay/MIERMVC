@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MIER.MVC.Controllers
@@ -38,8 +39,19 @@ namespace MIER.MVC.Controllers
             _purchaseCategoryRepo = new PurchaseCategoryRepo(context);
         }
 
+        //protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        //{
+        //    if (!string.IsNullOrEmpty(requestContext.HttpContext.Request["culture"]))
+        //    {
+        //        Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo(requestContext.HttpContext.Request["culture"]);
+        //    }
+        //    base.Initialize(requestContext);
+        //}
+
+
         public IActionResult Index()
         {
+            var i = System.Threading.Thread.CurrentThread.CurrentCulture;
             return View();
         }
 
@@ -59,13 +71,13 @@ namespace MIER.MVC.Controllers
             if (listSearch != null)
             {
                 purchaseList = purchaseList.Where(m => m.Number.ToLower().Contains(listSearch.ToLower())
-                                    || m.Vendor.Name.ToLower().Contains(listSearch.ToLower())
-                                    || m.LinesName.ToLower().Contains(listSearch.ToLower())
-                                    || m.PaymentMethod.Name.ToLower().Contains(listSearch.ToLower())
-                                    || m.SalesOrder.Customer.Name.ToLower().Contains(listSearch.ToLower())
-                                    || m.SalesOrder.Customer.Name.ToLower().Contains(listSearch.ToLower())
-                                    || m.SalesOrder.Number.ToLower().Contains(listSearch.ToLower())
-                                    ).ToList();
+                            || m.Vendor.Name.ToLower().Contains(listSearch.ToLower())
+                            || m.LinesName.ToLower().Contains(listSearch.ToLower())
+                            || m.PaymentMethod.Name.ToLower().Contains(listSearch.ToLower())
+                            || m.SalesOrder.Customer.Name.ToLower().Contains(listSearch.ToLower())
+                            || m.SalesOrder.Customer.Name.ToLower().Contains(listSearch.ToLower())
+                            || m.SalesOrder.Number.ToLower().Contains(listSearch.ToLower())
+                            ).ToList();
             }
 
             List<PurchasesVM> purchasesVMList = new List<PurchasesVM>();
@@ -79,7 +91,8 @@ namespace MIER.MVC.Controllers
                     RelatedOrder = string.IsNullOrEmpty(item.SalesOrderId.ToString()) ? "N/A" : item.SalesOrder.Customer.Name + " - " + item.SalesOrder.Number,
                     Payment = string.IsNullOrEmpty(item.PaymentMethodId.ToString()) ? "N/A" : item.PaymentMethod.Name,
                     LinesName = item.LinesName,
-                    Amount = item.Amount.ToString("N0"),
+                    //Amount = item.Amount.ToString("N0"),
+                    Amount = item.Amount,
                     Date = item.Date,
                     IsActive = item.IsActive,
                     InsertBy = item.InsertBy,
@@ -91,7 +104,35 @@ namespace MIER.MVC.Controllers
                 purchasesVMList.Add(purchasesVM);
             }
 
-            return Json(purchasesVMList.ToDataSourceResult(request));
+            TempData["123"] = "666";
+
+            var result = purchasesVMList.ToDataSourceResult(request);
+
+            return Json(new 
+            {
+                Data = result.Data,
+                Total = result.Total,
+                AggregateResults = result.AggregateResults,
+                Errors = result.Errors,
+                myProperty1 = "extra value", // Add the extra value
+            });
+
+
+           // return Json(result);
+
+            //return Json(purchasesVMList.ToDataSourceResult(request));
+
+            //var result /// get the data;
+
+            //var resultFinal = result.ToDataSourceResult(request);
+            //return Json(new
+            //{
+            //    Data = resultFinal.Data,
+            //    Total = resultFinal.Total,
+            //    AggregateResults = resultFinal.AggregateResults,
+            //    Errors = resultFinal.Errors,
+            //    myProperty1 = "extra value", // Add the extra value
+            //});
 
         }
 
