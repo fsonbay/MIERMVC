@@ -24,20 +24,21 @@ namespace MIER.MVC.Controllers
         private CustomerRepo _customerRepo;
         private ProductionStatusRepo _productionStatusRepo;
         private ProductRepo _productRepo;
-       // private MachineRepo machineRepo;
-
-
+        private MachineRepo _machineRepo;
+        private MaterialRepo _materialRepo;
 
         public SalesOrderController(AppDbContext context,
             UserManager<AppUser> userManager)
         {
             _userManager = userManager;
-            _salesOrderRepo = new SalesOrderRepo(context);
-            _salesOrderLineRepo = new SalesOrderLineRepo(context);
-            _salesInvoiceRepo = new SalesInvoiceRepo(context);
-            _customerRepo = new CustomerRepo(context);
-            _productionStatusRepo = new ProductionStatusRepo(context);
-            _productRepo = new ProductRepo(context);
+            _salesOrderRepo = new (context);
+            _salesOrderLineRepo = new (context);
+            _salesInvoiceRepo = new (context);
+            _customerRepo = new (context);
+            _productionStatusRepo = new (context);
+            _productRepo = new (context);
+            _machineRepo = new(context);
+            _materialRepo = new(context);
         }
 
         public IActionResult Index()
@@ -302,10 +303,11 @@ namespace MIER.MVC.Controllers
             //GET LOOKUP LISTS (CUSTOMER & PRODUCTION STATUS)
             var customerList = new SelectList(_customerRepo.GetAllActive().OrderBy(m => m.Name), "Id", "Name");
             var productionStatusList = new SelectList(_productionStatusRepo.GetAllActive().OrderBy(m => m.Id), "Id", "Name");
-            var materialList = new SelectList(_productionStatusRepo.GetAllActive().OrderBy(m => m.Id), "Id", "Name");
+            var machineList = new SelectList(_machineRepo.GetAll().OrderBy(m => m.Id), "Id", "Name");
+            var materialList = new SelectList(_materialRepo.GetAll().OrderBy(m => m.Id), "Id", "Name");
 
-
-
+            ViewData["Machine"] = new SelectList(machineList, "Id", "Name");
+            ViewData["Material"] = new SelectList(materialList, "Id", "Name");
 
             //EDIT MODE
             if (model.Id != 0)

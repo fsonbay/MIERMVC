@@ -23,17 +23,19 @@
 
     <div class="col-1">
         <div class="form-group">
-            <label asp-for="MaterialId"></label>
-            @*@Html.TextAreaFor(m => m.Description, new { @class = "form-control m-input", @rows = "3" })*@
-            <span class="form-text text-muted">Bahan, ketebalan, dimensi, finishing</span>
+            @Html.LabelFor(m => m.MaterialId)
+            @Html.DropDownListFor(m => m.MaterialId, (SelectList)ViewData["Material"], "Please select...",
+                new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MaterialId, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="col-1">
         <div class="form-group">
-            <label asp-for="MachineId"></label>
-            @*@Html.TextAreaFor(m => m.Description, new { @class = "form-control m-input", @rows = "3" })*@
-            <span class="form-text text-muted">Bahan, ketebalan, dimensi, finishing</span>
+            @Html.LabelFor(m => m.MachineId)
+            @Html.DropDownListFor(m => m.MachineId, (SelectList)ViewData["Machine"], "Please select...",
+                new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MachineId, String.Empty, new { @class = "text-danger" })
         </div>
     </div>
 
