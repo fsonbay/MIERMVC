@@ -105,7 +105,7 @@
     <script src="~/kendo/js/kendo.all.js"></script>
     <script src="~/kendo/js/kendo.aspnetmvc.js"></script>
     <script src="~/kendo/js/cultures/kendo.culture.id.js"></script>
- 
+
     <!--end:kendo-->
     <!--begin:toastr-->
     <script src="~/lib/toastr/dist/js/toastr.js"></script>
@@ -202,6 +202,17 @@
                                 </li>
                             }
 
+                            @if (User.IsInRole("Boss"))
+                            {
+                                <li class="menu-item " aria-haspopup="true">
+                                    <a asp-controller="Salary" asp-action="Index" class="menu-link">
+                                        <span class="svg-icon menu-icon">
+                                            <i class="fa fa-handshake-o text-theme" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="menu-text">Salary</span>
+                                    </a>
+                                </li>
+                            }
 
                             <li class="menu-section">
                                 <h4 class="menu-text text-muted">MASTER</h4>
@@ -210,7 +221,7 @@
                             <li class="menu-item " aria-haspopup="true">
                                 <a asp-controller="Customer" asp-action="Index" class="menu-link">
                                     <span class="svg-icon menu-icon">
-                                        <i class="fa fa-users text-theme" aria-hidden="true"></i>
+                                        <i class="fa fa-user text-theme" aria-hidden="true"></i>
                                     </span>
                                     <span class="menu-text">Customer</span>
                                 </a>
@@ -218,12 +229,24 @@
                             <li class="menu-item " aria-haspopup="true">
                                 <a asp-controller="Vendor" asp-action="Index" class="menu-link">
                                     <span class="svg-icon menu-icon">
-                                        <i class="fa fa-users text-theme" aria-hidden="true"></i>
+                                        <i class="fa fa-user-ninja text-theme" aria-hidden="true"></i>
                                     </span>
                                     <span class="menu-text">Vendor</span>
                                 </a>
                             </li>
 
+                            @if (User.IsInRole("Boss"))
+                            {
+                                <li class="menu-item " aria-haspopup="true">
+                                    <a asp-controller="Employee" asp-action="Index" class="menu-link">
+                                        <span class="svg-icon menu-icon">
+                                            <i class="fa fa-hospital-user text-theme" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="menu-text">Employee</span>
+                                    </a>
+                                </li>
+
+                            }
 
                             <li class="menu-section">
                                 <h4 class="menu-text">REFERENCES</h4>
@@ -273,7 +296,7 @@
                                 <li class="menu-item " aria-haspopup="true">
                                     <a asp-controller="ProductionStatus" asp-action="Index" class="menu-link">
                                         <span class="svg-icon menu-icon">
-                                            <i class="fa fa-cogs text-theme" aria-hidden="true"></i>
+                                            <i class="fa fa-random text-theme" aria-hidden="true"></i>
                                         </span>
                                         <span class="menu-text">Production Status</span>
                                     </a>
@@ -294,7 +317,33 @@
                                         <span class="menu-text">Payment Method</span>
                                     </a>
                                 </li>
+                                <li class="menu-item " aria-haspopup="true">
+                                    <a asp-controller="Machine" asp-action="Index" class="menu-link">
+                                        <span class="svg-icon menu-icon">
+                                            <i class="fa fa-cogs text-theme" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="menu-text">Machine</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item " aria-haspopup="true">
+                                    <a asp-controller="Material" asp-action="Index" class="menu-link">
+                                        <span class="svg-icon menu-icon">
+                                            <i class="fa fa-align-justify text-theme" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="menu-text">Material</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item " aria-haspopup="true">
+                                    <a asp-controller="EmployeePosition" asp-action="Index" class="menu-link">
+                                        <span class="svg-icon menu-icon">
+                                            <i class="fa fa-graduation-cap text-theme" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="menu-text">Employee Position</span>
+                                    </a>
+                                </li>
                             }
+
+
                         </ul>
                     </div>
                     <!--end::Menu Container-->
@@ -407,16 +456,16 @@
                 <!--end::Content-->
                 <!--begin::Footer-->
                 <!--<div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">-->
-                    <!--begin::Container-->
-                    <!--<div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">-->
-                        <!--begin::Copyright-->
-                        <div class="text-dark order-2 order-md-1">
-                            <span class="text-muted font-weight-bold mr-2">©2021</span>
-                            <a href="https://polarisbali.com/" target="_blank" class="text-primary text-hover-primary">POLARIS BALI</a>
-                        </div>
-                        <!--end::Copyright-->
-                    <!--</div>-->
-                    <!--end::Container-->
+                <!--begin::Container-->
+                <!--<div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">-->
+                <!--begin::Copyright-->
+                <div class="text-dark order-2 order-md-1">
+                    <span class="text-muted font-weight-bold mr-2">©2021</span>
+                    <a href="https://polarisbali.com/" target="_blank" class="text-primary text-hover-primary">POLARIS BALI</a>
+                </div>
+                <!--end::Copyright-->
+                <!--</div>-->
+                <!--end::Container-->
                 <!--</div>-->
                 <!--end::Footer-->
             </div>

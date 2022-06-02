@@ -1,0 +1,194 @@
+﻿@using MIER.MVC.ViewModels.Machine
+
+
+@{
+    ViewData["Title"] = "Machine Index";
+    const string EditLink = "#{#<a title='Edit'  href='/Machine/Edit/#=Id#'><i class='fa fa-pen text-theme'></i></a>#}#";
+
+}
+
+<!--begin:PageHeader-->
+<div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin:PageInfo-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Page Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Machine</h5>
+            <!--end::Page Title-->
+            <!--begin::Actions-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
+            <span class="text-muted font-weight-bold mr-4">Index</span>
+            <!--end::Actions-->
+        </div>
+        <!--end:PageInfo-->
+        <!--begin::Toolbar-->
+        <div class="d-flex align-items-center">
+            <!--begin::Actions-->
+            <a asp-controller="Machine" asp-action="Create" class="btn btn-theme btn-sm"><i class="fa fa-plus-circle text-white"></i>Create Machine</a>
+
+            <!--end::Actions-->
+        </div>
+        <!--end::Toolbar-->
+    </div>
+</div>
+<!--end:PageHeader-->
+<!--begin:PageContent-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+
+        <!--begin::Row-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom card-stretch gutter-b">
+                    <div class="card-body">
+                        <!--begin:Search-->
+                        <div class="row align-items-center mb-4">
+                            <div class="col-xl-12">
+                                <div class="form-group align-items-center">
+                                    <div class="input-group">
+                                        <input type="text" id="ListSearch" class="form-control" placeholder="Search...">
+                                        <span class="input-group-btn">
+                                            <button id="GetListButton" class="btn btn-theme"><i class="fa fa-search fa-sm text-white"></i></button>
+                                        </span>
+                                        <span class="input-group-btn">
+                                            <button id="ClearSearchButton" class="btn btn-link">Clear search</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end:Search-->
+                        <!--begin:Grid-->
+                        <div class="row align-items-center mb-4">
+                            <!--begin:GridExport-->
+                            <div class="col-6 d-flex">
+                                <div class="row">
+                                    @* IF NEEEDED : EXPORT BUTTONS HERE *@
+                                </div>
+                            </div>
+                            <!--end:GridExport-->
+                            <!--begin:GridFilter-->
+                            <div class="col-6 d-flex justify-content-end">
+                                <label>Show Audit Log</label>
+                                <input id="ShowAuditLogCheckbox" type="checkbox" class="ml-2">
+                                <p class="mr-4 ml-4">|</p>
+                                <label>Show Inactive</label>
+                                <input id="ShowInactiveCheckbox" type="checkbox" class="ml-2">
+                            </div>
+                            <!--end:GridFilter-->
+                            <!--begin:GridData-->
+                            <div>
+                                @(Html.Kendo().Grid<MachinesVM>()
+                                .Name("ListGrid")
+                                .Columns(columns =>
+                                {
+                                    columns.Bound(d => d.Id)
+                                        .HtmlAttributes(new { style = "text-align: center;" })
+                                        .ClientTemplate(string.Format("{0}", EditLink))
+                                        .Filterable(false)
+                                        .Sortable(false)
+                                        .Groupable(false)
+                                        .Width(60)
+                                        .Title(" ");
+
+                                    columns.Bound(m => m.Id).Width(60)
+                                        .HtmlAttributes(new { @class = "text text-muted" })
+                                        .HeaderHtmlAttributes(new { @class = "text text-muted" })
+                                        .Hidden();
+                                    columns.Bound(m => m.InsertBy)
+                                        .HtmlAttributes(new { @class = "text text-muted" })
+                                        .HeaderHtmlAttributes(new { @class = "text text-muted" })
+                                        .Hidden();
+                                    columns.Bound(m => m.InsertTime)
+                                        .Format("{0:dd-MM-yyyy HH:mm:ss}")
+                                        .HtmlAttributes(new { @class = "text text-muted" })
+                                        .HeaderHtmlAttributes(new { @class = "text text-muted" })
+                                        .Hidden();
+                                    columns.Bound(m => m.UpdateBy)
+                                        .HtmlAttributes(new { @class = "text text-muted" })
+                                        .HeaderHtmlAttributes(new { @class = "text text-muted" })
+                                        .Hidden();
+                                    columns.Bound(m => m.UpdateTime)
+                                        .Format("{0:dd-MM-yyyy HH:mm:ss}")
+                                        .HtmlAttributes(new { @class = "text text-muted" })
+                                        .HeaderHtmlAttributes(new { @class = "text text-muted" })
+                                        .Hidden();
+                                    columns.Bound(m => m.Name);
+                                    columns.Bound(m => m.IsActive);
+
+                                })
+                                .HtmlAttributes(new { style = "height:10%; width:auto;" })
+                                .ColumnMenu(col => col.Filterable(false))
+                                .Pageable(p =>
+                                {
+                                    p.PageSizes(new[] { 10, 20, 50, 100 });
+                                })
+                                .Sortable()
+                                .Navigatable()
+                                .Resizable(r => r.Columns(true))
+                                .Reorderable(r => r.Columns(true))
+                                .Groupable(g => g.ShowFooter(false))
+                                .Filterable()
+                                .Scrollable()
+                                .DataSource(datasource => datasource
+                                .Ajax()
+                                .PageSize(10)
+                                .Model(model =>
+                                {
+                                    model.Id(p => p.Id);
+                                })
+
+                                .Read(read => read.Action("List", "Machine").Data("FilterData"))
+                                .Sort(sort => sort.Add("Id").Ascending()))
+                                .Events(e => e.DataBound("OnDataBound")))
+
+                            </div>
+                            <!--end:GridData-->
+                        </div>
+                        <!--end:Grid-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Row-->
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end:PageContent-->
+<!--begin:PageScript-->
+@section Scripts {
+
+    <script type="text/javascript">
+
+        //Page Message
+        var message = '@TempData["Message"]';
+
+        //Kendo grid filter
+        function FilterData() {
+            var listSearch = $("#ListSearch").val();
+            var showInactive = $("#ShowInactiveCheckbox").is(":checked");
+
+            return { listSearch: listSearch, showInactive: showInactive }
+        }
+
+        function OnDataBound() {
+            // get the grid
+            var grid = this;
+            // iterate through each row
+            grid.tbody.find('>tr').each(function () {
+                // get the row item
+                var dataItem = grid.dataItem(this);
+                // check for the condition
+                if (!dataItem.IsActive) {
+                    // add the formatting if condition is met
+                    $(this).addClass('text-muted font-italic');
+                }
+            })
+        }
+
+    </script>
+}
+
+<!--end:PageScript-->

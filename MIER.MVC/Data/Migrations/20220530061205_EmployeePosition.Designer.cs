@@ -4,14 +4,16 @@ using MIER.MVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MIER.MVC.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220530061205_EmployeePosition")]
+    partial class EmployeePosition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,60 +223,6 @@ namespace MIER.MVC.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CustomerCategory");
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ContactPerson")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EmployeePositionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InsertBy")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("InsertTime")
-                        .HasColumnType("datetime");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhotoURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeePositionId");
-
-                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("MIER.MVC.Models.EmployeePosition", b =>
@@ -597,84 +545,6 @@ namespace MIER.MVC.Data.Migrations
                     b.HasIndex("PurchaseId");
 
                     b.ToTable("PurchaseLine");
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.Salary", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Salary");
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.SalaryExtra", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("SalaryExtra");
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.SalaryPayment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("PaymentAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("SalaryPayment");
                 });
 
             modelBuilder.Entity("MIER.MVC.Models.SalesInvoice", b =>
@@ -1065,17 +935,6 @@ namespace MIER.MVC.Data.Migrations
                     b.Navigation("CustomerCategory");
                 });
 
-            modelBuilder.Entity("MIER.MVC.Models.Employee", b =>
-                {
-                    b.HasOne("MIER.MVC.Models.EmployeePosition", "EmployeePosition")
-                        .WithMany()
-                        .HasForeignKey("EmployeePositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EmployeePosition");
-                });
-
             modelBuilder.Entity("MIER.MVC.Models.Purchase", b =>
                 {
                     b.HasOne("MIER.MVC.Models.PaymentMethod", "PaymentMethod")
@@ -1110,39 +969,6 @@ namespace MIER.MVC.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Purchase");
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.Salary", b =>
-                {
-                    b.HasOne("MIER.MVC.Models.Employee", "Employee")
-                        .WithMany("Salaries")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.SalaryExtra", b =>
-                {
-                    b.HasOne("MIER.MVC.Models.Employee", "Employee")
-                        .WithMany("SalaryExtras")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.SalaryPayment", b =>
-                {
-                    b.HasOne("MIER.MVC.Models.Employee", "Employee")
-                        .WithMany("SalaryPayments")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("MIER.MVC.Models.SalesInvoice", b =>
@@ -1276,15 +1102,6 @@ namespace MIER.MVC.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MIER.MVC.Models.Employee", b =>
-                {
-                    b.Navigation("Salaries");
-
-                    b.Navigation("SalaryExtras");
-
-                    b.Navigation("SalaryPayments");
                 });
 
             modelBuilder.Entity("MIER.MVC.Models.Purchase", b =>

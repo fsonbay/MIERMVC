@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MIER.MVC.ViewModels.Material
+namespace MIER.MVC.ViewModels.Machine
 {
-    public class MaterialVM
+    public class MachineVM
     {
         public bool IsEditMode => Id.HasValue;
 
@@ -14,8 +14,8 @@ namespace MIER.MVC.ViewModels.Material
 
         public string Name { get; set; }
 
+
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
-
     }
 }

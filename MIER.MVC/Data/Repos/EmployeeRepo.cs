@@ -7,39 +7,42 @@ using System.Threading.Tasks;
 
 namespace MIER.MVC.Data.Repos
 {
-    public class MaterialRepo : AppBaseRepo<Material>
+    public class EmployeeRepo : AppBaseRepo<Employee>
     {
         private readonly AppDbContext _context;
 
-        public MaterialRepo(AppDbContext context)
+        public EmployeeRepo(AppDbContext context)
             : base(context)
         {
             _context = context;
         }
 
-        public List<Material> GetAllIncludes()
+        public List<Employee> GetAllIncludes()
         {
-            var result = _context.Material
+            var result = _context.Employee
+                .Include(s => s.EmployeePosition)
                 .ToList();
 
             return result;
         }
 
-        public List<Material> GetAllActive()
+        public List<Employee> GetAllActive()
         {
-            var result = _context.Material
+            var result = _context.Employee
                 .Where(m => m.IsActive == true)
                 .ToList();
             return result;
         }
 
-        public List<Material> GetAllActiveIncludes()
+        public List<Employee> GetAllActiveIncludes()
         {
-            var result = _context.Material
+            var result = _context.Employee
                 .Where(m => m.IsActive == true)
+                .Include(s => s.EmployeePosition)
                 .ToList();
             return result;
         }
+
 
     }
 }

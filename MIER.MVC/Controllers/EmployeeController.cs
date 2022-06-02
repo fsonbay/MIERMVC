@@ -2,11 +2,12 @@
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MIER.MVC.Areas.Identity.Data;
 using MIER.MVC.Data;
 using MIER.MVC.Data.Repos;
 using MIER.MVC.Models;
-using MIER.MVC.ViewModels.Material;
+using MIER.MVC.ViewModels.Employee;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +15,18 @@ using System.Threading.Tasks;
 
 namespace MIER.MVC.Controllers
 {
-    public class MaterialController : Controller
+    public class EmployeeController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        private MaterialRepo _materialRepo;
+        private EmployeeRepo _employeeRepo;
+        private EmployeePositionRepo _employeePositionRepo;
 
-        public MaterialController(AppDbContext context,
-            UserManager<AppUser> userManager)
+        public EmployeeController(AppDbContext context,
+        UserManager<AppUser> userManager)
         {
             _userManager = userManager;
-            _materialRepo = new(context);
+            _employeeRepo = new(context);
+            _employeePositionRepo = new(context);
         }
 
         public IActionResult Index()
@@ -33,70 +36,74 @@ namespace MIER.MVC.Controllers
 
         public IActionResult List([DataSourceRequest] DataSourceRequest request, string listSearch, bool showInactive)
         {
-            List<Material> salesOrderList = new List<Material>();
+            List<Employee> m = new List<Employee>();
 
             if (showInactive)
             {
-                salesOrderList = _materialRepo.GetAllIncludes();
+                m = _employeeRepo.GetAllIncludes();
             }
             else
             {
-                salesOrderList = _materialRepo.GetAllActiveIncludes();
+                m = _employeeRepo.GetAllActiveIncludes();
             }
 
             if (listSearch != null)
             {
-                salesOrderList = salesOrderList.Where(m => m.Name.ToLower().Contains(listSearch.ToLower())
-                                    || m.TypesName.ToLower().Contains(listSearch.ToLower())
+                m = m.Where(m => m.Name.ToLower().Contains(listSearch.ToLower())
+                                    //|| m.Company != null && m.Company.ToLower().Contains(listSearch.ToLower())
+                                    //|| m.Phone != null && m.Phone.ToLower().Contains(listSearch.ToLower())
+                                    //|| m.Description != null && m.Description.ToLower().Contains(listSearch.ToLower())
+                                    || m.EmployeePosition.Name.ToLower().Contains(listSearch.ToLower())
                                     ).ToList();
             }
 
-            List<MaterialsVM> salesOrdersVMList = new List<MaterialsVM>();
-            foreach (var item in salesOrderList)
+
+            List<EmployeesVM> list = new();
+            foreach (var item in m)
             {
-                var salesOrdersVM = new MaterialsVM
+                var vm = new EmployeesVM
                 {
                     Id = item.Id,
                     Name = item.Name,
-                    IsActive = item.IsActive,
+                    Position = item.EmployeePosition.Name,
                     InsertBy = item.InsertBy,
                     InsertTime = item.InsertTime,
                     UpdateBy = item.UpdateBy,
                     UpdateTime = item.UpdateTime
                 };
 
-                salesOrdersVMList.Add(salesOrdersVM);
+                list.Add(vm);
             }
 
-            return Json(salesOrdersVMList.ToDataSourceResult(request));
+            return Json(list.ToDataSourceResult(request));
 
         }
 
         public IActionResult Create()
         {
-            MaterialVM vm = new MaterialVM();
+            EmployeeVM vm = new EmployeeVM();
             ConfigureVM(vm);
             return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Create(MaterialVM vm)
+        public IActionResult Create(EmployeeVM vm)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var m = new Material
+                    var m = new Employee
                     {
                         Name = vm.Name,
+                        Phone = vm.Phone,
                         IsActive = vm.IsActive,
                         InsertBy = _userManager.GetUserName(User),
                         InsertTime = DateTime.Now,
                         UpdateBy = _userManager.GetUserName(User),
-                        UpdateTime = DateTime.Now
+                        UpdateTime = DateTime.Now,
                     };
-
-                    _materialRepo.Create(m);
+                    _employeeRepo.Create(m);
                     TempData["Message"] = "Saved succesfully";
                 }
                 catch (Exception ex)
@@ -111,11 +118,12 @@ namespace MIER.MVC.Controllers
 
         public IActionResult Edit(int id)
         {
-            var m = _materialRepo.GetById(id);
-            var vm = new MaterialVM
+            var m = _employeeRepo.GetById(id);
+            var vm = new EmployeeVM
             {
                 Id = m.Id,
                 Name = m.Name,
+                Phone = m.Phone,
                 IsActive = m.IsActive
             };
 
@@ -125,20 +133,21 @@ namespace MIER.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(MaterialVM vm)
+        public IActionResult Update(EmployeeVM vm)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var m = _materialRepo.GetById(vm.Id);
+                    var m = _employeeRepo.GetById(vm.Id);
 
                     m.Name = vm.Name;
+                    m.Phone = vm.Phone;
                     m.IsActive = vm.IsActive;
                     m.UpdateBy = _userManager.GetUserName(User);
                     m.UpdateTime = DateTime.Now;
 
-                    _materialRepo.Update(m);
+                    _employeeRepo.Update(m);
                     TempData["Message"] = "Saved succesfully";
                 }
                 catch (Exception ex)
@@ -152,8 +161,11 @@ namespace MIER.MVC.Controllers
 
         }
 
-        private void ConfigureVM(MaterialVM vm)
+        private void ConfigureVM(EmployeeVM vm)
         {
+            var employeePositionList = new SelectList(_employeePositionRepo.GetAllActive().OrderBy(m => m.Name), "Id", "Name");
+            ViewData["EmployeePosition"] = employeePositionList;
+
             //Default values for insert mode
             if (!vm.IsEditMode)
             {

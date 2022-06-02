@@ -6,25 +6,23 @@ using System.Threading.Tasks;
 
 namespace MIER.MVC.Data.Repos
 {
-    public class ProductionStatusRepo : AppBaseRepo<ProductionStatus>
+    public class EmployeePositionRepo : AppBaseRepo<EmployeePosition>
     {
+
         private readonly AppDbContext _context;
 
-        public ProductionStatusRepo(AppDbContext context)
+        public EmployeePositionRepo(AppDbContext context)
             : base(context)
         {
             _context = context;
         }
 
-        public List<ProductionStatus> GetAllActive()
+        public List<EmployeePosition> GetAllActive()
         {
-            var result = _context.ProductionStatus
+            var result = _context.EmployeePosition
                 .Where(m => m.IsActive == true)
                 .ToList();
             return result;
         }
-
-
-
     }
 }

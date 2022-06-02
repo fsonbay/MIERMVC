@@ -32,6 +32,5 @@ namespace MIER.MVC.Models
         [Column(TypeName = "nvarchar(50)")]
         public string UpdateBy { get; set; }
 
-        public List<MaterialType> MaterialTypes { get; set; }
     }
 }

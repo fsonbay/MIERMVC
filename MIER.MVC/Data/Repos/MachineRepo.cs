@@ -18,6 +18,14 @@ namespace MIER.MVC.Data.Repos
             _context = context;
         }
 
+        public List<Machine> GetAllActive()
+        {
+            var result = _context.Machine
+                .Where(m => m.IsActive == true)
+                .ToList();
+            return result;
+        }
+
 
     }
 }
